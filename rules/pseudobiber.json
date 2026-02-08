@@ -1,0 +1,220 @@
+{
+  "Matcher": {
+    "f_01_past_tense": [[
+      {"TAG": "VBD"}
+    ]],
+
+    "f_02_perfect_aspect": [[
+      {"LEMMA": "have", "DEP": "aux"}
+    ]],
+
+    "f_03_present_tense": [[
+      {"TAG": {"IN": ["VBZ", "VBP"]}}
+    ]],
+
+    "f_10_demonstrative_pronoun": [
+      [
+        {"TAG": {"IN": ["NN", "NNS", "NNP", "NNPS",
+                        "CD", "DT"]},
+         "OP": "!"},
+        {"TAG": "DT", "DEP": {"IN": ["nsubj", "dobj", "pobj"]},
+         "LOWER": {"IN": ["that", "this", "these", "those"]}}
+      ],
+      [
+        {"TAG": "DT", "DEP": {"IN": ["nsubj", "dobj", "pobj"]},
+         "LOWER": {"IN": ["that", "this", "these", "those"]},
+         "IS_SENT_START": true}
+      ]
+    ],
+
+    "f_12_proverb_do": [[
+      {"LEMMA": "do", "DEP": {"NOT_IN": ["aux"]}}
+    ]],
+
+    "f_13_wh_question": [
+      [
+        {"IS_SENT_START": true},
+        {"TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
+         "POS": {"NOT_IN": ["DET"]}},
+        {"DEP": "aux"}
+      ],
+      [
+        {"TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
+         "POS": {"NOT_IN": ["DET"]},
+         "IS_SENT_START": true},
+        {"DEP": "aux"}
+      ]
+    ],
+
+    "f_14_nominalizations": [[
+      {"POS": "NOUN",
+       "LOWER": {"REGEX": "tion$|tions$|ment$|ments$|ness$|nesses$|ity$|ities$",
+                 "NOT_IN": [
+                   "apartment", "apartments", "attention", "business",
+                   "businesses", "capacities", "capacity", "cities", "city",
+                   "comment", "comments", "condition", "conditions", "document",
+                   "documents", "edition", "editions", "element", "elements",
+                   "environment", "environments", "experiment", "experiments",
+                   "fiction", "fictions", "function", "functions", "humanity",
+                   "identities", "identity", "mention", "mentions", "moment",
+                   "moments", "motion", "motions", "nation", "nations", "notion",
+                   "notions", "pity", "position", "positions", "qualities",
+                   "quality", "section", "sections", "solution", "solutions",
+                   "station", "stations", "tradition", "traditions",
+                   "universities", "university", "witness", "witnesses"]}}
+    ]],
+
+    "f_15_gerunds": [[
+      {"TAG": "VBG", "DEP": {"IN": ["nsubj", "obj", "obl", "conj", "nmod"]}}
+    ]],
+
+    "f_19_be_main_verb": [[
+      {"LEMMA": "be", "DEP": "ROOT"}
+    ]],
+
+    "f_25_present_participle": [[
+      {"TAG": "VBG", "DEP": {"IN": ["advcl", "ccomp"]}}
+    ]],
+
+    "f_26_past_participle": [[
+      {"TAG": "VBN", "DEP": {"IN": ["advcl", "ccomp"]}}
+    ]]
+  },
+
+  "DependencyMatcher": {
+    "f_TODO_all_passives": [[
+      {
+        "RIGHT_ID": "passive_verb",
+        "RIGHT_ATTRS": {"TAG": "VBN"}
+      },
+      {
+        "LEFT_ID": "passive_verb",
+        "REL_OP": ">",
+        "RIGHT_ID": "aux_pass",
+        "RIGHT_ATTRS": {"DEP": "auxpass"} 
+      }
+    ]],
+
+    "f_18_by_passives": [[
+      {
+        "RIGHT_ID": "passive_verb",
+        "RIGHT_ATTRS": {"TAG": "VBN"}
+      },
+      {
+        "LEFT_ID": "passive_verb",
+        "REL_OP": ">",
+        "RIGHT_ID": "aux_pass",
+        "RIGHT_ATTRS": {"DEP": "auxpass"} 
+      },
+      {
+        "LEFT_ID": "passive_verb",
+        "REL_OP": ">",
+        "RIGHT_ID": "agent_node",
+        "RIGHT_ATTRS": {"DEP": "agent"}
+      }
+    ]],
+
+    "f_21_that_verb_comp": [[
+      {
+        "RIGHT_ID": "verb",
+        "RIGHT_ATTRS": {"POS": "VERB"}
+      },
+      {
+        "LEFT_ID": "verb",
+        "REL_OP": ">",
+        "RIGHT_ID": "comp_verb",
+        "RIGHT_ATTRS": {"DEP": "ccomp", "POS": "VERB"}
+      },
+      {
+        "LEFT_ID": "comp_verb",
+        "REL_OP": ">",
+        "RIGHT_ID": "that_comp",
+        "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
+      }
+    ]],
+
+    "f_22_that_adj_comp": [[
+      {
+        "RIGHT_ID": "adjective",
+        "RIGHT_ATTRS": {"POS": "ADJ"}
+      },
+      {
+        "LEFT_ID": "adjective",
+        "REL_OP": ">",
+        "RIGHT_ID": "comp_verb",
+        "RIGHT_ATTRS": {"DEP": "ccomp", "POS": "VERB"}
+      },
+      {
+        "LEFT_ID": "comp_verb",
+        "REL_OP": ">",
+        "RIGHT_ID": "that_comp",
+        "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
+      }
+    ]],
+
+    "f_27_past_participle_whiz": [[
+      {
+        "RIGHT_ID": "noun",
+        "RIGHT_ATTRS": {"POS": "NOUN"}
+      },
+      {
+        "LEFT_ID": "noun",
+        "REL_OP": ">",
+        "RIGHT_ID": "past_participle",
+        "RIGHT_ATTRS": {"DEP": "acl", "TAG": "VBN"}
+      }
+    ]],
+
+    "f_28_present_participle_whiz": [[
+      {
+        "RIGHT_ID": "noun",
+        "RIGHT_ATTRS": {"POS": "NOUN"}
+      },
+      {
+        "LEFT_ID": "noun",
+        "REL_OP": ">",
+        "RIGHT_ID": "past_participle",
+        "RIGHT_ATTRS": {"DEP": "acl", "TAG": "VBG"}
+      }
+    ]],
+
+    "f_29_that_subj": [[
+      {
+        "RIGHT_ID": "noun_anchor",
+        "RIGHT_ATTRS": {"POS": "NOUN"} 
+      },
+      {
+        "LEFT_ID": "noun_anchor",
+        "REL_OP": ">",
+        "RIGHT_ID": "rel_verb",
+        "RIGHT_ATTRS": {"DEP": "relcl"}
+      },
+      {
+        "LEFT_ID": "rel_verb",
+        "REL_OP": ">",
+        "RIGHT_ID": "that_token",
+        "RIGHT_ATTRS": {"LOWER": "that", "DEP": {"IN": ["nsubj", "nsubjpass"]}}
+      }
+    ]],
+
+    "f_30_that_obj": [[
+      {
+        "RIGHT_ID": "noun_anchor",
+        "RIGHT_ATTRS": {"POS": "NOUN"} 
+      },
+      {
+        "LEFT_ID": "noun_anchor",
+        "REL_OP": ">",
+        "RIGHT_ID": "rel_verb",
+        "RIGHT_ATTRS": {"DEP": "relcl"}
+      },
+      {
+        "LEFT_ID": "rel_verb",
+        "REL_OP": ">",
+        "RIGHT_ID": "that_token",
+        "RIGHT_ATTRS": {"LOWER": "that", "DEP": {"IN": ["dobj", "pobj", "dative"]}}
+      }
+    ]]
+
+  }
+}
