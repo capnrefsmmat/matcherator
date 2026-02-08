@@ -93,7 +93,7 @@
         "LEFT_ID": "passive_verb",
         "REL_OP": ">",
         "RIGHT_ID": "aux_pass",
-        "RIGHT_ATTRS": {"DEP": "auxpass"} 
+        "RIGHT_ATTRS": {"DEP": "auxpass"}
       }
     ]],
 
@@ -106,7 +106,7 @@
         "LEFT_ID": "passive_verb",
         "REL_OP": ">",
         "RIGHT_ID": "aux_pass",
-        "RIGHT_ATTRS": {"DEP": "auxpass"} 
+        "RIGHT_ATTRS": {"DEP": "auxpass"}
       },
       {
         "LEFT_ID": "passive_verb",
@@ -183,7 +183,7 @@
     "f_29_that_subj": [[
       {
         "RIGHT_ID": "noun_anchor",
-        "RIGHT_ATTRS": {"POS": "NOUN"} 
+        "RIGHT_ATTRS": {"POS": "NOUN"}
       },
       {
         "LEFT_ID": "noun_anchor",
@@ -202,7 +202,7 @@
     "f_30_that_obj": [[
       {
         "RIGHT_ID": "noun_anchor",
-        "RIGHT_ATTRS": {"POS": "NOUN"} 
+        "RIGHT_ATTRS": {"POS": "NOUN"}
       },
       {
         "LEFT_ID": "noun_anchor",
