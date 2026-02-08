@@ -80,6 +80,44 @@
 
     "f_26_past_participle": [[
       {"TAG": "VBN", "DEP": {"IN": ["advcl", "ccomp"]}}
+    ]],
+
+    "f_34_sentence_relatives": [[
+      {
+        "ORTH": ","
+      },
+      {
+        "LOWER": "which",
+        "DEP": "nsubj"
+      }
+    ]],
+
+    "f_35_because": [[
+      {
+        "LOWER": "because",
+        "POS": {"IN": ["ADP", "SCONJ"]}
+      }
+    ]],
+
+    "f_36_though": [[
+      {
+        "LOWER": {"IN": ["though", "although", "tho"]},
+        "POS": "SCONJ"
+      }
+    ]],
+
+    "f_37_if": [[
+      {
+        "LOWER": {"IN": ["if", "unless"]},
+        "POS": "SCONJ"
+      }
+    ]],
+
+    "f_38_other_adv_sub": [[
+      {
+        "LOWER": {"IN": ["since", "while", "whereas"]},
+        "POS": "SCONJ"
+      }
     ]]
   },
 
@@ -216,7 +254,77 @@
         "RIGHT_ID": "that_token",
         "RIGHT_ATTRS": {"LOWER": "that", "DEP": {"IN": ["dobj", "pobj", "dative"]}}
       }
-    ]]
+    ]],
 
+    "f_31_wh_subj": [[
+      {
+        "RIGHT_ID": "noun_anchor",
+        "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}
+        }
+      },
+      {
+        "LEFT_ID": "noun_anchor",
+        "REL_OP": ">",
+        "RIGHT_ID": "rel_verb",
+        "RIGHT_ATTRS": {"DEP": "relcl"}
+      },
+      {
+        "LEFT_ID": "rel_verb",
+        "REL_OP": ">",
+        "RIGHT_ID": "wh_word",
+        "RIGHT_ATTRS": {
+          "DEP": {"IN": ["nsubj", "nsubjpass"]},
+          "TAG": {"IN": ["WDT", "WP"]}
+        }
+      }
+    ]],
+
+    "f_32_wh_obj": [[
+      {
+        "RIGHT_ID": "noun_anchor",
+        "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
+      },
+      {
+        "LEFT_ID": "noun_anchor",
+        "REL_OP": ">",
+        "RIGHT_ID": "rel_verb",
+        "RIGHT_ATTRS": {"DEP": "relcl"}
+      },
+      {
+        "LEFT_ID": "rel_verb",
+        "REL_OP": ">",
+        "RIGHT_ID": "wh_word",
+        "RIGHT_ATTRS": {
+          "DEP": {"IN": ["dobj", "pobj"]},
+          "TAG": {"IN": ["WDT", "WP"]}
+        }
+      }
+    ]],
+
+    "f_33_pied_piping": [[
+      {
+        "RIGHT_ID": "noun_anchor",
+        "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
+      },
+      {
+        "LEFT_ID": "noun_anchor",
+        "REL_OP": ">",
+        "RIGHT_ID": "rel_verb",
+        "RIGHT_ATTRS": {"DEP": "relcl"}},
+      {
+        "LEFT_ID": "rel_verb",
+        "REL_OP": ">",
+        "RIGHT_ID": "preposition",
+        "RIGHT_ATTRS": {"DEP": "prep"}},
+      {
+        "LEFT_ID": "preposition",
+        "REL_OP": ">",
+        "RIGHT_ID": "wh_word",
+        "RIGHT_ATTRS": {
+          "DEP": "pobj",
+          "TAG": {"IN": ["WDT", "WP", "WP$"]}
+        }
+      }
+    ]]
   }
 }

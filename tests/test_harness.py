@@ -41,8 +41,8 @@ class TestMatcherRules(unittest.TestCase):
                 doc = self.nlp(text)
 
                 # Collect all matches
-                matches = self.matcher(doc, as_spans=True)
-                found_matches = {m.label_ for m in matches}
+                matches = self.matcher(doc)
+                found_matches = {self.nlp.vocab.strings[match_id] for match_id, start, end in matches}
 
                 dep_matches = self.dep_matcher(doc)
                 found_matches.update(self.nlp.vocab.strings[match_id] for match_id, token_ids in dep_matches)

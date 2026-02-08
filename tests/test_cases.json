@@ -132,5 +132,61 @@
       "f_26_past_participle"
     ],
     "should_not_match": []
+  },
+  {
+    "text": "The man who likes popcorn is here.",
+    "should_match": [
+      "f_31_wh_subj"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "The man who Sally likes is here.",
+    "should_match": [
+      "f_32_wh_obj"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "The manner in which he was told was rude.",
+    "should_match": [
+      "f_33_pied_piping"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "Bob likes fried mangoes, which is the most disgusting thing I've ever heard of.",
+    "should_match": [
+      "f_34_sentence_relatives"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "I ate because I was hungry.",
+    "should_match": [
+      "f_35_because"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "Although it rained, we played.",
+    "should_match": [
+      "f_36_though"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "If it rains, we stay inside.",
+    "should_match": [
+      "f_37_if"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "Since it rained, we stayed inside.",
+    "should_match": [
+      "f_38_other_adv_sub"
+    ],
+    "should_not_match": []
   }
 ]
