@@ -1,0 +1,9 @@
+[
+    {
+        "text": "The man that I gave the book wanted to keep it.",
+        "should_match": [
+            "f_30_that_obj"
+        ],
+        "should_not_match": []
+    }
+]
