@@ -65,7 +65,9 @@
     ]],
 
     "f_15_gerunds": [[
-      {"TAG": "VBG", "DEP": {"IN": ["nsubj", "obj", "obl", "conj", "nmod"]}}
+      {"TAG": "VBG",
+        "DEP": {"IN": ["nsubj", "obj", "obl", "conj", "nmod", "csubj",
+                       "xcomp", "pcomp", "nsubjpass"]}}
     ]],
 
     "f_19_be_main_verb": [[

@@ -1,9 +1,136 @@
 [
-    {
-        "text": "The man that I gave the book wanted to keep it.",
-        "should_match": [
-            "f_30_that_obj"
-        ],
-        "should_not_match": []
-    }
+  {
+    "text": "The man that I gave the book wanted to keep it.",
+    "should_match": [
+      "f_30_that_obj"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "I walked to the store.",
+    "should_match": [
+      "f_01_past_tense"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "I have written this sentence.",
+    "should_match": [
+      "f_02_perfect_aspect"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "I eat lunch.",
+    "should_match": [
+      "f_03_present_tense"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "That is an example sentence.",
+    "should_match": [
+      "f_10_demonstrative_pronoun"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "I want that.",
+    "should_match": [
+      "f_10_demonstrative_pronoun"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "I want that book.",
+    "should_match": [],
+    "should_not_match": [
+      "f_10_demonstrative_pronoun"
+    ]
+  },
+  {
+    "text": "I did it.",
+    "should_match": [
+      "f_12_proverb_do"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "I do not know.",
+    "should_match": [],
+    "should_not_match": [
+      "f_12_proverb_do"
+    ]
+  },
+  {
+    "text": "When are you leaving?",
+    "should_match": [
+      "f_13_wh_question"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "I know when you are leaving.",
+    "should_match": [],
+    "should_not_match": [
+      "f_13_wh_question"
+    ]
+  },
+  {
+    "text": "The adjustment was necessary.",
+    "should_match": [
+      "f_14_nominalizations"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "The station is closed.",
+    "should_match": [],
+    "should_not_match": [
+      "f_14_nominalizations"
+    ]
+  },
+  {
+    "text": "Running is fun.",
+    "should_match": [
+      "f_15_gerunds"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "I am running.",
+    "should_match": [],
+    "should_not_match": [
+      "f_15_gerunds",
+      "f_19_be_main_verb"
+    ]
+  },
+  {
+    "text": "I am happy.",
+    "should_match": [
+      "f_19_be_main_verb"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "Stuffing his mouth with cookies, Joe ran out the door.",
+    "should_match": [
+      "f_25_present_participle"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "Joe ran out the door, stuffing his mouth with cookies.",
+    "should_match": [
+      "f_25_present_participle"
+    ],
+    "should_not_match": []
+  },
+  {
+    "text": "Built in a single week, the house would stand for fifty years.",
+    "should_match": [
+      "f_26_past_participle"
+    ],
+    "should_not_match": []
+  }
 ]
