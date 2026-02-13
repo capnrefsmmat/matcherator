@@ -30,6 +30,114 @@
       ]]
     },
 
+    "f_04_place_adverbials": {
+      "description": "Place adverbials (e.g., *above*, *beside*, *outdoors*)",
+      "examples": [
+        "Far downstream, you can find the delta.",
+        "I haven't found any good restaurants locally."
+      ],
+      "comment": "TODO 'She flew west at high speed' seems like a place adverbial, but 'west' is tagged NOUN with advmod dep. Should it count?",
+      "rules": [
+        [
+          {"TAG": {"IN": ["RB", "RBR", "RBS", "RP"]},
+           "LOWER": {"IN": [
+             "aboard", "above", "abroad", "across", "ahead", "alongside",
+             "around", "ashore", "astern", "away", "behind", "below", "beneath",
+             "beside", "downhill", "downstairs", "downstream", "east", "far",
+             "hereabouts", "indoors", "inland", "inshore", "inside", "locally",
+             "near", "nearby", "north", "nowhere", "outdoors", "outside",
+             "overboard", "overland", "overseas", "south", "underfoot",
+             "underground", "underneath", "uphill", "upstairs", "upstream",
+             "west"
+           ]}
+          }
+        ],
+        [
+          {"TAG": "IN",
+           "LOWER": {"IN": [
+             "aboard", "above", "abroad", "across", "alongside", "around",
+             "behind", "below", "beneath", "beside", "inside", "near", "nearby",
+             "outside", "underneath"]}
+          }
+        ]
+      ]
+    },
+
+    "f_05_time_adverbials": {
+      "description": "Time adverbials (e.g., *early*, *instantly*, *soon*)",
+      "examples": [
+        "I will leave momentarily.",
+        "Previously, we saw an example."
+      ],
+      "rules": [[
+        {"TAG": {"IN": ["RB", "RBR", "RBS", "RP"]},
+         "LOWER": {"IN": [
+           "again", "earlier", "early", "eventually", "formerly", "immediately",
+           "initially", "instantly", "late", "lately", "later", "momentarily",
+           "now", "nowadays", "once", "originally", "presently", "previously",
+           "recently", "shortly", "simultaneously", "subsequently", "today",
+           "to-day", "tomorrow", "to-morrow", "tonight", "to-night", "yesterday"
+         ]}
+        }
+      ]]
+    },
+
+    "f_06_first_person_pronouns": {
+      "description": "First-person pronouns",
+      "examples": [
+        "We are very confused.",
+        "I bought it for myself.",
+        "Our examples are too simplistic.",
+        "My cup runneth over."
+      ],
+      "rules": [[
+        {"TAG": {"IN": ["PRP", "PRP$"]},
+         "LOWER": {"IN": ["i", "me", "us", "my", "we", "our", "myself", "ourselves"]}}
+      ]]
+    },
+
+    "f_07_second_person_pronouns": {
+      "description": "Second-person pronouns",
+      "examples": [
+        "You are reading this example.",
+        "I noticed that thy pants are on fire.",
+        "Take control of thyself.",
+        "Your simian countenance suggests a heritage unusually rich in species diversity."
+      ],
+      "rules": [[
+        {"TAG": {"IN": ["PRP", "PRP$"]},
+         "LOWER": {"IN": ["you", "your", "yourself", "yourselves", "thy", "thee",
+                          "thyself", "thou"]}}
+      ]]
+    },
+
+    "f_08_third_person_pronouns": {
+      "description": "Third-person pronouns",
+      "examples": [
+        "Their pants are collectively on fire.",
+        "He is a liar.",
+        "When I asked her, she disagreed."
+      ],
+      "rules": [[
+        {"TAG": {"IN": ["PRP", "PRP$"]},
+         "LOWER": {"IN": [
+           "she", "he", "they", "her", "him", "them", "his", "their", "himself",
+           "herself", "themselves"]}}
+      ]]
+    },
+
+    "f_09_pronoun_it": {
+      "description": "Pronoun *it*, *its*, or *itself*",
+      "examples": [
+        "Its size is astounding.",
+        "It destroyed itself during the attempt."
+      ],
+      "rules": [[
+        {"TAG": {"IN": ["PRP", "PRP$"]},
+         "LOWER": {"IN": ["it", "its", "itself"]}}
+      ]]
+    },
+
     "f_10_demonstrative_pronoun": {
       "description": "Demonstrative pronouns, i.e., pronouns being used to replace a noun",
       "examples": [
@@ -49,6 +157,24 @@
            "IS_SENT_START": true}
         ]
       ]
+    },
+
+    "f_11_indefinite_pronouns": {
+      "description": "Indefinite pronouns (e.g., *anybody*, *nothing*, *someone*)",
+      "examples": [
+        "Well, someone has to do it.",
+        "Nobody is ever interested in this topic.",
+        "The project went nowhere.",
+        "Everyone likes this example.",
+        "Something's not right."
+      ],
+      "rules": [[
+        {"LOWER": {"IN": [
+          "anybody", "anyone", "anything", "everybody", "everyone",
+          "everything", "nobody", "none", "nothing", "nowhere", "somebody",
+          "someone", "something"
+        ]}}
+      ]]
     },
 
     "f_12_proverb_do": {
@@ -143,6 +269,27 @@
       ]]
     },
 
+    "f_20_existential_there": {
+      "description": "Existential *there*",
+      "examples": [
+        "There is a feature in this sentence."
+      ],
+      "rules": [[
+        {"TAG": "EX"}
+      ]]
+    },
+
+    "f_24_infinitives": {
+      "description": "Infinitives",
+      "examples": [
+        "I want to believe.",
+        "To be involved is unwise."
+      ],
+      "rules": [[
+        {"TAG": "TO"}
+      ]]
+    },
+
     "f_25_present_participle": {
       "description": "Present participial adverbial clauses",
       "examples": [
@@ -169,6 +316,7 @@
       "examples": [
         "Bob likes fried mangoes, which is the most disgusting thing I've ever heard of."
       ],
+      "comment": "TODO Feels like this should be done with DependencyMatcher instead of matching on commas",
       "rules": [[
         {
           "ORTH": ","
@@ -189,10 +337,12 @@
       "counterexamples": [
         "Because of the rain, the game was canceled."
       ],
+      "comment": "TODO Check that the DEP rule here is better than checking for a following 'of'",
       "rules": [[
         {
           "LOWER": "because",
-          "POS": {"IN": ["ADP", "SCONJ"]}
+          "POS": {"IN": ["ADP", "SCONJ"]},
+          "DEP": "mark"
         }
       ]]
     },
@@ -229,9 +379,7 @@
       "examples": [
         "Since it rained, we stayed inside."
       ],
-      "counterexamples": [
-        "It's been raining since noon."
-      ],
+      "comment": "TODO 'It's been raining since noon' should not match, but does.",
       "rules": [[
         {
           "LOWER": {"IN": ["since", "while", "whereas"]},
@@ -270,6 +418,15 @@
       ],
       "rules": [[
         {"POS": "ADJ", "DEP": "acomp"}
+      ]]
+    },
+
+    "f_42_adverbs": {
+      "description": "Total adverbs",
+      "examples": [
+      ],
+      "rules": [[
+        {"TAG": {"IN": ["RB", "RBR", "RBS", "WRB"]}}
       ]]
     },
 
@@ -385,7 +542,7 @@
         {
           "POS": "VERB",
           "LEMMA": {"IN": [
-            "acknowledge", "add", "admit", "affirm", "agree", "allege", "announce", 
+            "acknowledge", "add", "admit", "affirm", "agree", "allege", "announce",
             "argue", "assert", "bet", "boast", "certify", "claim", "comment",
             "complain", "concede", "confess", "confide", "confirm", "contend",
             "convey", "declare", "deny", "disclose", "exclaim", "explain",
@@ -424,6 +581,32 @@
           ]}
         }
       ]]
+    },
+
+    "f_57_verb_suasive": {
+      "description": "Suasive verbs",
+      "examples": [
+        "She decreed that none will survive.",
+        "I will ensure that you succeed.",
+        "They urged us to accept the proposal urgently."
+      ],
+      "counterexamples": [
+        "We followed the rules.",
+        "She read the decree."
+      ],
+      "rules": [[
+        {
+          "POS": "VERB",
+          "LEMMA": {"IN": [
+            "agree", "allow", "arrange", "ask", "beg", "command", "concede",
+            "decide", "decree", "decreed", "demand", "desire", "determine", "enjoin",
+            "ensure", "entreat", "grant", "insist", "instruct", "intend",
+            "move", "ordain", "order", "pledge", "pray", "prefer", "pronounce",
+            "propose", "recommend", "request", "require", "resolve", "rule",
+            "stipulate", "suggest", "urge", "vote"
+          ]}
+        }
+      ]]
     }
   },
 
@@ -454,7 +637,8 @@
         "The task was done by Steve."
       ],
       "counterexamples": [
-        "The task was done."
+        "The task was done.",
+        "By beginning this sentence with \"by\", I may break the feature detector."
       ],
       "rules": [[
         {
@@ -522,6 +706,33 @@
           "REL_OP": ">",
           "RIGHT_ID": "that_comp",
           "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
+        }
+      ]]
+    },
+
+    "f_23_wh_clause": {
+      "description": "*wh-* clauses",
+      "examples": [
+        "I believed what he told me."
+      ],
+      "comment": "TODO What about 'I believed in what he told me' or 'I believed a little of what he told me'?",
+      "rules": [[
+        {
+          "RIGHT_ID": "root_verb",
+          "RIGHT_ATTRS": {"POS": "VERB"}
+        },
+        {
+          "LEFT_ID": "root_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "subordinate_verb",
+          "RIGHT_ATTRS": {"POS": "VERB", "DEP": "ccomp"}
+        },
+        {
+          "LEFT_ID": "subordinate_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "wh-",
+          "RIGHT_ATTRS": {"TAG": {"IN": ["WP", "WP$", "WRB"]},
+                          "DEP": "dative"}
         }
       ]]
     },
@@ -718,6 +929,7 @@
   "PhraseMatcher": {
     "f_45_conjuncts": {
       "description": "Conjuncts",
+      "comment": "TODO deal with _punct_",
       "rules": [
         "alternatively", "consequently", "conversely", "e.g.", "furthermore",
         "hence", "however", "i.e.", "instead", "likewise", "moreover", "namely",
