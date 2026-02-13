@@ -1,52 +1,102 @@
 {
   "Matcher": {
-    "f_01_past_tense": [[
-      {"TAG": "VBD"}
-    ]],
-
-    "f_02_perfect_aspect": [[
-      {"LEMMA": "have", "DEP": "aux"}
-    ]],
-
-    "f_03_present_tense": [[
-      {"TAG": {"IN": ["VBZ", "VBP"]}}
-    ]],
-
-    "f_10_demonstrative_pronoun": [
-      [
-        {"TAG": {"IN": ["NN", "NNS", "NNP", "NNPS",
-                        "CD", "DT"]},
-         "OP": "!"},
-        {"TAG": "DT", "DEP": {"IN": ["nsubj", "dobj", "pobj"]},
-         "LOWER": {"IN": ["that", "this", "these", "those"]}}
+    "f_01_past_tense": {
+      "description": "Verbs in the past tense",
+      "examples": [
+        "The cat walked slowly down the street."
       ],
-      [
-        {"TAG": "DT", "DEP": {"IN": ["nsubj", "dobj", "pobj"]},
-         "LOWER": {"IN": ["that", "this", "these", "those"]},
-         "IS_SENT_START": true}
-      ]
-    ],
+      "rules": [[
+        {"TAG": "VBD"}
+      ]]
+    },
 
-    "f_12_proverb_do": [[
-      {"LEMMA": "do", "DEP": {"NOT_IN": ["aux"]}}
-    ]],
-
-    "f_13_wh_question": [
-      [
-        {"IS_SENT_START": true},
-        {"TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
-         "POS": {"NOT_IN": ["DET"]}},
-        {"DEP": "aux"}
+    "f_02_perfect_aspect": {
+      "description": "Words in the perfect aspect, indicated by *have* as an auxiliary verb",
+      "examples": [
+        "I have written this sentence."
       ],
-      [
-        {"TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
-         "POS": {"NOT_IN": ["DET"]},
-         "IS_SENT_START": true},
-        {"DEP": "aux"}
-      ]
-    ],
+      "rules": [[
+        {"LEMMA": "have", "DEP": "aux"}
+      ]]
+    },
 
-    "f_14_nominalizations": [[
+    "f_03_present_tense": {
+      "description": "Verbs in the present tense",
+      "examples": [
+        "The quick brown fox jumps over the lazy dog."
+      ],
+      "rules": [[
+        {"TAG": {"IN": ["VBZ", "VBP"]}}
+      ]]
+    },
+
+    "f_10_demonstrative_pronoun": {
+      "description": "Demonstrative pronouns, i.e., pronouns being used to replace a noun",
+      "examples": [
+        "That is an example sentence."
+      ],
+      "rules": [
+        [
+          {"TAG": {"IN": ["NN", "NNS", "NNP", "NNPS",
+                          "CD", "DT"]},
+           "OP": "!"},
+          {"TAG": "DT", "DEP": {"IN": ["nsubj", "dobj", "pobj"]},
+           "LOWER": {"IN": ["that", "this", "these", "those"]}}
+        ],
+        [
+          {"TAG": "DT", "DEP": {"IN": ["nsubj", "dobj", "pobj"]},
+           "LOWER": {"IN": ["that", "this", "these", "those"]},
+           "IS_SENT_START": true}
+        ]
+      ]
+    },
+
+    "f_12_proverb_do": {
+      "description": "Pro-verb *do*",
+      "examples": [
+        "I did it."
+      ],
+      "counterexamples": [
+        "I do not know."
+      ],
+      "rules": [[
+        {"LEMMA": "do", "DEP": {"NOT_IN": ["aux"]}}
+      ]]
+    },
+
+    "f_13_wh_question": {
+      "description": "Direct *wh-* questions",
+      "examples": [
+        "When are you leaving?"
+      ],
+      "counterexamples": [
+        "I know when you are leaving."
+      ],
+      "rules": [
+        [
+          {"IS_SENT_START": true},
+          {"TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
+           "POS": {"NOT_IN": ["DET"]}},
+          {"DEP": "aux"}
+        ],
+        [
+          {"TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
+           "POS": {"NOT_IN": ["DET"]},
+           "IS_SENT_START": true},
+          {"DEP": "aux"}
+        ]
+      ]
+    },
+
+    "f_14_nominalizations": {
+      "description": "Nominalizations (nouns ending in *-tion*, *-ment*, *-ness*, *-ity*, e.g. *adjustment*, *abandonment*)",
+      "examples": [
+        "The adjustment was necessary."
+      ],
+      "counterexamples": [
+        "I went to the station."
+      ],
+      "rules": [[
       {"POS": "NOUN",
        "LOWER": {"REGEX": "tion$|tions$|ment$|ments$|ness$|nesses$|ity$|ities$",
                  "NOT_IN": [
@@ -62,269 +112,656 @@
                    "quality", "section", "sections", "solution", "solutions",
                    "station", "stations", "tradition", "traditions",
                    "universities", "university", "witness", "witnesses"]}}
-    ]],
+      ]]
+    },
 
-    "f_15_gerunds": [[
+    "f_15_gerunds": {
+      "description": "Gerunds (participial forms functioning as nouns)",
+      "examples": [
+        "Running is fun."
+      ],
+      "counterexamples": [
+        "I am running."
+      ],
+      "rules": [[
       {"TAG": "VBG",
         "DEP": {"IN": ["nsubj", "obj", "obl", "conj", "nmod", "csubj",
                        "xcomp", "pcomp", "nsubjpass"]}}
-    ]],
+      ]]
+    },
 
-    "f_19_be_main_verb": [[
-      {"LEMMA": "be", "DEP": "ROOT"}
-    ]],
+    "f_19_be_main_verb": {
+      "description": "*be* as main verb",
+      "examples": [
+        "I am happy."
+      ],
+      "counterexamples": [
+        "I am running."
+      ],
+      "rules": [[
+        {"LEMMA": "be", "DEP": "ROOT"}
+      ]]
+    },
 
-    "f_25_present_participle": [[
-      {"TAG": "VBG", "DEP": {"IN": ["advcl", "ccomp"]}}
-    ]],
+    "f_25_present_participle": {
+      "description": "Present participial adverbial clauses",
+      "examples": [
+        "Stuffing his mouth with cookies, Joe ran out the door.",
+        "Joe ran out the door, stuffing his mouth with cookies."
+      ],
+      "rules": [[
+        {"TAG": "VBG", "DEP": {"IN": ["advcl", "ccomp"]}}
+      ]]
+    },
 
-    "f_26_past_participle": [[
-      {"TAG": "VBN", "DEP": {"IN": ["advcl", "ccomp"]}}
-    ]],
+    "f_26_past_participle": {
+      "description": "Past participial adverbial clauses",
+      "examples": [
+        "Built in a single week, the house would stand for fifty years."
+      ],
+      "rules": [[
+        {"TAG": "VBN", "DEP": {"IN": ["advcl", "ccomp"]}}
+      ]]
+    },
 
-    "f_34_sentence_relatives": [[
-      {
-        "ORTH": ","
-      },
-      {
-        "LOWER": "which",
-        "DEP": "nsubj"
-      }
-    ]],
+    "f_34_sentence_relatives": {
+      "description": "Sentence relatives",
+      "examples": [
+        "Bob likes fried mangoes, which is the most disgusting thing I've ever heard of."
+      ],
+      "rules": [[
+        {
+          "ORTH": ","
+        },
+        {
+          "LOWER": "which",
+          "DEP": "nsubj"
+        }
+      ]]
+    },
 
-    "f_35_because": [[
-      {
-        "LOWER": "because",
-        "POS": {"IN": ["ADP", "SCONJ"]}
-      }
-    ]],
+    "f_35_because": {
+      "description": "Causative adverbial subordinator (*because*)",
+      "examples": [
+        "I ate because I was hungry.",
+        "Because I was hungry, I ate."
+      ],
+      "counterexamples": [
+        "Because of the rain, the game was canceled."
+      ],
+      "rules": [[
+        {
+          "LOWER": "because",
+          "POS": {"IN": ["ADP", "SCONJ"]}
+        }
+      ]]
+    },
 
-    "f_36_though": [[
-      {
-        "LOWER": {"IN": ["though", "although", "tho"]},
-        "POS": "SCONJ"
-      }
-    ]],
+    "f_36_though": {
+      "description": "Concessive adverbial subordinators (*although*, *though*)",
+      "examples": [
+        "Although it rained, we played.",
+        "It was a good game, though it was rainy."
+      ],
+      "rules": [[
+        {
+          "LOWER": {"IN": ["though", "although", "tho"]},
+          "POS": "SCONJ"
+        }
+      ]]
+    },
 
-    "f_37_if": [[
-      {
-        "LOWER": {"IN": ["if", "unless"]},
-        "POS": "SCONJ"
-      }
-    ]],
+    "f_37_if": {
+      "description": "Conditional adverbial subordinators (*if*, *unless*)",
+      "examples": [
+        "If it rains, we stay inside."
+      ],
+      "rules": [[
+        {
+          "LOWER": {"IN": ["if", "unless"]},
+          "POS": "SCONJ"
+        }
+      ]]
+    },
 
-    "f_38_other_adv_sub": [[
-      {
-        "LOWER": {"IN": ["since", "while", "whereas"]},
-        "POS": "SCONJ"
-      }
-    ]]
+    "f_38_other_adv_sub": {
+      "description": "Other adverbial subordinators (*since*, *while*, *whereas*)",
+      "examples": [
+        "Since it rained, we stayed inside."
+      ],
+      "counterexamples": [
+        "It's been raining since noon."
+      ],
+      "rules": [[
+        {
+          "LOWER": {"IN": ["since", "while", "whereas"]},
+          "POS": "SCONJ"
+        }
+      ]]
+    },
+
+    "f_39_prepositions": {
+      "description": "Total prepositional phrases",
+      "rules": [[
+        {"DEP": "prep"}
+      ]]
+    },
+
+    "f_40_adj_attr": {
+      "description": "Attributive adjectives",
+      "examples": [
+        "The big horse is here."
+      ],
+      "counterexamples": [
+        "The horse is big."
+      ],
+      "rules": [[
+        {"POS": "ADJ", "DEP": "amod"}
+      ]]
+    },
+
+    "f_41_adj_pred": {
+      "description": "Predicative adjectives",
+      "examples": [
+        "The horse is big."
+      ],
+      "counterexamples": [
+        "The big horse is here."
+      ],
+      "rules": [[
+        {"POS": "ADJ", "DEP": "acomp"}
+      ]]
+    },
+
+    "f_49_emphatics": {
+      "description": "Emphatics",
+      "examples": [
+        "The horse is so big.",
+        "He did do it.",
+        "It's a real big problem."
+      ],
+      "rules": [
+        [
+          {"LOWER": {"IN": ["so", "real"]}},
+          {"TAG": "JJ"}
+        ],
+        [
+          {"LOWER": {"IN": ["do", "does", "doing", "did"]},
+           "TAG": {"IN": ["VB", "VBD", "VBG", "VBN", "VBP", "VBN", "VBP", "VBZ"]}},
+          {"POS": "VERB"}
+        ]
+      ]
+    },
+
+    "f_50_discourse_particles": {
+      "description": "Discourse particles",
+      "examples": [
+        "Well, that's not a good idea.",
+        "Anyway, I started blasting.",
+        "She tried it, but, well, it didn't work."
+      ],
+      "counterexamples": [
+        "He dug a well."
+      ],
+      "rules": [
+        [
+          {"IS_PUNCT": true},
+          {"LOWER": {"IN": ["well", "now", "anyhow", "anyways", "anyway"]}}
+        ],
+        [
+          {"IS_SENT_START": true,
+           "LOWER": {"IN": ["well", "now", "anyhow", "anyways", "anyway"]}}
+        ]
+
+      ]
+    },
+
+    "f_51_demonstratives": {
+      "description": "Demonstratives",
+      "comment": "TODO add examples",
+      "examples": [],
+      "rules": [[
+        {"DEP": "det", "LOWER": {"IN": ["that", "this", "these", "those"]}}
+      ]]
+    },
+
+    "f_52_modal_possibility": {
+      "description": "Possibility modals",
+      "examples": [
+        "You can do it!",
+        "The bridge might fall down."
+      ],
+      "counterexamples": [
+        "Stand in awe of my might."
+      ],
+      "rules": [[
+        {"LEMMA": {"IN": ["can", "may", "might", "could"]},
+         "TAG": "MD"}
+      ]]
+    },
+
+    "f_53_modal_necessity": {
+      "description": "Necessity modals",
+      "examples": [
+        "You should wright more examples.",
+        "One must write examples."
+      ],
+      "counterexamples": [
+        "It smells very musty in here."
+      ],
+      "rules": [[
+        {"LEMMA": {"IN": ["ought", "should", "must"]},
+         "TAG": "MD"}
+      ]]
+    },
+
+    "f_54_modal_predictive": {
+      "description": "Predictive modals",
+      "examples": [
+        "You will read this example.",
+        "It shall be done."
+      ],
+      "counterexamples": [
+        "He wrote a will."
+      ],
+      "rules": [[
+        {"LEMMA": {"IN": ["will", "would", "shall"]},
+         "TAG": "MD"}
+      ]]
+    },
+
+    "f_55_verb_public": {
+      "description": "Public verbs",
+      "examples": [
+        "He announced his opinions.",
+        "She remarked that this example is stupid.",
+        "I do solemly swear that this is an example."
+      ],
+      "counterexamples": [
+        "This is a swear word.",
+        "He placed a bet."
+      ],
+      "rules": [[
+        {
+          "POS": "VERB",
+          "LEMMA": {"IN": [
+            "acknowledge", "add", "admit", "affirm", "agree", "allege", "announce", 
+            "argue", "assert", "bet", "boast", "certify", "claim", "comment",
+            "complain", "concede", "confess", "confide", "confirm", "contend",
+            "convey", "declare", "deny", "disclose", "exclaim", "explain",
+            "forecast", "foretell", "guarantee", "hint", "insist", "maintain",
+            "mention", "object", "predict", "proclaim", "promise", "pronounce",
+            "prophesy", "protest", "remark", "repeat", "reply", "report", "say",
+            "state", "submit", "suggest", "swear", "testify", "vow", "warn",
+            "write"]}
+        }
+      ]]
+    },
+
+    "f_56_verb_private": {
+      "description": "Private verbs",
+      "examples": [
+        "I anticipate a raise.",
+        "I did not realise the issue.",
+        "She thinks it's an issue."
+      ],
+      "rules": [[
+        {
+          "POS": "VERB",
+          "LEMMA": {"IN": [
+            "accept", "anticipate", "ascertain", "assume", "believe", "calculate",
+            "check", "conclude", "conjecture", "consider", "decide", "deduce",
+            "deem", "demonstrate", "determine", "discern", "discover", "doubt",
+            "dream", "ensure", "establish", "estimate", "expect", "fancy", "fear",
+            "feel", "find", "foresee", "forget", "gather", "guess", "hear",
+            "hold", "hope", "imagine", "imply", "indicate", "infer", "insure",
+            "judge", "know", "learn", "mean", "note", "notice", "observe",
+            "perceive", "presume", "presuppose", "pretend", "prove", "realize",
+            "realise",
+            "reason", "recall", "reckon", "recognize", "reflect", "remember",
+            "reveal", "see", "sense", "show", "signify", "suppose", "suspect",
+            "think", "understand"
+          ]}
+        }
+      ]]
+    }
   },
 
   "DependencyMatcher": {
-    "f_TODO_all_passives": [[
-      {
-        "RIGHT_ID": "passive_verb",
-        "RIGHT_ATTRS": {"TAG": "VBN"}
-      },
-      {
-        "LEFT_ID": "passive_verb",
-        "REL_OP": ">",
-        "RIGHT_ID": "aux_pass",
-        "RIGHT_ATTRS": {"DEP": "auxpass"}
-      }
-    ]],
-
-    "f_18_by_passives": [[
-      {
-        "RIGHT_ID": "passive_verb",
-        "RIGHT_ATTRS": {"TAG": "VBN"}
-      },
-      {
-        "LEFT_ID": "passive_verb",
-        "REL_OP": ">",
-        "RIGHT_ID": "aux_pass",
-        "RIGHT_ATTRS": {"DEP": "auxpass"}
-      },
-      {
-        "LEFT_ID": "passive_verb",
-        "REL_OP": ">",
-        "RIGHT_ID": "agent_node",
-        "RIGHT_ATTRS": {"DEP": "agent"}
-      }
-    ]],
-
-    "f_21_that_verb_comp": [[
-      {
-        "RIGHT_ID": "verb",
-        "RIGHT_ATTRS": {"POS": "VERB"}
-      },
-      {
-        "LEFT_ID": "verb",
-        "REL_OP": ">",
-        "RIGHT_ID": "comp_verb",
-        "RIGHT_ATTRS": {"DEP": "ccomp", "POS": "VERB"}
-      },
-      {
-        "LEFT_ID": "comp_verb",
-        "REL_OP": ">",
-        "RIGHT_ID": "that_comp",
-        "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
-      }
-    ]],
-
-    "f_22_that_adj_comp": [[
-      {
-        "RIGHT_ID": "adjective",
-        "RIGHT_ATTRS": {"POS": "ADJ"}
-      },
-      {
-        "LEFT_ID": "adjective",
-        "REL_OP": ">",
-        "RIGHT_ID": "comp_verb",
-        "RIGHT_ATTRS": {"DEP": "ccomp", "POS": "VERB"}
-      },
-      {
-        "LEFT_ID": "comp_verb",
-        "REL_OP": ">",
-        "RIGHT_ID": "that_comp",
-        "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
-      }
-    ]],
-
-    "f_27_past_participle_whiz": [[
-      {
-        "RIGHT_ID": "noun",
-        "RIGHT_ATTRS": {"POS": "NOUN"}
-      },
-      {
-        "LEFT_ID": "noun",
-        "REL_OP": ">",
-        "RIGHT_ID": "past_participle",
-        "RIGHT_ATTRS": {"DEP": "acl", "TAG": "VBN"}
-      }
-    ]],
-
-    "f_28_present_participle_whiz": [[
-      {
-        "RIGHT_ID": "noun",
-        "RIGHT_ATTRS": {"POS": "NOUN"}
-      },
-      {
-        "LEFT_ID": "noun",
-        "REL_OP": ">",
-        "RIGHT_ID": "past_participle",
-        "RIGHT_ATTRS": {"DEP": "acl", "TAG": "VBG"}
-      }
-    ]],
-
-    "f_29_that_subj": [[
-      {
-        "RIGHT_ID": "noun_anchor",
-        "RIGHT_ATTRS": {"POS": "NOUN"}
-      },
-      {
-        "LEFT_ID": "noun_anchor",
-        "REL_OP": ">",
-        "RIGHT_ID": "rel_verb",
-        "RIGHT_ATTRS": {"DEP": "relcl"}
-      },
-      {
-        "LEFT_ID": "rel_verb",
-        "REL_OP": ">",
-        "RIGHT_ID": "that_token",
-        "RIGHT_ATTRS": {"LOWER": "that", "DEP": {"IN": ["nsubj", "nsubjpass"]}}
-      }
-    ]],
-
-    "f_30_that_obj": [[
-      {
-        "RIGHT_ID": "noun_anchor",
-        "RIGHT_ATTRS": {"POS": "NOUN"}
-      },
-      {
-        "LEFT_ID": "noun_anchor",
-        "REL_OP": ">",
-        "RIGHT_ID": "rel_verb",
-        "RIGHT_ATTRS": {"DEP": "relcl"}
-      },
-      {
-        "LEFT_ID": "rel_verb",
-        "REL_OP": ">",
-        "RIGHT_ID": "that_token",
-        "RIGHT_ATTRS": {"LOWER": "that", "DEP": {"IN": ["dobj", "pobj", "dative"]}}
-      }
-    ]],
-
-    "f_31_wh_subj": [[
-      {
-        "RIGHT_ID": "noun_anchor",
-        "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}
+    "f_TODO_all_passives": {
+      "description": "All passives",
+      "examples": [
+        "The task was done.",
+        "The task was done by Steve."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "passive_verb",
+          "RIGHT_ATTRS": {"TAG": "VBN"}
+        },
+        {
+          "LEFT_ID": "passive_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "aux_pass",
+          "RIGHT_ATTRS": {"DEP": "auxpass"}
         }
-      },
-      {
-        "LEFT_ID": "noun_anchor",
-        "REL_OP": ">",
-        "RIGHT_ID": "rel_verb",
-        "RIGHT_ATTRS": {"DEP": "relcl"}
-      },
-      {
-        "LEFT_ID": "rel_verb",
-        "REL_OP": ">",
-        "RIGHT_ID": "wh_word",
-        "RIGHT_ATTRS": {
-          "DEP": {"IN": ["nsubj", "nsubjpass"]},
-          "TAG": {"IN": ["WDT", "WP"]}
-        }
-      }
-    ]],
+      ]]
+    },
 
-    "f_32_wh_obj": [[
-      {
-        "RIGHT_ID": "noun_anchor",
-        "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
-      },
-      {
-        "LEFT_ID": "noun_anchor",
-        "REL_OP": ">",
-        "RIGHT_ID": "rel_verb",
-        "RIGHT_ATTRS": {"DEP": "relcl"}
-      },
-      {
-        "LEFT_ID": "rel_verb",
-        "REL_OP": ">",
-        "RIGHT_ID": "wh_word",
-        "RIGHT_ATTRS": {
-          "DEP": {"IN": ["dobj", "pobj"]},
-          "TAG": {"IN": ["WDT", "WP"]}
+    "f_18_by_passives": {
+      "description": "*by-* passives",
+      "examples": [
+        "The task was done by Steve."
+      ],
+      "counterexamples": [
+        "The task was done."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "passive_verb",
+          "RIGHT_ATTRS": {"TAG": "VBN"}
+        },
+        {
+          "LEFT_ID": "passive_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "aux_pass",
+          "RIGHT_ATTRS": {"DEP": "auxpass"}
+        },
+        {
+          "LEFT_ID": "passive_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "agent_node",
+          "RIGHT_ATTRS": {"DEP": "agent"}
         }
-      }
-    ]],
+      ]]
+    },
 
-    "f_33_pied_piping": [[
-      {
-        "RIGHT_ID": "noun_anchor",
-        "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
-      },
-      {
-        "LEFT_ID": "noun_anchor",
-        "REL_OP": ">",
-        "RIGHT_ID": "rel_verb",
-        "RIGHT_ATTRS": {"DEP": "relcl"}},
-      {
-        "LEFT_ID": "rel_verb",
-        "REL_OP": ">",
-        "RIGHT_ID": "preposition",
-        "RIGHT_ATTRS": {"DEP": "prep"}},
-      {
-        "LEFT_ID": "preposition",
-        "REL_OP": ">",
-        "RIGHT_ID": "wh_word",
-        "RIGHT_ATTRS": {
-          "DEP": "pobj",
-          "TAG": {"IN": ["WDT", "WP", "WP$"]}
+    "f_21_that_verb_comp": {
+      "description": "*that* verb complements",
+      "examples": [
+        "I said that he went."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "verb",
+          "RIGHT_ATTRS": {"POS": "VERB"}
+        },
+        {
+          "LEFT_ID": "verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "comp_verb",
+          "RIGHT_ATTRS": {"DEP": "ccomp", "POS": "VERB"}
+        },
+        {
+          "LEFT_ID": "comp_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "that_comp",
+          "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
         }
-      }
-    ]]
+      ]]
+    },
+
+    "f_22_that_adj_comp": {
+      "description": "*that* adjective complements",
+      "examples": [
+        "I'm glad that you like it."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "adjective",
+          "RIGHT_ATTRS": {"POS": "ADJ"}
+        },
+        {
+          "LEFT_ID": "adjective",
+          "REL_OP": ">",
+          "RIGHT_ID": "comp_verb",
+          "RIGHT_ATTRS": {"DEP": "ccomp", "POS": "VERB"}
+        },
+        {
+          "LEFT_ID": "comp_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "that_comp",
+          "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
+        }
+      ]]
+    },
+
+    "f_27_past_participle_whiz": {
+      "description": "Past participial postnominal (reduced relative) clauses",
+      "examples": [
+        "The solution produced by this process is effective."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "noun",
+          "RIGHT_ATTRS": {"POS": "NOUN"}
+        },
+        {
+          "LEFT_ID": "noun",
+          "REL_OP": ">",
+          "RIGHT_ID": "past_participle",
+          "RIGHT_ATTRS": {"DEP": "acl", "TAG": "VBN"}
+        }
+      ]]
+    },
+
+    "f_28_present_participle_whiz": {
+      "description": "Present participial postnominal (reduced relative) clauses",
+      "examples": [
+        "The financial crisis was the event causing this decline."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "noun",
+          "RIGHT_ATTRS": {"POS": "NOUN"}
+        },
+        {
+          "LEFT_ID": "noun",
+          "REL_OP": ">",
+          "RIGHT_ID": "past_participle",
+          "RIGHT_ATTRS": {"DEP": "acl", "TAG": "VBG"}
+        }
+      ]]
+    },
+
+    "f_29_that_subj": {
+      "description": "*that* relative clauses on subject position",
+      "examples": [
+        "The dog that bit me was big."
+      ],
+      "counterexamples": [
+        "The dog that I saw was big."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "noun_anchor",
+          "RIGHT_ATTRS": {"POS": "NOUN"}
+        },
+        {
+          "LEFT_ID": "noun_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "rel_verb",
+          "RIGHT_ATTRS": {"DEP": "relcl"}
+        },
+        {
+          "LEFT_ID": "rel_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "that_token",
+          "RIGHT_ATTRS": {"LOWER": "that", "DEP": {"IN": ["nsubj", "nsubjpass"]}}
+        }
+      ]]
+    },
+
+    "f_30_that_obj": {
+      "description": "*that* relative clauses on object position",
+      "examples": [
+        "The dog that I saw was big."
+      ],
+      "counterexamples": [
+        "The dog that bit me was big."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "noun_anchor",
+          "RIGHT_ATTRS": {"POS": "NOUN"}
+        },
+        {
+          "LEFT_ID": "noun_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "rel_verb",
+          "RIGHT_ATTRS": {"DEP": "relcl"}
+        },
+        {
+          "LEFT_ID": "rel_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "that_token",
+          "RIGHT_ATTRS": {"LOWER": "that", "DEP": {"IN": ["dobj", "pobj", "dative"]}}
+        }
+      ]]
+    },
+
+    "f_31_wh_subj": {
+      "description": "*wh-* relatives on subject position",
+      "examples": [
+        "The man who likes popcorn ate sixteen tons."
+      ],
+      "counterexamples": [
+        "The man who Sally likes is here."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "noun_anchor",
+          "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
+        },
+        {
+          "LEFT_ID": "noun_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "rel_verb",
+          "RIGHT_ATTRS": {"DEP": "relcl"}
+        },
+        {
+          "LEFT_ID": "rel_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "wh_word",
+          "RIGHT_ATTRS": {
+            "DEP": {"IN": ["nsubj", "nsubjpass"]},
+            "TAG": {"IN": ["WDT", "WP"]}
+          }
+        }
+      ]]
+    },
+
+    "f_32_wh_obj": {
+      "description": "*wh-* relatives on object position",
+      "examples": [
+        "The man who Sally likes is here."
+      ],
+      "counterexamples": [
+        "The man who likes popcorn ate sixteen tons."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "noun_anchor",
+          "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
+        },
+        {
+          "LEFT_ID": "noun_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "rel_verb",
+          "RIGHT_ATTRS": {"DEP": "relcl"}
+        },
+        {
+          "LEFT_ID": "rel_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "wh_word",
+          "RIGHT_ATTRS": {
+            "DEP": {"IN": ["dobj", "pobj"]},
+            "TAG": {"IN": ["WDT", "WP"]}
+          }
+        }
+      ]]
+    },
+
+    "f_33_pied_piping": {
+      "description": "Pied-piping relative clauses",
+      "examples": [
+        "She resented the manner in which she was told."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "noun_anchor",
+          "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
+        },
+        {
+          "LEFT_ID": "noun_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "rel_verb",
+          "RIGHT_ATTRS": {"DEP": "relcl"}},
+        {
+          "LEFT_ID": "rel_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "preposition",
+          "RIGHT_ATTRS": {"DEP": "prep"}},
+        {
+          "LEFT_ID": "preposition",
+          "REL_OP": ">",
+          "RIGHT_ID": "wh_word",
+          "RIGHT_ATTRS": {
+            "DEP": "pobj",
+            "TAG": {"IN": ["WDT", "WP", "WP$"]}
+          }
+        }
+      ]]
+    }
+  },
+
+  "PhraseMatcher": {
+    "f_45_conjuncts": {
+      "description": "Conjuncts",
+      "rules": [
+        "alternatively", "consequently", "conversely", "e.g.", "furthermore",
+        "hence", "however", "i.e.", "instead", "likewise", "moreover", "namely",
+        "nevertheless", "nonetheless", "notwithstanding", "otherwise",
+        "similarly", "therefore", "thus", "viz.", "in comparison", "in contrast",
+        "in particular", "in addition", "in conclusion", "in consequence",
+        "in sum", "in summary", "for example", "for instance", "instead of",
+        "by contrast", "by comparison", "in any event", "in any case",
+        "in other words", "as a result", "as a consequence", "on the contrary",
+        "on the other hand", "_punct_ else", "_punct_ altogether", "_punct_ rather"
+      ]
+    },
+
+    "f_46_downtoners": {
+      "description": "Downtoners",
+      "rules": [
+        "almost", "barely", "hardly", "merely", "mildly", "nearly", "only",
+        "partially", "partly", "practically", "scarcely", "slightly", "somewhat"
+      ]
+    },
+
+    "f_47_hedges": {
+      "description": "Hedges",
+      "rules": [
+        "maybe", "at about", "something like", "more or less", "sort of",
+        "kind of"
+      ]
+    },
+
+    "f_48_amplifiers": {
+      "description": "Amplifiers",
+      "rules": [
+        "absolutely", "altogether", "completely", "definitely", "drastically",
+        "enormously", "entirely", "extremely", "fully", "greatly", "highly",
+        "intensely", "perfectly", "strongly", "thoroughly", "totally", "utterly",
+        "very"
+      ]
+    },
+
+    "f_49_emphatics": {
+      "description": "Emphatics",
+      "rules": [
+        "just", "really", "most", "more", "a lot", "for sure", "such a"
+      ]
+    }
   }
 }
