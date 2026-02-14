@@ -610,6 +610,42 @@
     }
   },
 
+  "f_58_verb_seem": {
+    "description": "Verbs *seem* and *appear*",
+    "examples": [
+      "It seems to be the case.",
+      "It appears to be the case.",
+      "It just appeared in front of me!",
+      "While they were appearing, one went missing."
+    ],
+    "rules": [[
+      {"POS": "VERB",
+       "LEMMA": {"IN": ["seem", "appear"]}}
+    ]]
+  },
+
+  "f_59_contractions": {
+    "description": "Contractions",
+    "examples": [
+      "I can't do it.",
+      "They won't do it.",
+      "You shouldn't be involved.",
+      "They'll do it.",
+      "You could've done it.",
+      "It's a good idea.",
+      "She's a great teacher.",
+      "They're going to do it."
+    ],
+    "counterexamples": [
+      "The truck's fender was damaged.",
+      "Bob's truck was damaged."
+    ],
+    "rules": [[
+      {"LOWER": {"REGEX": "'"},
+       "TAG": {"IN": ["MD", "RB", "VBZ", "VBP"]}}
+    ]]
+  },
+
   "DependencyMatcher": {
     "f_TODO_all_passives": {
       "description": "All passives",
@@ -921,6 +957,132 @@
             "DEP": "pobj",
             "TAG": {"IN": ["WDT", "WP", "WP$"]}
           }
+        }
+      ]]
+    },
+
+    "f_60_that_deletion:all": {
+      "description": "Subordinator *that* deletion: clauses with or without *that*",
+      "examples": [
+        "I think he went.",
+        "She denies a problem occurred.",
+        "He alleges a small problem occurred.",
+        "I think that he went.",
+        "She denies that a problem occurred.",
+        "He alleges that a small problem occurred."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "verb_anchor",
+          "RIGHT_ATTRS": {
+            "POS": "VERB",
+            "LEMMA": {"IN": [
+              "accept", "acknowledge", "add", "admit", "affirm", "agree",
+              "allege", "allow", "announce", "anticipate", "appear", "argue",
+              "arrange", "ascertain", "ask", "assert", "beg", "believe", "bet",
+              "boast", "calculate", "certify", "check", "claim", "command",
+              "comment", "complain", "concede", "conclude", "confess",
+              "confide", "confirm", "conjecture", "consider", "contend",
+              "convey", "decide", "declare", "decree", "deduce", "deem",
+              "demand", "demonstrate", "deny", "desire", "determine", "discern",
+              "disclose", "discover", "doubt", "dream", "enjoin", "ensure",
+              "ensure", "entreat", "establish", "estimate", "exclaim", "expect",
+              "explain", "fancy", "fear", "feel", "find", "forecast", "foresee",
+              "foretell", "forget", "gather", "grant", "guarantee", "guess",
+              "hear", "hint", "hold", "hope", "imagine", "imply", "indicate",
+              "infer", "insist", "instruct", "insure", "intend", "judge",
+              "know", "learn", "maintain", "mean", "mention", "move", "moved",
+              "moves", "moving", "note", "notice", "object", "observe",
+              "ordain", "order", "perceive", "pledge", "pray", "predict",
+              "prefer", "presume", "presuppose", "pretend", "proclaim",
+              "promise", "pronounce", "prophesy", "propose", "protest", "prove",
+              "realise", "realize", "reason", "recall", "reckon", "recognise",
+              "recognize", "recommend", "reflect", "remark", "remember",
+              "repeat", "reply", "report", "request", "require", "resolve",
+              "reveal", "rule", "see", "seem", "sense", "show", "signify",
+              "state", "stipulate", "submit", "submits", "suggest", "suggest",
+              "suppose", "suspect", "swear", "testify", "think", "understand",
+              "urge", "vote", "vow", "warn", "write"]}
+          }
+        },
+        {
+          "LEFT_ID": "verb_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "comp_verb",
+          "RIGHT_ATTRS": {"DEP": "ccomp"}
+        },
+        {
+          "LEFT_ID": "comp_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "subject",
+          "RIGHT_ATTRS": {"DEP": "nsubj"}
+        }
+      ]]
+    },
+
+    "f_60_that_deletion:that": {
+      "description": "Subordinator *that* deletion: clauses with *that*",
+      "examples": [
+        "I think that he went.",
+        "She denies that a problem occurred.",
+        "He alleges that a small problem occurred."
+      ],
+      "counterexamples": [
+        "I think he went.",
+        "She denies a problem occurred.",
+        "He alleges a small problem occurred."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "verb_anchor",
+          "RIGHT_ATTRS": {
+            "POS": "VERB",
+            "LEMMA": {"IN": [
+              "accept", "acknowledge", "add", "admit", "affirm", "agree",
+              "allege", "allow", "announce", "anticipate", "appear", "argue",
+              "arrange", "ascertain", "ask", "assert", "beg", "believe", "bet",
+              "boast", "calculate", "certify", "check", "claim", "command",
+              "comment", "complain", "concede", "conclude", "confess",
+              "confide", "confirm", "conjecture", "consider", "contend",
+              "convey", "decide", "declare", "decree", "deduce", "deem",
+              "demand", "demonstrate", "deny", "desire", "determine", "discern",
+              "disclose", "discover", "doubt", "dream", "enjoin", "ensure",
+              "ensure", "entreat", "establish", "estimate", "exclaim", "expect",
+              "explain", "fancy", "fear", "feel", "find", "forecast", "foresee",
+              "foretell", "forget", "gather", "grant", "guarantee", "guess",
+              "hear", "hint", "hold", "hope", "imagine", "imply", "indicate",
+              "infer", "insist", "instruct", "insure", "intend", "judge",
+              "know", "learn", "maintain", "mean", "mention", "move", "moved",
+              "moves", "moving", "note", "notice", "object", "observe",
+              "ordain", "order", "perceive", "pledge", "pray", "predict",
+              "prefer", "presume", "presuppose", "pretend", "proclaim",
+              "promise", "pronounce", "prophesy", "propose", "protest", "prove",
+              "realise", "realize", "reason", "recall", "reckon", "recognise",
+              "recognize", "recommend", "reflect", "remark", "remember",
+              "repeat", "reply", "report", "request", "require", "resolve",
+              "reveal", "rule", "see", "seem", "sense", "show", "signify",
+              "state", "stipulate", "submit", "submits", "suggest", "suggest",
+              "suppose", "suspect", "swear", "testify", "think", "understand",
+              "urge", "vote", "vow", "warn", "write"]}
+          }
+        },
+        {
+          "LEFT_ID": "verb_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "comp_verb",
+          "RIGHT_ATTRS": {"DEP": "ccomp"}
+        },
+        {
+          "LEFT_ID": "comp_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "subject",
+          "RIGHT_ATTRS": {"DEP": "nsubj"}
+        },
+        {
+          "LEFT_ID": "comp_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "that",
+          "RIGHT_ATTRS": {"LOWER": "that", "DEP": "mark"}
         }
       ]]
     }
