@@ -26,7 +26,7 @@ def check_rule_in_matches(rulename, matches, nlp):
 
 def test_examples():
     for rule_file in RULE_FILES:
-        rules = json.load(open(os.path.join("../rules/", rule_file), "r"))
+        rules = json.load(open(os.path.join("./rules/", rule_file), "r"))
 
         matchers = match_rules.initialize_matchers(rules, MODEL)
 
