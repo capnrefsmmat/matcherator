@@ -1095,7 +1095,11 @@
   "PhraseMatcher": {
     "f_45_conjuncts": {
       "description": "Conjuncts",
-      "comment": "TODO deal with _punct_",
+      "examples": [
+        "I need an example of a conjunct, e.g., one like this.",
+        "However, it didn't work.",
+        "It's a whole different kind of flying, altogether."
+      ],
       "rules": [
         "alternatively", "consequently", "conversely", "e.g.", "furthermore",
         "hence", "however", "i.e.", "instead", "likewise", "moreover", "namely",
@@ -1105,12 +1109,17 @@
         "in sum", "in summary", "for example", "for instance", "instead of",
         "by contrast", "by comparison", "in any event", "in any case",
         "in other words", "as a result", "as a consequence", "on the contrary",
-        "on the other hand", "_punct_ else", "_punct_ altogether", "_punct_ rather"
+        "on the other hand", ", else", ", altogether", ", rather"
       ]
     },
 
     "f_46_downtoners": {
       "description": "Downtoners",
+      "examples": [
+        "Are you working hard or hardly working?",
+        "It was somewhat difficult.",
+        "I was mildly annoyed."
+      ],
       "rules": [
         "almost", "barely", "hardly", "merely", "mildly", "nearly", "only",
         "partially", "partly", "practically", "scarcely", "slightly", "somewhat"
@@ -1119,6 +1128,11 @@
 
     "f_47_hedges": {
       "description": "Hedges",
+      "examples": [
+        "Maybe I should write more examples.",
+        "It was kind of gross.",
+        "At about seven feet, she was unusually tall."
+      ],
       "rules": [
         "maybe", "at about", "something like", "more or less", "sort of",
         "kind of"
@@ -1127,6 +1141,11 @@
 
     "f_48_amplifiers": {
       "description": "Amplifiers",
+      "examples": [
+        "She came on too strongly.",
+        "Yeah, absolutely!",
+        "It's definitely an example."
+      ],
       "rules": [
         "absolutely", "altogether", "completely", "definitely", "drastically",
         "enormously", "entirely", "extremely", "fully", "greatly", "highly",
@@ -1137,6 +1156,10 @@
 
     "f_49_emphatics": {
       "description": "Emphatics",
+      "examples": [
+        "I just want a puppy.",
+        "It's such a disappointment."
+      ],
       "rules": [
         "just", "really", "most", "more", "a lot", "for sure", "such a"
       ]
