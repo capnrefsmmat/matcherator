@@ -70,8 +70,7 @@ if __name__ == "__main__":
 
     print("DependencyMatcher")
     for match_id, token_ids in matches["DependencyMatcher"]:
-        print(nlp.vocab.strings[match_id],
-              ", ".join([doc[tok].text for tok in token_ids]))
+        print(matchers.nlp.vocab.strings[match_id])
 
     print("PhraseMatcher")
     for m in matches["PhraseMatcher"]:
