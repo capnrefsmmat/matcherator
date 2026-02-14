@@ -474,11 +474,15 @@
     },
 
     "f_51_demonstratives": {
-      "description": "Demonstratives",
-      "comment": "TODO add examples",
-      "examples": [],
+      "description": "Demonstratives (*that*, *this*, *these*, or *those* used as determiners)",
+      "examples": [
+        "That is the feature.",
+        "This cat is happy.",
+        "Those are my penguins."
+      ],
       "rules": [[
-        {"DEP": "det", "LOWER": {"IN": ["that", "this", "these", "those"]}}
+        {"TAG": "DT",
+         "LOWER": {"IN": ["that", "this", "these", "those"]}}
       ]]
     },
 
