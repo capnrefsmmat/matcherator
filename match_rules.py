@@ -2,10 +2,12 @@
 
 import argparse
 import json
-from collections import namedtuple
+from collections import defaultdict, namedtuple
 
 import spacy
 from spacy.matcher import Matcher, DependencyMatcher, PhraseMatcher
+
+import pandas as pd
 
 Matchers = namedtuple("Matchers", ["nlp", "plain", "dependency", "phrase"])
 
@@ -48,6 +50,43 @@ def match_text(matchers, text):
         "DependencyMatcher": matchers.dependency(doc),
         "PhraseMatcher": matchers.phrase(doc, as_spans=True)
     }
+
+def count_matches(matchers, matches):
+    """Count the matches of each feature.
+
+    Takes the output of match_text() and produces a dictionary of {feature_name:
+    count} pairs.
+
+    """
+
+    matches_out = defaultdict(lambda: 0)
+
+    for m in matches["Matcher"]:
+        matches_out[m.label_] += 1
+
+    for match_id, token_id in matches["DependencyMatcher"]:
+        matches_out[matchers.nlp.vocab.strings[match_id]] += 1
+
+    for m in matches["PhraseMatcher"]:
+        matches_out[m.label_] += 1
+
+    return matches_out
+
+def count_matches_texts(matchers, doc_ids, texts):
+    """Apply matchers to a sequence of documents.
+
+    Returns a Pandas data frame. Each row is one document; each column is one
+    matched feature. Entries are counts of each feature.
+
+    """
+
+    assert len(doc_ids) == len(texts), \
+        "Number of doc_ids doesn't match number of texts"
+
+    match_counts = [count_matches(matchers, match_text(matchers, text))
+                    for text in texts]
+
+    return pd.DataFrame.from_records(match_counts, index=doc_ids).fillna(0)
 
 
 if __name__ == "__main__":
