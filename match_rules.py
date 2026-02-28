@@ -46,6 +46,7 @@ def match_text(matchers, text):
     doc = matchers.nlp(text)
 
     return {
+        "Document": doc,
         "Matcher": matchers.plain(doc, as_spans=True),
         "DependencyMatcher": matchers.dependency(doc),
         "PhraseMatcher": matchers.phrase(doc, as_spans=True)
@@ -88,6 +89,20 @@ def count_matches_texts(matchers, doc_ids, texts):
 
     return pd.DataFrame.from_records(match_counts, index=doc_ids).fillna(0)
 
+def print_matches(matchers, matches):
+    print("Matcher")
+    for m in matches["Matcher"]:
+        print(f"{m.label_}: {m.text}")
+
+    print("DependencyMatcher")
+    for match_id, token_ids in matches["DependencyMatcher"]:
+        match_tokens = ", ".join(matches["Document"][t].text for t in token_ids)
+        print(f"{matchers.nlp.vocab.strings[match_id]}: {match_tokens}")
+
+    print("PhraseMatcher")
+    for m in matches["PhraseMatcher"]:
+        print(f"{m.label_}: {m.text}")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Match a text against a JSON ruleset.")
@@ -103,14 +118,4 @@ if __name__ == "__main__":
     matchers = initialize_matchers(rules, args.model)
     matches = match_text(matchers, args.text)
 
-    print("Matcher")
-    for m in matches["Matcher"]:
-        print(f"{m.label_}: {m.text}")
-
-    print("DependencyMatcher")
-    for match_id, token_ids in matches["DependencyMatcher"]:
-        print(matchers.nlp.vocab.strings[match_id])
-
-    print("PhraseMatcher")
-    for m in matches["PhraseMatcher"]:
-        print(f"{m.label_}: {m.text}")
+    print_matches(matchers, matches)
