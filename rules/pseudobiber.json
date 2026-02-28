@@ -674,7 +674,8 @@
     "f_18_by_passives": {
       "description": "*by-* passives",
       "examples": [
-        "The task was done by Steve."
+        "The task was done by Steve.",
+        "The task was done by Steve rather than by Sharon."
       ],
       "counterexamples": [
         "The task was done.",
