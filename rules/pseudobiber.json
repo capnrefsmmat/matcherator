@@ -649,11 +649,21 @@
       "You could've done it.",
       "It's a good idea.",
       "She's a great teacher.",
-      "They're going to do it."
+      "They're going to do it.",
+      "I can’t do it.",
+      "They won’t do it.",
+      "You shouldn’t be involved.",
+      "They’ll do it.",
+      "You could’ve done it.",
+      "It’s a good idea.",
+      "She’s a great teacher.",
+      "They’re going to do it."
     ],
     "counterexamples": [
       "The truck's fender was damaged.",
-      "Bob's truck was damaged."
+      "Bob's truck was damaged.",
+      "The truck’s fender was damaged.",
+      "Bob’s truck was damaged."
     ],
     "rules": [[
       {"LOWER": {"REGEX": "'"},
