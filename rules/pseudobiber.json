@@ -386,20 +386,6 @@
       ]]
     },
 
-    "f_38_other_adv_sub": {
-      "description": "Other adverbial subordinators (*since*, *while*, *whereas*)",
-      "examples": [
-        "Since it rained, we stayed inside."
-      ],
-      "comment": "TODO 'It's been raining since noon' should not match, but does.",
-      "rules": [[
-        {
-          "LOWER": {"IN": ["since", "while", "whereas"]},
-          "POS": "SCONJ"
-        }
-      ]]
-    },
-
     "f_39_prepositions": {
       "description": "Total prepositional phrases",
       "rules": [[
@@ -985,6 +971,34 @@
           "RIGHT_ATTRS": {
             "DEP": "pobj",
             "TAG": {"IN": ["WDT", "WP", "WP$"]}
+          }
+        }
+      ]]
+    },
+
+    "f_38_other_adv_sub": {
+      "description": "Other adverbial subordinators (*since*, *while*, *whereas*)",
+      "examples": [
+        "Since it rained, we stayed inside.",
+        "The approach emphasizes creating redundancies, implementing cross-checks, and establishing feedback mechanisms that can catch errors before they propagate into accidents or serious incidents.",
+        "Developing standardised protocols for information gathering at incident scenes may also help to ensure that relevant information is systematically recorded whilst it remains readily accessible."
+      ],
+      "counterexamples": [
+        "It's been raining since noon."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "adv_clause_head",
+          "RIGHT_ATTRS": {"DEP": "advcl"}
+        },
+        {
+          "LEFT_ID": "adv_clause_head",
+          "REL_OP": ">",
+          "RIGHT_ID": "other_adv_sub",
+          "RIGHT_ATTRS": {
+            "DEP": "mark",
+            "POS": "SCONJ",
+            "LEMMA": {"NOT_IN": ["because", "if", "unless", "though", "although", "tho"]}
           }
         }
       ]]
