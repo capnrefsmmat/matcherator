@@ -780,12 +780,13 @@
     "f_27_past_participle_whiz": {
       "description": "Past participial postnominal (reduced relative) clauses",
       "examples": [
-        "The solution produced by this process is effective."
+        "The solution produced by this process is effective.",
+        "Steve, considered here, is a serious man."
       ],
       "rules": [[
         {
           "RIGHT_ID": "noun",
-          "RIGHT_ATTRS": {"POS": "NOUN"}
+          "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
         },
         {
           "LEFT_ID": "noun",
@@ -799,12 +800,13 @@
     "f_28_present_participle_whiz": {
       "description": "Present participial postnominal (reduced relative) clauses",
       "examples": [
-        "The financial crisis was the event causing this decline."
+        "The financial crisis was the event causing this decline.",
+        "She was the Karen causing this decline."
       ],
       "rules": [[
         {
           "RIGHT_ID": "noun",
-          "RIGHT_ATTRS": {"POS": "NOUN"}
+          "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
         },
         {
           "LEFT_ID": "noun",
