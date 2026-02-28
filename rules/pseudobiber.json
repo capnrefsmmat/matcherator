@@ -781,7 +781,8 @@
       "description": "Past participial postnominal (reduced relative) clauses",
       "examples": [
         "The solution produced by this process is effective.",
-        "Steve, considered here, is a serious man."
+        "Steve, considered here, is a serious man.",
+        "Sharon's knowledge of grammar, combined with years of experience diagramming sentences, helped her write a past participle."
       ],
       "rules": [[
         {
