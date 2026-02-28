@@ -92,18 +92,32 @@ def count_matches_texts(matchers, doc_ids, texts):
     return pd.DataFrame.from_records(match_counts, index=doc_ids).fillna(0)
 
 def print_matches(matchers, matches):
+    def print_dict(d):
+        for label, items in d.items():
+            out = "; ".join(items)
+            print(f"{label}: {out}")
+
     print("Matcher")
+    matcher_matches = defaultdict(list)
     for m in matches["Matcher"]:
-        print(f"{m.label_}: {m.text}")
+        matcher_matches[m.label_].append(m.text)
+
+    print_dict(matcher_matches)
 
     print("DependencyMatcher")
+    dep_matches = defaultdict(list)
     for match_id, token_ids in matches["DependencyMatcher"]:
         match_tokens = ", ".join(matches["Document"][t].text for t in token_ids)
-        print(f"{matchers.nlp.vocab.strings[match_id]}: {match_tokens}")
+        dep_matches[matchers.nlp.vocab.strings[match_id]].append(match_tokens)
+
+    print_dict(dep_matches)
 
     print("PhraseMatcher")
+    phrase_matches = defaultdict(list)
     for m in matches["PhraseMatcher"]:
-        print(f"{m.label_}: {m.text}")
+        phrase_matches[m.label_].append(m.text)
+
+    print_dict(phrase_matches)
 
 
 if __name__ == "__main__":
