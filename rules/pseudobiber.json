@@ -382,6 +382,25 @@
       ]]
     },
 
+    "f_45_conjuncts": {
+      "description": "Conjuncts",
+      "examples": [
+        "It's a whole different kind of flying, altogether.",
+        "Rather than treating workers as passive recipients of safety procedures, this approach encourages workers to actively participate in identifying error-prone conditions, contributing to hazard analysis, and providing feedback on the effectiveness of existing controls and procedures."
+      ],
+      "comment": "There is a PhraseMatcher rule for all other conjunct phrases",
+      "rules": [
+        [
+          {"IS_PUNCT": true},
+          {"LOWER": {"IN": ["else", "altogether", "rather"]}}
+        ],
+        [
+          {"IS_SENT_START": true,
+           "LOWER": {"IN": ["else", "altogether", "rather"]}}
+        ]
+      ]
+    },
+
     "f_49_emphatics": {
       "description": "Emphatics",
       "examples": [
@@ -1169,9 +1188,9 @@
       "description": "Conjuncts",
       "examples": [
         "I need an example of a conjunct, e.g., one like this.",
-        "However, it didn't work.",
-        "It's a whole different kind of flying, altogether."
+        "However, it didn't work."
       ],
+      "comment": "There is also a Matcher rule for else, altogether, and rather following punctuation",
       "rules": [
         "alternatively", "consequently", "conversely", "e.g.", "furthermore",
         "hence", "however", "i.e.", "instead", "likewise", "moreover", "namely",
@@ -1181,7 +1200,7 @@
         "in sum", "in summary", "for example", "for instance", "instead of",
         "by contrast", "by comparison", "in any event", "in any case",
         "in other words", "as a result", "as a consequence", "on the contrary",
-        "on the other hand", ", else", ", altogether", ", rather"
+        "on the other hand"
       ]
     },
 
