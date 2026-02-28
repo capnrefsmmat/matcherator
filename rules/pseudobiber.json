@@ -67,7 +67,8 @@
       "description": "Time adverbials (e.g., *early*, *instantly*, *soon*)",
       "examples": [
         "I will leave momentarily.",
-        "Previously, we saw an example."
+        "Previously, we saw an example.",
+        "Moreover, music engages multiple neural systems simultaneously—including those mediating perception, cognition, memory and emotion—thereby enabling investigation of how pathological disruption of distributed neural networks manifests in alterations of affective behaviour."
       ],
       "rules": [[
         {"TAG": {"IN": ["RB", "RBR", "RBS", "RP"]},
