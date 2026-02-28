@@ -1012,7 +1012,12 @@
         "Developing standardised protocols for information gathering at incident scenes may also help to ensure that relevant information is systematically recorded whilst it remains readily accessible."
       ],
       "counterexamples": [
-        "It's been raining since noon."
+        "It's been raining since noon.",
+        "I ate because I was hungry.",
+        "Because I was hungry, I ate.",
+        "If it rains, we stay inside.",
+        "Although it rained, we played.",
+        "It was a good game, though it was rainy."
       ],
       "rules": [[
         {
