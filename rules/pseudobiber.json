@@ -340,52 +340,6 @@
       ]]
     },
 
-    "f_35_because": {
-      "description": "Causative adverbial subordinator (*because*)",
-      "examples": [
-        "I ate because I was hungry.",
-        "Because I was hungry, I ate."
-      ],
-      "counterexamples": [
-        "Because of the rain, the game was canceled."
-      ],
-      "comment": "TODO Check that the DEP rule here is better than checking for a following 'of'",
-      "rules": [[
-        {
-          "LOWER": "because",
-          "POS": {"IN": ["ADP", "SCONJ"]},
-          "DEP": "mark"
-        }
-      ]]
-    },
-
-    "f_36_though": {
-      "description": "Concessive adverbial subordinators (*although*, *though*)",
-      "examples": [
-        "Although it rained, we played.",
-        "It was a good game, though it was rainy."
-      ],
-      "rules": [[
-        {
-          "LOWER": {"IN": ["though", "although", "tho"]},
-          "POS": "SCONJ"
-        }
-      ]]
-    },
-
-    "f_37_if": {
-      "description": "Conditional adverbial subordinators (*if*, *unless*)",
-      "examples": [
-        "If it rains, we stay inside."
-      ],
-      "rules": [[
-        {
-          "LOWER": {"IN": ["if", "unless"]},
-          "POS": "SCONJ"
-        }
-      ]]
-    },
-
     "f_39_prepositions": {
       "description": "Total prepositional phrases",
       "rules": [[
@@ -971,6 +925,80 @@
           "RIGHT_ATTRS": {
             "DEP": "pobj",
             "TAG": {"IN": ["WDT", "WP", "WP$"]}
+          }
+        }
+      ]]
+    },
+
+    "f_35_because": {
+      "description": "Causative adverbial subordinator (*because*)",
+      "examples": [
+        "I ate because I was hungry.",
+        "Because I was hungry, I ate."
+      ],
+      "counterexamples": [
+        "Because of the rain, the game was canceled."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "adv_clause_head",
+          "RIGHT_ATTRS": {"DEP": "advcl"}
+        },
+        {
+          "LEFT_ID": "adv_clause_head",
+          "REL_OP": ">",
+          "RIGHT_ID": "other_adv_sub",
+          "RIGHT_ATTRS": {
+            "DEP": "mark",
+            "POS": "SCONJ",
+            "LOWER": "because"
+          }
+        }
+      ]]
+    },
+
+    "f_36_though": {
+      "description": "Concessive adverbial subordinators (*although*, *though*)",
+      "examples": [
+        "Although it rained, we played.",
+        "It was a good game, though it was rainy."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "adv_clause_head",
+          "RIGHT_ATTRS": {"DEP": "advcl"}
+        },
+        {
+          "LEFT_ID": "adv_clause_head",
+          "REL_OP": ">",
+          "RIGHT_ID": "other_adv_sub",
+          "RIGHT_ATTRS": {
+            "DEP": "mark",
+            "POS": "SCONJ",
+            "LOWER": {"IN": ["though", "although", "tho"]}
+          }
+        }
+      ]]
+    },
+
+    "f_37_if": {
+      "description": "Conditional adverbial subordinators (*if*, *unless*)",
+      "examples": [
+        "If it rains, we stay inside."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "adv_clause_head",
+          "RIGHT_ATTRS": {"DEP": "advcl"}
+        },
+        {
+          "LEFT_ID": "adv_clause_head",
+          "REL_OP": ">",
+          "RIGHT_ID": "other_adv_sub",
+          "RIGHT_ATTRS": {
+            "DEP": "mark",
+            "POS": "SCONJ",
+            "LOWER": {"IN": ["if", "unless"]}
           }
         }
       ]]
