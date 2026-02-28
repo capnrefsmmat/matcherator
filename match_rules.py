@@ -19,7 +19,9 @@ def initialize_matchers(rules, model):
     DependencyMatcher, and PhraseMatcher) in a namedtuple.
     """
 
-    nlp = spacy.load(model)
+    # no need for named-entity recognition
+    nlp = spacy.load(model, disable=["ner"])
+
     matcher = Matcher(nlp.vocab, validate=True)
     dep_matcher = DependencyMatcher(nlp.vocab, validate=True)
     phrase_matcher = PhraseMatcher(nlp.vocab, attr="LOWER",
