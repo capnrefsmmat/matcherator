@@ -245,15 +245,33 @@
     "f_15_gerunds": {
       "description": "Gerunds (participial forms functioning as nouns)",
       "examples": [
-        "Running is fun."
+        "Running is fun.",
+        "Rather than seeking to eliminate all possibility of human error, organizations try to reduce it.",
+        "Future research should therefore adopt a more integrative approach that combines computational modeling of prediction errors with individual difference measures and clinical outcomes.",
+        "This approach focuses on reducing the likelihood of errors."
       ],
       "counterexamples": [
-        "I am running."
+        "I am running.",
+        "According to Steve, it's nice out.",
+        "I bought something."
       ],
       "rules": [[
-      {"TAG": "VBG",
-        "DEP": {"IN": ["nsubj", "obj", "obl", "conj", "nmod", "csubj",
-                       "xcomp", "pcomp", "nsubjpass"]}}
+        {"LOWER":
+         {"REGEX": ".*ings?$",
+          "NOT_IN": ["according", "anything", "beijing", "bing", "bings",
+                     "boeing", "bring", "ceiling", "ceilings", "cling",
+                     "clings", "darling", "ding", "dings", "during", "evening",
+                     "evenings", "everything", "fling", "flings", "inning",
+                     "innings", "irving", "king", "kings", "morning",
+                     "mornings", "nothing", "notwithstanding", "offspring",
+                     "offsprings", "outstanding", "ping", "pings", "ring",
+                     "rings", "sing", "sings", "something", "spring", "springs",
+                     "sterling", "sting", "stings", "string", "strings",
+                     "thanksgiving", "thanksgivings", "thing", "things",
+                     "wedding", "wing", "wing", "wings", "wings", "wrongdoing",
+                     "wyoming"]},
+         "DEP": {"IN": ["nsubj", "dobj", "pobj", "obj", "obl", "conj", "nmod", "csubj",
+                        "xcomp", "pcomp", "nsubjpass"]}}
       ]]
     },
 
