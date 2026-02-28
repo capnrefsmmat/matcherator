@@ -296,6 +296,7 @@
         "Stuffing his mouth with cookies, Joe ran out the door.",
         "Joe ran out the door, stuffing his mouth with cookies."
       ],
+      "comment": "TODO Should this also check for sentence start or punctuation like f_26_past_participle? Need examples/counterexamples",
       "rules": [[
         {"TAG": "VBG", "DEP": {"IN": ["advcl", "ccomp"]}}
       ]]
@@ -306,9 +307,19 @@
       "examples": [
         "Built in a single week, the house would stand for fifty years."
       ],
-      "rules": [[
-        {"TAG": "VBN", "DEP": {"IN": ["advcl", "ccomp"]}}
-      ]]
+      "counterexamples": [
+        "After the bridge has been been built in a single week, it will fall down."
+      ],
+      "rules": [
+        [
+          {"TAG": "VBN", "DEP": {"IN": ["advcl", "ccomp"]},
+           "IS_SENT_START": true}
+        ],
+        [
+          {"IS_PUNCT": true},
+          {"TAG": "VBN", "DEP": {"IN": ["advcl", "ccomp"]}}
+        ]
+      ]
     },
 
     "f_34_sentence_relatives": {
