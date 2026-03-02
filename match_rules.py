@@ -9,7 +9,8 @@ from spacy.matcher import Matcher, DependencyMatcher, PhraseMatcher
 
 import pandas as pd
 
-Matchers = namedtuple("Matchers", ["nlp", "plain", "dependency", "phrase"])
+Matchers = namedtuple("Matchers",
+                      ["nlp", "plain", "dependency", "phrase", "feature_names"])
 
 def initialize_matchers(rules, model):
     """Initialize matchers from a rule specification.
@@ -27,16 +28,20 @@ def initialize_matchers(rules, model):
     phrase_matcher = PhraseMatcher(nlp.vocab, attr="LOWER",
                                    validate=True)
 
+    matcher_features = {k for k in rules["Matcher"].keys()}
     for rulename, rule in rules["Matcher"].items():
         matcher.add(rulename, rule["rules"])
 
+    dep_features = {k for k in rules["DependencyMatcher"].keys()}
     for rulename, rule in rules["DependencyMatcher"].items():
         dep_matcher.add(rulename, rule["rules"])
 
+    phrase_features = {k for k in rules["PhraseMatcher"].keys()}
     for rulename, rule in rules["PhraseMatcher"].items():
         phrase_matcher.add(rulename, list(nlp.tokenizer.pipe(rule["rules"])))
 
-    return Matchers(nlp, matcher, dep_matcher, phrase_matcher)
+    return Matchers(nlp, matcher, dep_matcher, phrase_matcher,
+                    matcher_features | dep_features | phrase_features)
 
 
 def match_text(matchers, text):
@@ -89,7 +94,16 @@ def count_matches_texts(matchers, doc_ids, texts):
     match_counts = [count_matches(matchers, match_text(matchers, text))
                     for text in texts]
 
-    return pd.DataFrame.from_records(match_counts, index=doc_ids).fillna(0)
+    out = pd.DataFrame.from_records(match_counts, index=doc_ids).fillna(0)
+
+    # If we didn't match a feature, add a column of 0s instead of omitting it
+    # from the data frame
+    missing_cols = matchers.feature_names - set(out.columns)
+
+    for col in missing_cols:
+        out[col] = 0
+
+    return out
 
 def print_matches(matchers, matches):
     def print_dict(d):
