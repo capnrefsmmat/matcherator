@@ -276,15 +276,17 @@
     },
 
     "f_19_be_main_verb": {
-      "description": "*be* as main verb",
+      "description": "*be* as main verb of a clause",
       "examples": [
-        "I am happy."
+        "I am happy.",
+        "Additionally, the human performance approach acknowledges that communication, both formal and informal, is essential to maintaining an effective safety culture.",
+        "Workers, being closest to the actual work processes, often possess valuable insights into where error precursors exist and where system vulnerabilities are most likely to manifest."
       ],
       "counterexamples": [
         "I am running."
       ],
       "rules": [[
-        {"LEMMA": "be", "DEP": "ROOT"}
+        {"LEMMA": "be", "DEP": {"NOT_IN": ["aux", "auxpass"]}}
       ]]
     },
 
