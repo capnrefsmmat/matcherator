@@ -879,11 +879,13 @@
     "f_31_wh_subj": {
       "description": "*wh-* relatives on subject position",
       "examples": [
-        "The man who likes popcorn ate sixteen tons."
+        "The man who likes popcorn ate sixteen tons.",
+        "Our goal is to be a resource center with a reading library of materials and directors who are competent professionals."
       ],
       "counterexamples": [
         "The man who Sally likes is here.",
-        "Tom asked the man who went to the store."
+        "Tom asked the man who went to the store.",
+        "The dog that saw me was big."
       ],
       "rules": [[
         {
@@ -902,7 +904,8 @@
           "RIGHT_ID": "wh_word",
           "RIGHT_ATTRS": {
             "DEP": {"IN": ["nsubj", "nsubjpass"]},
-            "TAG": {"IN": ["WDT", "WP"]}
+            "TAG": {"IN": ["WDT", "WP"]},
+            "LOWER": {"NOT_IN": ["that"]}
           }
         },
         {
@@ -919,11 +922,15 @@
     "f_32_wh_obj": {
       "description": "*wh-* relatives on object position",
       "examples": [
-        "The man who Sally likes is here."
+        "The man who Sally likes is here.",
+        "I resent the man who Sally likes.",
+        "The goals which we indicated for phase 1 are now complete."
       ],
       "counterexamples": [
         "The man who likes popcorn ate sixteen tons.",
-        "The detective asked the witness whom he saw at the scene."
+        "The detective asked the witness whom he saw at the scene.",
+        "To test these hypotheses, we employed a double-blind, sham-controlled experimental design wherein participants completed a battery of cognitive tasks both before and after receiving either tDCS or sham stimulation at two different current intensities.",
+        "The dog that I saw was big."
       ],
       "rules": [[
         {
@@ -942,7 +949,8 @@
           "RIGHT_ID": "wh_word",
           "RIGHT_ATTRS": {
             "DEP": {"IN": ["dobj", "pobj"]},
-            "TAG": {"IN": ["WDT", "WP"]}
+            "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
+            "LOWER": {"NOT_IN": ["that"]}
           }
         },
         {
