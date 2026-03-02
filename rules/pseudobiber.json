@@ -882,7 +882,8 @@
         "The man who likes popcorn ate sixteen tons."
       ],
       "counterexamples": [
-        "The man who Sally likes is here."
+        "The man who Sally likes is here.",
+        "Tom asked the man who went to the store."
       ],
       "rules": [[
         {
@@ -903,6 +904,14 @@
             "DEP": {"IN": ["nsubj", "nsubjpass"]},
             "TAG": {"IN": ["WDT", "WP"]}
           }
+        },
+        {
+          "LEFT_ID": "noun_anchor",
+          "REL_OP": "<",
+          "RIGHT_ID": "anchor_head",
+          "RIGHT_ATTRS": {
+            "LEMMA": {"NOT_IN": ["ask", "tell"]}
+          }
         }
       ]]
     },
@@ -913,7 +922,8 @@
         "The man who Sally likes is here."
       ],
       "counterexamples": [
-        "The man who likes popcorn ate sixteen tons."
+        "The man who likes popcorn ate sixteen tons.",
+        "The detective asked the witness whom he saw at the scene."
       ],
       "rules": [[
         {
@@ -933,6 +943,14 @@
           "RIGHT_ATTRS": {
             "DEP": {"IN": ["dobj", "pobj"]},
             "TAG": {"IN": ["WDT", "WP"]}
+          }
+        },
+        {
+          "LEFT_ID": "noun_anchor",
+          "REL_OP": "<",
+          "RIGHT_ID": "anchor_head",
+          "RIGHT_ATTRS": {
+            "LEMMA": {"NOT_IN": ["ask", "tell"]}
           }
         }
       ]]
