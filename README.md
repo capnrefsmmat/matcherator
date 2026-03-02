@@ -1,15 +1,18 @@
 # matcherator: spaCy pattern-matching libraries
 
+**Currently experimental.** This code uses spaCy's pattern-matching facilities
+to match lexical, grammatical, and rhetorical features in texts to facilitate
+corpus linguistic analyses.
+
+The ultimate goal is to provide a package with several rulesets for different
+features.
+
 ## pseudobiber
 
 Rules like Biber's.
 
 TODO notes:
 
-- `f_15_gerunds`: pseudobibeR has a complicated strategy based on matching
-  suffixes (for "ing" and "ings"). Instead I've looked for VBG (gerund or
-  participle) and used the dependency relation to determine if it's acting
-  noun-ally. Is that wrong?
 - `f_16_other_nouns`: Skipped because it requires negating two other patterns,
   and writing this out manually would be redundant. Is there a better way?
 - `f_17_agentless_passives`: DependencyMatcher doesn't let you match on there
@@ -25,3 +28,23 @@ TODO notes:
   the verb to start the sentence. But is that necessary? Consider "Joe ran out
   the door, stuffing his mouth with cookies." Is it instead sufficient just to
   get VBG/VBNs with advcl or ccomp relation?
+  - It at least has the start the clause; see `f_26_past_participle` for
+    counterexample when it doesn't start the sentence or clause.
+- `f_35_because`: pseudobibeR forbids following "of". Necessary? Need test
+  cases/examples.
+
+
+Differences from pybiber:
+
+- `f_15_gerunds`: pybiber only allows nsub, dobj, pobj, resulting in it finding
+  far fewer gerunds. Not confident in what the right definition is.
+- `f_42_adverbs`: pybiber does not count RBS (adverb, superlative); we do
+- `f_33_pied_piping`: pybiber and pseudobiber only look for the forms "in who",
+  "in whom", "in whose", and "in which"; and not, for instance, "on which" or
+  "to which", though those can be pied piping too.
+- `f_27_past_participle_whiz` and `f_28_present_participle_whiz`: pybiber only
+  allows nouns, not proper nouns, to have the postnominal clause; we allow
+  proper nouns as well. pybiber relies on the verb being immediately after the
+  noun, but `DependencyMatcher` allows more complex construction (see examples).
+- `f_18_by_passives`: in a parallel construction ("This was done by Steve rather
+  than by Sharon"), the `DependencyMatcher` will count two by-passives, not one.
