@@ -959,7 +959,8 @@
     "f_33_pied_piping": {
       "description": "Pied-piping relative clauses",
       "examples": [
-        "She resented the manner in which she was told."
+        "She resented the manner in which she was told.",
+        "We felt that we needed a financial base on which to work."
       ],
       "rules": [[
         {
