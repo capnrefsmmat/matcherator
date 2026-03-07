@@ -970,7 +970,22 @@
       "description": "Pied-piping relative clauses",
       "examples": [
         "She resented the manner in which she was told.",
-        "We felt that we needed a financial base on which to work."
+        "We felt that we needed a financial base on which to work.",
+        "He is a linguist articles by whom the editors always reject.",
+        "The executive to whom I addressed the complaint has recently resigned.",
+        "The crumbling stone bridge under which the river flows is scheduled for demolition.",
+        "The ancient artifact, the exact origins of which remain a subject of fierce debate among historians, is kept in a climate-controlled vault."
+      ],
+      "failed_examples": [
+        {
+          "text": "The corporate mandate, in staunch opposition to which the labor union ultimately decided to strike, was quietly repealed a week later.",
+          "comment": "spaCy tags TO as PART with DEP dependency relation, i.e., no specific relation; perhaps bad tagging?"
+        }
+      ],
+      "counterexamples": [
+        "She resented the manner she was told in.",
+        "We felt that we needed a financial base to work on.",
+        "Which manner was she told in?"
       ],
       "rules": [[
         {
@@ -984,7 +999,7 @@
           "RIGHT_ATTRS": {"DEP": "relcl"}},
         {
           "LEFT_ID": "rel_verb",
-          "REL_OP": ">",
+          "REL_OP": ">>",
           "RIGHT_ID": "preposition",
           "RIGHT_ATTRS": {"DEP": "prep"}},
         {
