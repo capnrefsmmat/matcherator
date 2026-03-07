@@ -194,14 +194,22 @@
     "f_13_wh_question": {
       "description": "Direct *wh-* questions",
       "examples": [
-        "When are you leaving?"
+        "When are you leaving?",
+        "The difference between heights constitutes the gap, which can be measured with a depth micrometer."
       ],
       "counterexamples": [
         "I know when you are leaving."
       ],
+      "comment": "TODO Need examples for the first rule, where the WH- word is after one token; then determine if that should also apply to the second rule, for clause-initial WH-questions",
       "rules": [
         [
           {"IS_SENT_START": true},
+          {"TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
+           "POS": {"NOT_IN": ["DET"]}},
+          {"DEP": "aux"}
+        ],
+        [
+          {"IS_PUNCT": true},
           {"TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
            "POS": {"NOT_IN": ["DET"]}},
           {"DEP": "aux"}
