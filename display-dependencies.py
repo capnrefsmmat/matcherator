@@ -15,4 +15,6 @@ if __name__ == "__main__":
 
     nlp = spacy.load(args.model)
     doc = nlp(args.text)
-    displacy.serve(doc, style="dep", auto_select_port=True)
+    displacy.serve(doc, style="dep", auto_select_port=True,
+                   options={"collapse_punct": False,
+                            "add_lemma": True})
