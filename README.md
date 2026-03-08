@@ -48,3 +48,17 @@ Differences from pybiber:
   noun, but `DependencyMatcher` allows more complex construction (see examples).
 - `f_18_by_passives`: in a parallel construction ("This was done by Steve rather
   than by Sharon"), the `DependencyMatcher` will count two by-passives, not one.
+
+## LLM patterns
+
+Stylistic features reported to be common among LLMs, so that they can be
+automatically detected and quantified. Does not replicate pseudobiber features
+that mark AI writing---only includes features not counted by pseudobiber.
+
+Sources for reported style features and examples:
+
+- Wikipedia's [Signs of AI
+  writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) guide
+- [tropes.fyi](https://tropes.fyi/)
+- sneak's [LLM Prose
+  Tells](https://git.eeqj.de/sneak/prompts/src/branch/main/prompts/LLM_PROSE_TELLS.md)

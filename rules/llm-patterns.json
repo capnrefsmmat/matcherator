@@ -1,0 +1,122 @@
+{
+  "Matcher": {
+  },
+
+  "DependencyMatcher": {
+    "rule_of_three": {
+      "description": "Rule of three (parallel lists)",
+      "examples": [
+        "The Amaze Conference brings together global SEO professionals, experts, and growth hackers to discuss the latest trends in digital marketing.",
+        "The event features keynote sessions, panel discussions, and networking opportunities."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "first_noun",
+          "RIGHT_ATTRS": {"POS": "NOUN"}
+        },
+        {
+          "LEFT_ID": "first_noun",
+          "REL_OP": ">",
+          "RIGHT_ID": "second_noun",
+          "RIGHT_ATTRS": {
+            "POS": "NOUN",
+            "DEP": "conj"
+          }
+        },
+        {
+          "LEFT_ID": "second_noun",
+          "REL_OP": ">",
+          "RIGHT_ID": "third_noun",
+          "RIGHT_ATTRS": {
+            "POS": "NOUN",
+            "DEP": "conj"
+          }
+        },
+        {
+          "LEFT_ID": "second_noun",
+          "REL_OP": ">",
+          "RIGHT_ID": "cc",
+          "RIGHT_ATTRS": {"DEP": "cc"}
+        }
+      ]]
+    },
+
+    "contradictory_be_complement": {
+      "description": "Clausal complement with *be* main verb that contradicts the main clause",
+      "examples": [
+        "It's not bold --- it's backwards.",
+        "It's not bold---it's backwards.",
+        "It's not just a tool—it's a paradigm shift.",
+        "This isn't about technology—it's about trust.",
+        "It's not just about the beat riding under the vocals; it's part of the aggression and atmosphere.",
+        "This ain't bludgeoning — it's surgical teardown of a weak argument hiding behind fake neutrality."
+      ],
+      "comment": "Subtype of 'negative parallelisms' from Wikipedia and tropes.fyi; includes the 'em-dash pivot' by sneak.",
+      "rules": [
+        [
+          {
+            "RIGHT_ID": "be_main_verb",
+            "RIGHT_ATTRS": {
+              "LEMMA": "be"
+            }
+          },
+          {
+            "LEFT_ID": "be_main_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "be_complement",
+            "RIGHT_ATTRS": {
+              "DEP": "ccomp",
+              "LEMMA": {"IN": ["be", "ai"]}
+            }
+          },
+          {
+            "LEFT_ID": "be_complement",
+            "REL_OP": ">",
+            "RIGHT_ID": "negation",
+            "RIGHT_ATTRS": {
+              "DEP": "neg"
+            }
+          }
+        ],
+        [
+          {
+            "RIGHT_ID": "be_main_verb",
+            "RIGHT_ATTRS": {
+              "LEMMA": "be"
+            }
+          },
+          {
+            "LEFT_ID": "be_main_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "gerund",
+            "RIGHT_ATTRS": {
+              "DEP": "ccomp",
+              "TAG": "VBG"
+            }
+          },
+          {
+            "LEFT_ID": "gerund",
+            "REL_OP": ">",
+            "RIGHT_ID": "be_complement",
+            "RIGHT_ATTRS": {
+              "DEP": "aux",
+              "LEMMA": {"IN": ["be", "ai"]}
+            }
+          },
+          {
+            "LEFT_ID": "gerund",
+            "REL_OP": ">",
+            "RIGHT_ID": "negation",
+            "RIGHT_ATTRS": {
+              "DEP": "neg"
+            }
+          }
+        ]
+      ]
+    }
+  },
+
+  "PhraseMatcher": {
+
+  }
+}
