@@ -6,6 +6,7 @@ from collections import defaultdict, namedtuple
 
 import spacy
 from spacy.matcher import Matcher, DependencyMatcher, PhraseMatcher
+from spacymoji import Emoji
 
 import pandas as pd
 
@@ -22,6 +23,9 @@ def initialize_matchers(rules, model):
 
     # no need for named-entity recognition
     nlp = spacy.load(model, disable=["ner"])
+
+    # Add emoji detection pipeline
+    nlp.add_pipe("emoji", first=True)
 
     matcher = Matcher(nlp.vocab, validate=True)
     dep_matcher = DependencyMatcher(nlp.vocab, validate=True)

@@ -1,5 +1,15 @@
 {
   "Matcher": {
+    "emoji": {
+      "description": "Emoji",
+      "examples": [
+        "💩",
+        "🧠 Cognitive Dissonance Pattern"
+      ],
+      "rules": [[
+        {"_": {"is_emoji": true}}
+      ]]
+    }
   },
 
   "DependencyMatcher": {
