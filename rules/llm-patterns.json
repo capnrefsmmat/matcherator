@@ -51,7 +51,7 @@
       ]]
     },
 
-    "contradictory_be_complement": {
+    "contradictory_be_clausal_complement": {
       "description": "Clausal complement with *be* main verb that contradicts the main clause",
       "examples": [
         "It's not bold --- it's backwards.",
