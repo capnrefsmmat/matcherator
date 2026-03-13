@@ -9,6 +9,31 @@
       "rules": [[
         {"_": {"is_emoji": true}}
       ]]
+    },
+
+    "em_dashes": {
+      "description": "Em dashes",
+      "examples": [
+        "This isn't about technology—it's about trust.",
+        "If we disagree on that, then yes — we’re speaking different languages."
+      ],
+      "rules": [[
+        {"IS_PUNCT": true, "ORTH": "—"}
+      ]]
+    },
+
+    "almost_hedge": {
+      "description": "Hedging by using 'almost'",
+      "comment": "From sneak's list",
+      "examples": [
+        "This is almost certainly an example of LLM writing.",
+        "Almost nobody formats lists this way when writing by hand."
+      ],
+      "rules": [[
+        {
+          "LEMMA": "almost"
+        }
+      ]]
     }
   },
 
