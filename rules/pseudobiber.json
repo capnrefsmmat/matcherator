@@ -490,13 +490,18 @@
 
     "f_51_demonstratives": {
       "description": "Demonstratives (*that*, *this*, *these*, or *those* used as determiners)",
+      "comment": "Excludes demonstrative pronouns (f_10_demonstrative_pronoun)",
       "examples": [
-        "That is the feature.",
-        "This cat is happy.",
+        "That sentence illustrates the feature.",
+        "This cat is happy."
+      ],
+      "counterexamples": [
+        "That is an example sentence.",
+        "This is the feature.",
         "Those are my penguins."
       ],
       "rules": [[
-        {"TAG": "DT",
+        {"DEP": "det",
          "LOWER": {"IN": ["that", "this", "these", "those"]}}
       ]]
     },
