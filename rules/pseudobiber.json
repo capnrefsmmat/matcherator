@@ -321,6 +321,7 @@
 
     "f_25_present_participle": {
       "description": "Present participial adverbial clauses",
+      "comment": "Syntacticaly detached clauses only, to match Biber's definition",
       "examples": [
         "Stuffing his mouth with cookies, Joe ran out the door.",
         "Joe ran out the door, stuffing his mouth with cookies.",
@@ -345,6 +346,7 @@
 
     "f_26_past_participle": {
       "description": "Past participial adverbial clauses",
+      "comment": "Syntacticaly detached clauses only, to match Biber's definition",
       "examples": [
         "Built in a single week, the house would stand for fifty years.",
         "Stored in a cool, dry place, these heirloom seeds can remain viable for up to five years.",
