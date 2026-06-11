@@ -631,53 +631,53 @@
           ]}
         }
       ]]
+    },
+
+    "f_58_verb_seem": {
+      "description": "Verbs *seem* and *appear*",
+      "examples": [
+        "It seems to be the case.",
+        "It appears to be the case.",
+        "It just appeared in front of me!",
+        "While they were appearing, one went missing."
+      ],
+      "rules": [[
+        {"POS": "VERB",
+         "LEMMA": {"IN": ["seem", "appear"]}}
+      ]]
+    },
+
+    "f_59_contractions": {
+      "description": "Contractions",
+      "examples": [
+        "I can't do it.",
+        "They won't do it.",
+        "You shouldn't be involved.",
+        "They'll do it.",
+        "You could've done it.",
+        "It's a good idea.",
+        "She's a great teacher.",
+        "They're going to do it.",
+        "I can’t do it.",
+        "They won’t do it.",
+        "You shouldn’t be involved.",
+        "They’ll do it.",
+        "You could’ve done it.",
+        "It’s a good idea.",
+        "She’s a great teacher.",
+        "They’re going to do it."
+      ],
+      "counterexamples": [
+        "The truck's fender was damaged.",
+        "Bob's truck was damaged.",
+        "The truck’s fender was damaged.",
+        "Bob’s truck was damaged."
+      ],
+      "rules": [[
+        {"LOWER": {"REGEX": "'"},
+         "TAG": {"IN": ["MD", "RB", "VB", "VBZ", "VBP"]}}
+      ]]
     }
-  },
-
-  "f_58_verb_seem": {
-    "description": "Verbs *seem* and *appear*",
-    "examples": [
-      "It seems to be the case.",
-      "It appears to be the case.",
-      "It just appeared in front of me!",
-      "While they were appearing, one went missing."
-    ],
-    "rules": [[
-      {"POS": "VERB",
-       "LEMMA": {"IN": ["seem", "appear"]}}
-    ]]
-  },
-
-  "f_59_contractions": {
-    "description": "Contractions",
-    "examples": [
-      "I can't do it.",
-      "They won't do it.",
-      "You shouldn't be involved.",
-      "They'll do it.",
-      "You could've done it.",
-      "It's a good idea.",
-      "She's a great teacher.",
-      "They're going to do it.",
-      "I can’t do it.",
-      "They won’t do it.",
-      "You shouldn’t be involved.",
-      "They’ll do it.",
-      "You could’ve done it.",
-      "It’s a good idea.",
-      "She’s a great teacher.",
-      "They’re going to do it."
-    ],
-    "counterexamples": [
-      "The truck's fender was damaged.",
-      "Bob's truck was damaged.",
-      "The truck’s fender was damaged.",
-      "Bob’s truck was damaged."
-    ],
-    "rules": [[
-      {"LOWER": {"REGEX": "'"},
-       "TAG": {"IN": ["MD", "RB", "VBZ", "VBP"]}}
-    ]]
   },
 
   "DependencyMatcher": {
