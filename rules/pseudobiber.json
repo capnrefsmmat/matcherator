@@ -677,6 +677,60 @@
         {"LOWER": {"REGEX": "'"},
          "TAG": {"IN": ["MD", "RB", "VB", "VBZ", "VBP"]}}
       ]]
+    },
+
+    "f_61_stranded_preposition": {
+      "description": "Prepositions stranded at the end of a sentence or clause",
+      "examples": [
+        "She is the candidate that I was thinking of.",
+        "I don't know who she laughed at."
+      ],
+      "rules": [[
+        {"TAG": "IN", "DEP": "prep"},
+        {"POS": "PUNCT"}
+      ]]
+    },
+
+    "f_62_split_infinitive": {
+      "description": "Split infinitives",
+      "examples": [
+        "He wants to definitively show the result.",
+        "I aim to boldly go where no man has gone before."
+      ],
+      "rules": [
+        [
+          {"TAG": "TO"},
+          {"TAG": "RB"},
+          {"TAG": "VB"}
+        ],
+        [
+          {"TAG": "TO"},
+          {"TAG": "RB"},
+          {"TAG": "RB"},
+          {"TAG": "VB"}
+        ]
+      ]
+    },
+
+    "f_63_split_auxiliary": {
+      "description": "Split auxiliaries",
+      "examples": [
+        "They are objectively shown to be split.",
+        "I have already written the example."
+      ],
+      "rules": [
+        [
+          {"POS": "AUX"},
+          {"POS": "ADV"},
+          {"POS": "VERB"}
+        ],
+        [
+          {"POS": "AUX"},
+          {"POS": "ADV"},
+          {"POS": "ADV"},
+          {"POS": "VERB"}
+        ]
+      ]
     }
   },
 
