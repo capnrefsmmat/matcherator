@@ -34,6 +34,24 @@
           "LEMMA": "almost"
         }
       ]]
+    },
+
+    "contradictory_sentence_pair": {
+      "description": "Pair of sentences where first states a contradiction and second replaces it",
+      "examples": [
+        "That wasn't style. That was software.",
+        "It didn't feel like a real style. It felt like something helped make it.",
+        "It's not human. It's machine-generated mimicry."
+      ],
+      "rules": [[
+        {"POS": "PRON", "DEP": "nsubj"},
+        {"POS": {"IN": ["AUX", "VERB"]}},
+        {"DEP": "neg"},
+        {"OP": "*"},
+        {"IS_SENT_START": true, "POS": "PRON", "DEP": "nsubj"},
+        {"POS": {"IN": ["AUX", "VERB"]}},
+        {"DEP": "neg", "OP": "!"}
+      ]]
     }
   },
 
