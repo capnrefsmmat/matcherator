@@ -730,6 +730,59 @@
           {"POS": "VERB"}
         ]
       ]
+    },
+
+    "f_64_phrasal_coordination": {
+      "description": "Phrases joined with coordinating conjunctions",
+      "examples": [
+        "I want ducks and drakes.",
+        "Swans are white and angry.",
+        "The cat likes to run and jump.",
+        "The cat struck silently and swiftly."
+      ],
+      "counterexamples": [
+        "She wrote the example, and then she tested it.",
+        "I came and I saw."
+      ],
+      "rules": [
+        [
+          {"POS": "NOUN"},
+          {"TAG": "CC"},
+          {"POS": "NOUN"}
+        ],
+        [
+          {"POS": "VERB"},
+          {"TAG": "CC"},
+          {"POS": "VERB"}
+        ],
+        [
+          {"POS": "ADJ"},
+          {"TAG": "CC"},
+          {"POS": "ADJ"}
+        ],
+        [
+          {"POS": "ADV"},
+          {"TAG": "CC"},
+          {"POS": "ADV"}
+        ]
+      ]
+    },
+
+    "f_65_clausal_coordination": {
+      "description": "Independent clause coordination with *and*",
+      "examples": [
+        "She wrote the example, and then she tested it.",
+        "I came and I saw."
+      ],
+      "counterexamples": [
+        "I want ducks and drakes."
+      ],
+      "rules": [[
+        {"TAG": "CC",
+         "DEP": {"NOT_IN": ["ROOT"]}},
+        {"OP": "{,2}"},
+        {"DEP": "nsubj"}
+      ]]
     }
   },
 
