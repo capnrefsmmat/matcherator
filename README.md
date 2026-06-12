@@ -13,15 +13,12 @@ Rules like Biber's.
 
 TODO notes:
 
-- Still missing `f_61` through `f_67`
 - `f_16_other_nouns`: Skipped because it requires negating two other patterns,
   and writing this out manually would be redundant. Is there a better way?
 - `f_17_agentless_passives`: DependencyMatcher doesn't let you match on there
   *not* being a certain dependency, so I can't match based on there being no
   token that is the `agent` for `by`. Instead I match all passives in one rule
   and match by-passives in the other, leaving agentless as the difference.
-- `f_19_be_main_verb`: Instead of matching on "be" that is not an auxiliary, I
-  matched on "be" that is the ROOT. Is that wrong?
 - `f_23_wh_clause`: Need some more examples to understand what rule to write. I
   can do it with DependencyMatcher, but what dependency to look for? Dative
   comes up in the one example, but is that the right thing to match?
@@ -37,8 +34,8 @@ TODO notes:
 
 Differences from pybiber:
 
-- `f_15_gerunds`: pybiber only allows nsub, dobj, pobj, resulting in it finding
-  far fewer gerunds. Not confident in what the right definition is.
+- `f_15_gerunds`: pybiber only allows nsub, dobj, or pobj, resulting in it
+  finding far fewer gerunds. Not confident in what the right definition is.
 - `f_42_adverbs`: pybiber does not count RBS (adverb, superlative); we do
 - `f_33_pied_piping`: pybiber and pseudobiber only look for the forms "in who",
   "in whom", "in whose", and "in which"; and not, for instance, "on which" or
@@ -63,3 +60,7 @@ Sources for reported style features and examples:
 - [tropes.fyi](https://tropes.fyi/)
 - sneak's [LLM Prose
   Tells](https://git.eeqj.de/sneak/prompts/src/branch/main/prompts/LLM_PROSE_TELLS.md)
+
+
+TODO Consider counting phrasal verbs. David thinks they may be different in
+LLMs; use his list from Text Analysis in PhraseMatcher or do a DependencyMatcher

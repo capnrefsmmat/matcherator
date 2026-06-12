@@ -181,6 +181,7 @@
     "f_12_proverb_do": {
       "description": "Pro-verb *do*",
       "examples": [
+        "The cat did it.",
         "I did it."
       ],
       "counterexamples": [
@@ -263,6 +264,7 @@
         "According to Steve, it's nice out.",
         "I bought something."
       ],
+      "comment": "TODO If David agrees in browndw/pybiber#7, replace with DependencyMatcher rule that checks if it is a dobj/pobj or, crucially, chains up/down to one",
       "rules": [[
         {"LOWER":
          {"REGEX": ".*ings?$",
@@ -931,26 +933,35 @@
     "f_23_wh_clause": {
       "description": "*wh-* clauses",
       "examples": [
-        "I believed what he told me."
+        "I believed what he told me.",
+        "We had a discussion about how the agency operates.",
+        "They investigated which chemical was responsible."
       ],
       "comment": "TODO What about 'I believed in what he told me' or 'I believed a little of what he told me'?",
       "rules": [[
         {
-          "RIGHT_ID": "root_verb",
-          "RIGHT_ATTRS": {"POS": "VERB"}
+          "RIGHT_ID": "governor",
+          "RIGHT_ATTRS": {}
         },
         {
-          "LEFT_ID": "root_verb",
+          "LEFT_ID": "governor",
           "REL_OP": ">",
-          "RIGHT_ID": "subordinate_verb",
-          "RIGHT_ATTRS": {"POS": "VERB", "DEP": "ccomp"}
+          "RIGHT_ID": "clause_root",
+          "RIGHT_ATTRS": {
+            "DEP": {"IN": ["ccomp", "csubj", "csubjpass", "pcomp"]}
+          }
         },
         {
-          "LEFT_ID": "subordinate_verb",
+          "LEFT_ID": "clause_root",
           "REL_OP": ">",
-          "RIGHT_ID": "wh-",
-          "RIGHT_ATTRS": {"TAG": {"IN": ["WP", "WP$", "WRB"]},
-                          "DEP": "dative"}
+          "RIGHT_ID": "wh_word",
+          "RIGHT_ATTRS": {
+            "LOWER": {"IN": [
+              "who", "whom", "whose", "which", "what",
+              "where", "when", "why", "how",
+              "whoever", "whomever", "whatever", "whenever", "wherever"
+            ]}
+          }
         }
       ]]
     },
