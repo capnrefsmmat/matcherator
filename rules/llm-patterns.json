@@ -294,6 +294,40 @@
           }
         ]
       ]
+    },
+
+    "copula": {
+      "description": "Copula (linking subject to complement with *be*)",
+      "comment": "Wikipedia's 'Signs of AI Writing' notes LLMs avoid copulas, prefer fancier forms",
+      "examples": [
+        "The sky is blue.",
+        "It was not being cooperative.",
+        "Mary and John are my friends.",
+        "The birds and the beasts were there.",
+        "Are you happy?"
+      ],
+      "counterexamples": [
+        "The man was killed.",
+        "It is raining."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "subject",
+          "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
+        },
+        {
+          "LEFT_ID": "subject",
+          "REL_OP": "<",
+          "RIGHT_ID": "be",
+          "RIGHT_ATTRS": {"POS": "AUX", "LEMMA": "be"}
+        },
+        {
+          "LEFT_ID": "be",
+          "REL_OP": ">",
+          "RIGHT_ID": "complement",
+          "RIGHT_ATTRS": {"DEP": {"IN": ["acomp", "attr", "advmod"]}}
+        }
+      ]]
     }
   },
 
