@@ -166,6 +166,122 @@
           }
         ]
       ]
+    },
+
+    "contradictory_aux_clausal_complement": {
+      "description": "Clausal complement with auxiliary that contradicts the main clause",
+      "examples": [
+        "At that moment, you won't care about the view of Pittsburgh; you'll only care about whether Larry Wasserman is going to invoke a Concentration Inequality that breaks your spirit."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "main_verb",
+          "RIGHT_ATTRS": {"POS": "VERB"}
+        },
+        {
+          "LEFT_ID": "main_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "main_auxiliary",
+          "RIGHT_ATTRS": {"POS": "AUX"}
+        },
+        {
+          "LEFT_ID": "main_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "complement_verb",
+          "RIGHT_ATTRS": {
+            "POS": "VERB",
+            "DEP": "ccomp"
+          }
+        },
+        {
+          "LEFT_ID": "complement_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "negation",
+          "RIGHT_ATTRS": {"DEP": "neg"}
+        },
+        {
+          "LEFT_ID": "complement_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "complement_auxiliary",
+          "RIGHT_ATTRS": {"POS": "AUX"}
+        }
+      ]]
+    },
+
+    "contradictory_be_conjunction": {
+      "description": "Clause with *be* main verb, contradicted by conjunction",
+      "examples": [
+        "Through this lens, Kusama’s self-portrait is not a mirror but a portal.",
+        "I’ve just honed in on the pattern - the abrupt shift between complex vocabulary and plain clichés isn’t a stylistic choice, but the tell-tale signature of an algorithm."
+      ],
+      "rules": [
+        [
+          {
+            "RIGHT_ID": "root_be",
+            "RIGHT_ATTRS": {
+              "POS": {"IN": ["VERB", "AUX"]}
+            }
+          },
+          {
+            "LEFT_ID": "root_be",
+            "REL_OP": ">",
+            "RIGHT_ID": "negation",
+            "RIGHT_ATTRS": {
+              "DEP": "neg"
+            }
+          },
+          {
+            "LEFT_ID": "root_be",
+            "REL_OP": ">",
+            "RIGHT_ID": "attribute",
+            "RIGHT_ATTRS": {
+              "DEP": "attr"
+            }
+          },
+          {
+            "LEFT_ID": "root_be",
+            "REL_OP": ">",
+            "RIGHT_ID": "conjunction",
+            "RIGHT_ATTRS": {
+              "DEP": "cc",
+              "LEMMA": "but"
+            }
+          }
+        ],
+        [
+          {
+            "RIGHT_ID": "root_be",
+            "RIGHT_ATTRS": {
+              "LEMMA": "be"
+            }
+          },
+          {
+            "LEFT_ID": "root_be",
+            "REL_OP": ">",
+            "RIGHT_ID": "negation",
+            "RIGHT_ATTRS": {
+              "DEP": "neg"
+            }
+          },
+          {
+            "LEFT_ID": "root_be",
+            "REL_OP": ">",
+            "RIGHT_ID": "attribute",
+            "RIGHT_ATTRS": {
+              "DEP": "attr"
+            }
+          },
+          {
+            "LEFT_ID": "attribute",
+            "REL_OP": ">",
+            "RIGHT_ID": "conjunction",
+            "RIGHT_ATTRS": {
+              "DEP": "cc",
+              "LEMMA": "but"
+            }
+          }
+        ]
+      ]
     }
   },
 
