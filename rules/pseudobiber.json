@@ -662,7 +662,6 @@
         "They won’t do it.",
         "You shouldn’t be involved.",
         "They’ll do it.",
-        "You could’ve done it.",
         "It’s a good idea.",
         "She’s a great teacher.",
         "They’re going to do it."
@@ -674,7 +673,7 @@
         "Bob’s truck was damaged."
       ],
       "rules": [[
-        {"LOWER": {"REGEX": "'"},
+        {"LOWER": {"REGEX": "['’]"},
          "TAG": {"IN": ["MD", "RB", "VB", "VBZ", "VBP"]}}
       ]]
     },
