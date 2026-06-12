@@ -817,7 +817,6 @@
       "examples": [
         "That isn't good enough."
       ],
-      "not_*" "n't_*"
       "rules": [
         [
           {"LOWER": "not"}
