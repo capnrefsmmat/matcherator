@@ -52,6 +52,18 @@
         {"POS": {"IN": ["AUX", "VERB"]}},
         {"DEP": "neg", "OP": "!"}
       ]]
+    },
+
+    "leading_adv_mod": {
+      "description": "Sentence-initial adverbial modifier",
+      "examples": [
+        "Crucially, we programmatically verified all assumptions.",
+        "Critically, attitudes about policing are the strongest predictors of training success."
+      ],
+      "rules": [[
+        {"POS": "ADV", "DEP": "advmod", "IS_SENT_START": true},
+        {"IS_PUNCT": true}
+      ]]
     }
   },
 
