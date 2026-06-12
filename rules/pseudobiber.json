@@ -783,6 +783,47 @@
         {"OP": "{,2}"},
         {"DEP": "nsubj"}
       ]]
+    },
+
+    "f_66_neg_synthetic": {
+      "description": "Synthetic negation",
+      "examples": [
+        "No answer is good enough for Jones.",
+        "No better answer is available.",
+        "Neither answer is satisfactory."
+      ],
+      "rules": [
+        [
+          {"LOWER": "no"},
+          {"POS": "NOUN"}
+        ],
+        [
+          {"LOWER": "no"},
+          {"POS": "ADJ"}
+        ],
+        [
+          {"LOWER": "neither"}
+        ],
+        [
+          {"LOWER": "nor"}
+        ]
+      ]
+    },
+
+    "f_67_neg_analytic": {
+      "description": "Analytic negation",
+      "examples": [
+        "That isn't good enough."
+      ],
+      "not_*" "n't_*"
+      "rules": [
+        [
+          {"LOWER": "not"}
+        ],
+        [
+          {"LOWER": {"IN": ["n't", "n’t"]}}
+        ]
+      ]
     }
   },
 
