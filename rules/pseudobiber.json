@@ -336,12 +336,12 @@
       ],
       "rules": [
         [
-          {"TAG": "VBG", "DEP": {"IN": ["advcl", "ccomp"]},
+          {"TAG": "VBG", "DEP": "advcl",
            "IS_SENT_START": true}
         ],
         [
           {"IS_PUNCT": true},
-          {"TAG": "VBG", "DEP": {"IN": ["advcl", "ccomp"]}}
+          {"TAG": "VBG", "DEP": "advcl"}
         ]
       ]
     },
@@ -359,12 +359,12 @@
       ],
       "rules": [
         [
-          {"TAG": "VBN", "DEP": {"IN": ["advcl", "ccomp"]},
+          {"TAG": "VBN", "DEP": "advcl",
            "IS_SENT_START": true}
         ],
         [
           {"IS_PUNCT": true},
-          {"TAG": "VBN", "DEP": {"IN": ["advcl", "ccomp"]}}
+          {"TAG": "VBN", "DEP": "advcl"}
         ]
       ]
     },
