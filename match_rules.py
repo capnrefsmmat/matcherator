@@ -90,13 +90,19 @@ def count_matches(doc, normalize=False):
                 in doc._.matcherator.items()}
 
 
-def count_matches_texts(model, rule_path, doc_ids, texts, normalize=False):
+def count_matches_texts(model, rule_path, doc_ids, texts, normalize=False,
+                        n_process=1):
     """Apply spaCy and the given rules to a set of texts and count matches.
 
     Returns a Pandas data frame with one row per document and one column per
     feature, whose entries give the count of matches of each feature in each
     document. If normalize is True, counts are normalized to rates per 1,000
     tokens.
+
+    n_process sets the number of parallel processes to use in the spaCy
+    pipeline. There is a high fixed cost to spawning processes, so only set this
+    greater than 1 when there are many texts. Set to -1 to use all available
+    cores.
 
     """
 
@@ -116,7 +122,7 @@ def count_matches_texts(model, rule_path, doc_ids, texts, normalize=False):
     texts = [t for t in texts if t is not None]
 
     match_counts = [count_matches(doc, normalize)
-                    for doc in nlp.pipe(texts, n_process=-1)]
+                    for doc in nlp.pipe(texts, n_process=n_process)]
 
     return pd.DataFrame.from_records(match_counts, index=doc_ids) \
                        .fillna(0) \
