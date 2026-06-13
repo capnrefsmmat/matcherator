@@ -7,6 +7,27 @@ corpus linguistic analyses.
 The ultimate goal is to provide a package with several rulesets for different
 features.
 
+## Design
+
+Match rules are defined in JSON format in `rules/`. `match_rules.py` can set up
+a spaCy pipeline to apply these rules to texts. It can also be run at the
+command line:
+
+```sh
+python match_rules.py rules/pseudobiber.json "The quick brown fox jumps over the lazy dog."
+```
+
+Unit tests work with pytest. Test data is defined in the same rule files, by
+`examples` and `counterexamples` files for each rule: the rule must match the
+`examples` and must not match the `counterexamples`.
+
+`test/test_ruleset.py` uses these to test the matcherator matching engine and
+rule definitions.
+
+`test/test_pybiber.py` uses these examples to test pybiber. Many of these tests
+are expected to fail, since pybiber's rules are not as flexible, or sometimes
+are defined slightly differently.
+
 ## pseudobiber
 
 Rules like Biber's.
