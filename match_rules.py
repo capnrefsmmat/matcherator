@@ -51,7 +51,9 @@ def initialize_matchers(rules, model):
 def match_text(matchers, text):
     """Apply the matchers to a text string.
 
-    Returns a dictionary of Matcher, DependencyMatcher, and PhraseMatcher matches.
+    Returns a dictionary of Matcher, DependencyMatcher, and PhraseMatcher
+    matches.
+
     """
 
     doc = matchers.nlp(text)
@@ -63,11 +65,12 @@ def match_text(matchers, text):
         "PhraseMatcher": matchers.phrase(doc, as_spans=True)
     }
 
-def count_matches(matchers, matches):
+def count_matches(matchers, matches, normalize=False):
     """Count the matches of each feature.
 
     Takes the output of match_text() and produces a dictionary of {feature_name:
-    count} pairs.
+    count} pairs. If normalize is True, count is normalized to a rate per 1,000
+    tokens.
 
     """
 
@@ -82,21 +85,37 @@ def count_matches(matchers, matches):
     for m in matches["PhraseMatcher"]:
         matches_out[m.label_] += 1
 
+    if normalize:
+        num_tokens = len(matches["Document"])
+
+        matches_out = {
+            key: value / num_tokens * 1000
+            for key, value in matches_out.items()
+        }
+
     return matches_out
 
-def count_matches_texts(matchers, doc_ids, texts):
+def count_matches_texts(matchers, doc_ids, texts, normalize=False):
     """Apply matchers to a sequence of documents.
 
     Returns a Pandas data frame. Each row is one document; each column is one
-    matched feature. Entries are counts of each feature.
+    matched feature. Entries are counts of each feature. If normalize is True,
+    count is normalized to a rate per 1,000 tokens.
 
     """
 
     assert len(doc_ids) == len(texts), \
         "Number of doc_ids doesn't match number of texts"
 
-    match_counts = [count_matches(matchers, match_text(matchers, text))
-                    for text in texts]
+    match_counts = [count_matches(matchers, match_text(matchers, text),
+                                  normalize)
+                    for text in texts
+                    if text is not None]
+
+    # handle cases where text is None
+    doc_ids = [doc_ids[ii]
+               for ii in range(len(doc_ids))
+               if texts[ii] is not None]
 
     out = pd.DataFrame.from_records(match_counts, index=doc_ids).fillna(0)
 
