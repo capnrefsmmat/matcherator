@@ -34,7 +34,7 @@ def initialize_matchers(rules, model):
 
     matcher_features = {k for k in rules["Matcher"].keys()}
     for rulename, rule in rules["Matcher"].items():
-        matcher.add(rulename, rule["rules"])
+        matcher.add(rulename, rule["rules"], greedy="FIRST")
 
     dep_features = {k for k in rules["DependencyMatcher"].keys()}
     for rulename, rule in rules["DependencyMatcher"].items():
