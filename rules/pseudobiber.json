@@ -934,9 +934,10 @@
       "examples": [
         "I believed what he told me.",
         "We had a discussion about how the agency operates.",
-        "They investigated which chemical was responsible."
+        "They investigated which chemical was responsible.",
+        "I believed in what he told me.",
+        "I believed a little of what he told me."
       ],
-      "comment": "TODO What about 'I believed in what he told me' or 'I believed a little of what he told me'?",
       "rules": [[
         {
           "RIGHT_ID": "governor",
@@ -952,7 +953,7 @@
         },
         {
           "LEFT_ID": "clause_root",
-          "REL_OP": ">",
+          "REL_OP": ">>",
           "RIGHT_ID": "wh_word",
           "RIGHT_ATTRS": {
             "LOWER": {"IN": [
