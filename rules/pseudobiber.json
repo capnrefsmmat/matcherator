@@ -829,7 +829,7 @@
   },
 
   "DependencyMatcher": {
-    "f_TODO_all_passives": {
+    "f_17_agentless_passives:all": {
       "description": "All passives",
       "examples": [
         "The task was done.",
