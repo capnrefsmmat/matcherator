@@ -118,7 +118,9 @@ def count_matches_texts(model, rule_path, doc_ids, texts, normalize=False):
     match_counts = [count_matches(doc, normalize)
                     for doc in nlp.pipe(texts, n_process=-1)]
 
-    return pd.DataFrame.from_records(match_counts, index=doc_ids).fillna(0)
+    return pd.DataFrame.from_records(match_counts, index=doc_ids) \
+                       .fillna(0) \
+                       .rename_axis("doc_id")
 
 
 def print_matches(nlp, doc):
