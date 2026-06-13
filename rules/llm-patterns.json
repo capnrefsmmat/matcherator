@@ -328,6 +328,28 @@
           "RIGHT_ATTRS": {"DEP": {"IN": ["acomp", "attr", "advmod"]}}
         }
       ]]
+    },
+
+    "phrasal_verbs": {
+      "description": "Phrasal verbs",
+      "examples": [
+        "The plane took off.",
+        "I give up.",
+        "She took her coat off.",
+        "He shut the computer down."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "verb",
+          "RIGHT_ATTRS": {"POS": "VERB"}
+        },
+        {
+          "LEFT_ID": "verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "particle",
+          "RIGHT_ATTRS": {"DEP": "prt"}
+        }
+      ]]
     }
   },
 

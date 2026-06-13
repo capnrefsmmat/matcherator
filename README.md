@@ -81,7 +81,3 @@ Sources for reported style features and examples:
 - [tropes.fyi](https://tropes.fyi/)
 - sneak's [LLM Prose
   Tells](https://git.eeqj.de/sneak/prompts/src/branch/main/prompts/LLM_PROSE_TELLS.md)
-
-
-TODO Consider counting phrasal verbs. David thinks they may be different in
-LLMs; use his list from Text Analysis in PhraseMatcher or do a DependencyMatcher
