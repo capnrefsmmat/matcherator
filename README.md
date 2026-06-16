@@ -51,13 +51,22 @@ TODO notes:
     counterexample when it doesn't start the sentence or clause.
 - `f_35_because`: pseudobibeR forbids following "of". Necessary? Need test
   cases/examples.
+- `f_62_split_infinitive` and `f_63_split_auxiliary`: These simple patterns will
+  miss obvious cases where the split is long. ("To boldly and proudly go
+  where...") It'd be better to do it with DependencyMatcher. e.g., for split
+  infinitives, match the `to` to the verb, and then in Python check if they're
+  adjacent or not.
 
 
 Differences from pybiber:
 
+- pybiber normalizes curly quotes to straight quotes, curly apostrophes to
+  straight ones, and en/em-dashes to hyphens. This can sometimes change spaCy's
+  dependency parsing.
 - `f_15_gerunds`: pybiber only allows nsub, dobj, or pobj, resulting in it
   finding far fewer gerunds. Not confident in what the right definition is.
-- `f_42_adverbs`: pybiber does not count RBS (adverb, superlative); we do
+- `f_18_by_passives`: in a parallel construction ("This was done by Steve rather
+  than by Sharon"), the `DependencyMatcher` will count two by-passives, not one.
 - `f_33_pied_piping`: pybiber and pseudobiber only look for the forms "in who",
   "in whom", "in whose", and "in which"; and not, for instance, "on which" or
   "to which", though those can be pied piping too.
@@ -65,8 +74,9 @@ Differences from pybiber:
   allows nouns, not proper nouns, to have the postnominal clause; we allow
   proper nouns as well. pybiber relies on the verb being immediately after the
   noun, but `DependencyMatcher` allows more complex construction (see examples).
-- `f_18_by_passives`: in a parallel construction ("This was done by Steve rather
-  than by Sharon"), the `DependencyMatcher` will count two by-passives, not one.
+- `f_40_adj_attr` and `f_41_adj_pred`: pybiber uses word order to distinguish
+  attributive and predicative adjectives; we use spaCy's dependency parse.
+- `f_42_adverbs`: pybiber does not count RBS (adverb, superlative); we do
 
 ## LLM patterns
 
