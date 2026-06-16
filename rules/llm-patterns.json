@@ -183,7 +183,8 @@
     "contradictory_aux_clausal_complement": {
       "description": "Clausal complement with auxiliary that contradicts the main clause",
       "examples": [
-        "At that moment, you won't care about the view of Pittsburgh; you'll only care about whether Larry Wasserman is going to invoke a Concentration Inequality that breaks your spirit."
+        "At that moment, you won't care about the view of Pittsburgh; you'll only care about whether Larry Wasserman is going to invoke a Concentration Inequality that breaks your spirit.",
+        "The issue here isn't just sourcing---it's framing."
       ],
       "rules": [[
         {
