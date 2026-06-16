@@ -350,6 +350,86 @@
           "RIGHT_ATTRS": {"DEP": "prt"}
         }
       ]]
+    },
+
+    "private_verb_personal": {
+      "description": "Private verbs with a person or pronoun as subject",
+      "examples": [
+        "I think it's a good idea.",
+        "Steve accepts the conclusion.",
+        "You anticipate a problem."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "private_verb",
+          "RIGHT_ATTRS": {
+            "POS": "VERB",
+            "LEMMA": {"IN": [
+              "accept", "anticipate", "ascertain", "assume", "believe", "calculate",
+              "check", "conclude", "conjecture", "consider", "decide", "deduce",
+              "deem", "demonstrate", "determine", "discern", "discover", "doubt",
+              "dream", "ensure", "establish", "estimate", "expect", "fancy", "fear",
+              "feel", "find", "foresee", "forget", "gather", "guess", "hear",
+              "hold", "hope", "imagine", "imply", "indicate", "infer", "insure",
+              "judge", "know", "learn", "mean", "note", "notice", "observe",
+              "perceive", "presume", "presuppose", "pretend", "prove", "realize",
+              "realise",
+              "reason", "recall", "reckon", "recognize", "reflect", "remember",
+              "reveal", "see", "sense", "show", "signify", "suppose", "suspect",
+              "think", "understand"
+            ]}
+          }
+        },
+        {
+          "LEFT_ID": "private_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "subject",
+          "RIGHT_ATTRS": {
+            "DEP": "nsubj",
+            "POS": {"IN": ["PROPN", "PRON"]}
+          }
+        }
+      ]]
+    },
+
+    "private_verb_impersonal": {
+      "description": "Private verbs attributed to an entity, not a person",
+      "examples": [
+        "The government thinks it's a good idea.",
+        "Many experts believe the conclusion.",
+        "Modern researchers understand it to be an illusion."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "private_verb",
+          "RIGHT_ATTRS": {
+            "POS": "VERB",
+            "LEMMA": {"IN": [
+              "accept", "anticipate", "ascertain", "assume", "believe", "calculate",
+              "check", "conclude", "conjecture", "consider", "decide", "deduce",
+              "deem", "demonstrate", "determine", "discern", "discover", "doubt",
+              "dream", "ensure", "establish", "estimate", "expect", "fancy", "fear",
+              "feel", "find", "foresee", "forget", "gather", "guess", "hear",
+              "hold", "hope", "imagine", "imply", "indicate", "infer", "insure",
+              "judge", "know", "learn", "mean", "note", "notice", "observe",
+              "perceive", "presume", "presuppose", "pretend", "prove", "realize",
+              "realise",
+              "reason", "recall", "reckon", "recognize", "reflect", "remember",
+              "reveal", "see", "sense", "show", "signify", "suppose", "suspect",
+              "think", "understand"
+            ]}
+          }
+        },
+        {
+          "LEFT_ID": "private_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "subject",
+          "RIGHT_ATTRS": {
+            "DEP": "nsubj",
+            "POS": "NOUN"
+          }
+        }
+      ]]
     }
   },
 
