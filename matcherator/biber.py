@@ -48,10 +48,34 @@ class BiberMatcherator(Matcherator):
 
         return matches, features
 
+    def _filter_that_deletion(self, matches, features):
+        """Produce f_60_that_deletion.
+
+        We match subordinator clauses with or without "that", and separately
+        match those with "that". That deletion is the clauses without.
+
+        """
+
+        subord_thats = {(m[0], m[1], m[2])
+                        for m in matches["f_60_that_deletion:that"]}
+
+        that_deleted = [m for m in matches["f_60_that_deletion:all"]
+                        if (m[0], m[1], m[2]) not in subord_thats]
+
+        matches["f_60_that_deletion"] = that_deleted
+        del matches["f_60_that_deletion:all"]
+        del matches["f_60_that_deletion:that"]
+
+        features -= set(["f_60_that_deletion:all", "f_60_that_deletion:that"])
+        features &= set("f_60_that_deletion")
+
+        return matches, features
+
     def __call__(self, doc):
         matches = self._match(doc)
 
         matches, features = self._filter_passives(matches, self.features)
+        matches, features = self._filter_that_deletion(matches, features)
 
         doc._.matcherator_biber = matches
         doc._.matcherator_biber_features = features

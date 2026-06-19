@@ -1515,6 +1515,20 @@
       "counterexamples": [
         "The task was done by Steve."
       ]
+    },
+
+    "f_60_that_deletion": {
+      "description": "Subordinator *that* deletion",
+      "examples": [
+        "I think he went.",
+        "She denies a problem occurred.",
+        "He alleges a small problem occurred."
+      ],
+      "counterexamples": [
+        "I think that he went.",
+        "She denies that a problem occurred.",
+        "He alleges that a small problem occurred."
+      ]
     }
   }
 }
