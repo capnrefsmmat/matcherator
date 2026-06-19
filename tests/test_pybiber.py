@@ -2,6 +2,7 @@
 
 import pybiber as pb
 
+import importlib.resources
 import itertools
 import json
 import pytest
@@ -43,7 +44,9 @@ def examples_match(processor, nlp, examples, rulename):
             f"Rule `{rulename}` failed to match {', '.join(failed_matches)}"
 
 def test_examples(subtests):
-    rules = json.load(open("./rules/pseudobiber.json", "r"))
+    rules = json.loads(importlib.resources.files("matcherator.rules") \
+                       .joinpath("pseudobiber.json") \
+                       .read_text())
 
     processor = pb.CorpusProcessor()
     nlp = spacy.load("en_core_web_sm")

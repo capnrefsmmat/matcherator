@@ -1,0 +1,22 @@
+[project]
+name = "matcherator"
+version = "0.1.0"
+dependencies = [
+    "spacy",
+    "pandas",
+    "spacymoji"
+]
+description = "Detect various linguistic features in text using pattern-matching rules"
+authors = [
+    {name = "Alex Reinhart", email = "areinhar@stat.cmu.edu"}
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["matcherator"]

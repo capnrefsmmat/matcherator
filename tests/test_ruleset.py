@@ -1,15 +1,15 @@
 """Test rule files to ensure the examples and counterexamples match correctly."""
 
-from .. import match_rules
-
+import importlib.resources
 import itertools
 import json
 import pytest
-import os.path
 
 import spacy
 
-RULE_FILES = ["pseudobiber.json", "llm-patterns.json"]
+import matcherator.biber
+import matcherator.generic
+
 MODEL = "en_core_web_sm"
 
 def check_rule_in_spans(rulename, matches):
@@ -26,33 +26,36 @@ def check_rule_in_matches(rulename, matches, nlp):
 
     return False
 
+def check_rule_examples(nlp, rules, attr_name, subtests):
+    for rulename, rule in itertools.chain(rules["Matcher"].items(),
+                                          rules["DependencyMatcher"].items(),
+                                          rules["PhraseMatcher"].items()):
+        with subtests.test(rulename):
+            for example in rule.get("examples", []):
+                doc = nlp(example)
 
-def test_examples(subtests):
-    for rule_file in RULE_FILES:
-        rule_path = os.path.join("./rules/", rule_file)
+                assert len(getattr(doc._, attr_name)[rulename]) > 0, \
+                    f"Expected `{rulename}` to match `{example}`"
 
-        rules = json.load(open(rule_path, "r"))
+            for example in rule.get("counterexamples", []):
+                doc = nlp(example)
 
-        nlp = spacy.load(MODEL, disable=["ner"])
+                assert len(getattr(doc._, attr_name)[rulename]) == 0, \
+                    f"Expected `{rulename}` to not match `{example}`"
 
-        # Add emoji detection pipeline
-        nlp.add_pipe("emoji", first=True)
+def test_biber(subtests):
+    rules = json.loads(
+        importlib.resources.files("matcherator.rules") \
+        .joinpath("pseudobiber.json") \
+        .read_text()
+    )
 
-        # Add matcherator pipeline
-        nlp.add_pipe("matcherator", config={"path": rule_path})
+    nlp = spacy.load(MODEL, disable=["ner"])
 
-        for rulename, rule in itertools.chain(rules["Matcher"].items(),
-                                              rules["DependencyMatcher"].items(),
-                                              rules["PhraseMatcher"].items()):
-            with subtests.test(rulename):
-                for example in rule.get("examples", []):
-                    doc = nlp(example)
+    # Add emoji detection pipeline
+    nlp.add_pipe("emoji", first=True)
 
-                    assert len(doc._.matcherator[rulename]) > 0, \
-                        f"Expected `{rulename}` to match `{example}`"
+    # Add matcherator pipeline
+    nlp.add_pipe("matcherator_biber")
 
-                for example in rule.get("counterexamples", []):
-                    doc = nlp(example)
-
-                    assert len(doc._.matcherator[rulename]) == 0, \
-                        f"Expected `{rulename}` to not match `{example}`"
+    check_rule_examples(nlp, rules, "matcherator_biber", subtests)
