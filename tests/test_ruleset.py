@@ -29,7 +29,8 @@ def check_rule_in_matches(rulename, matches, nlp):
 def check_rule_examples(nlp, rules, attr_name, subtests):
     for rulename, rule in itertools.chain(rules["Matcher"].items(),
                                           rules["DependencyMatcher"].items(),
-                                          rules["PhraseMatcher"].items()):
+                                          rules["PhraseMatcher"].items(),
+                                          rules["Derived"].items()):
         with subtests.test(rulename):
             for example in rule.get("examples", []):
                 doc = nlp(example)

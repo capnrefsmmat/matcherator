@@ -831,10 +831,6 @@
   "DependencyMatcher": {
     "f_17_agentless_passives:all": {
       "description": "All passives",
-      "examples": [
-        "The task was done.",
-        "The task was done by Steve."
-      ],
       "rules": [[
         {
           "RIGHT_ID": "passive_verb",
@@ -1506,6 +1502,18 @@
       ],
       "rules": [
         "just", "really", "most", "more", "a lot", "for sure", "such a"
+      ]
+    }
+  },
+
+  "Derived": {
+    "f_17_agentless_passives": {
+      "description": "Agentless passive voice",
+      "examples": [
+        "The task was done."
+      ],
+      "counterexamples": [
+        "The task was done by Steve."
       ]
     }
   }

@@ -26,7 +26,7 @@ class BiberMatcherator(Matcherator):
 
         super().__init__(nlp, rules)
 
-    def _filter_passives(self, matches):
+    def _filter_passives(self, matches, features):
         """Produce f_17_agentless_passives from matched passives.
 
         Our rules match all passives and by-passives; from the set difference,
@@ -34,13 +34,27 @@ class BiberMatcherator(Matcherator):
 
         """
 
-        # TODO
-        pass
+        by_passive_verbs = {(m[0], m[1])
+                            for m in matches["f_18_by_passives"]}
 
+        agentless = [m for m in matches["f_17_agentless_passives:all"]
+                     if (m[0], m[1]) not in by_passive_verbs]
+
+        matches["f_17_agentless_passives"] = agentless
+        del matches["f_17_agentless_passives:all"]
+
+        features -= set("f_17_agentless_passives:all")
+        features &= set("f_17_agentless_passives")
+
+        return matches, features
 
     def __call__(self, doc):
-        doc._.matcherator_biber = self._match(doc)
-        doc._.matcherator_biber_features = self.features
+        matches = self._match(doc)
+
+        matches, features = self._filter_passives(matches, self.features)
+
+        doc._.matcherator_biber = matches
+        doc._.matcherator_biber_features = features
 
         return doc
 
