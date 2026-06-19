@@ -16,19 +16,16 @@ class Matcherator:
         self.phrase_matcher = PhraseMatcher(nlp.vocab, attr="LOWER",
                                             validate=True)
 
-        matcher_features = {k for k in rules["Matcher"].keys()}
         for rulename, rule in rules["Matcher"].items():
             self.matcher.add(rulename, rule["rules"], greedy="FIRST")
 
-        dep_features = {k for k in rules["DependencyMatcher"].keys()}
         for rulename, rule in rules["DependencyMatcher"].items():
             self.dep_matcher.add(rulename, rule["rules"])
 
-        phrase_features = {k for k in rules["PhraseMatcher"].keys()}
         for rulename, rule in rules["PhraseMatcher"].items():
             self.phrase_matcher.add(rulename, list(nlp.tokenizer.pipe(rule["rules"])))
 
-        self.features = matcher_features | dep_features | phrase_features
+        self.features = _collect_features(rules)
         self.nlp = nlp
 
     def _match(self, doc):
@@ -52,3 +49,24 @@ class Matcherator:
             matches[self.nlp.vocab.strings[match_id]].append((start, end))
 
         return matches
+
+
+def _collect_features(rules):
+    """Collect all valid feature names from rules.
+
+    Some rules are used to derive others and should not be in the output; these
+    have `derived` set to True. Ignore these.
+
+    """
+
+    def collect_one(r):
+        return {
+            feature_name
+            for feature_name in r.keys()
+            if not r[feature_name].get("derived", False)
+        }
+
+    return (collect_one(rules["Matcher"]) |
+            collect_one(rules["DependencyMatcher"]) |
+            collect_one(rules["PhraseMatcher"]) |
+            collect_one(rules["Derived"]))

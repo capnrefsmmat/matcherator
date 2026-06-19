@@ -26,7 +26,7 @@ class BiberMatcherator(Matcherator):
 
         super().__init__(nlp, rules)
 
-    def _filter_passives(self, matches, features):
+    def _filter_passives(self, matches):
         """Produce f_17_agentless_passives from matched passives.
 
         Our rules match all passives and by-passives; from the set difference,
@@ -41,14 +41,10 @@ class BiberMatcherator(Matcherator):
                      if (m[0], m[1]) not in by_passive_verbs]
 
         matches["f_17_agentless_passives"] = agentless
-        del matches["f_17_agentless_passives:all"]
 
-        features -= set("f_17_agentless_passives:all")
-        features &= set("f_17_agentless_passives")
+        return matches
 
-        return matches, features
-
-    def _filter_that_deletion(self, matches, features):
+    def _filter_that_deletion(self, matches):
         """Produce f_60_that_deletion.
 
         We match subordinator clauses with or without "that", and separately
@@ -63,22 +59,17 @@ class BiberMatcherator(Matcherator):
                         if (m[0], m[1], m[2]) not in subord_thats]
 
         matches["f_60_that_deletion"] = that_deleted
-        del matches["f_60_that_deletion:all"]
-        del matches["f_60_that_deletion:that"]
 
-        features -= set(["f_60_that_deletion:all", "f_60_that_deletion:that"])
-        features &= set("f_60_that_deletion")
-
-        return matches, features
+        return matches
 
     def __call__(self, doc):
         matches = self._match(doc)
 
-        matches, features = self._filter_passives(matches, self.features)
-        matches, features = self._filter_that_deletion(matches, features)
+        matches = self._filter_passives(matches)
+        matches = self._filter_that_deletion(matches)
 
         doc._.matcherator_biber = matches
-        doc._.matcherator_biber_features = features
+        doc._.matcherator_biber_features = self.features
 
         return doc
 
