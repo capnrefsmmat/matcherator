@@ -1311,8 +1311,10 @@
       "examples": [
         "I think he went.",
         "She denies a problem occurred.",
+        "The reporter reported the election was over.",
         "He alleges a small problem occurred.",
         "I think that he went.",
+        "The reporter reported that the election was over.",
         "She denies that a problem occurred.",
         "He alleges that a small problem occurred."
       ],
@@ -1431,6 +1433,73 @@
           "RIGHT_ATTRS": {"LOWER": "that", "DEP": "mark"}
         }
       ]]
+    },
+
+    "f_60_that_deletion:wh_clause": {
+      "derived": true,
+      "description": "Subordinator *that* deletion: clauses with a wh-clause",
+      "examples": [
+        "The rationale helps ensure that workers understand what they should do."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "verb_anchor",
+          "RIGHT_ATTRS": {
+            "POS": "VERB",
+            "LEMMA": {"IN": [
+              "accept", "acknowledge", "add", "admit", "affirm", "agree",
+              "allege", "allow", "announce", "anticipate", "appear", "argue",
+              "arrange", "ascertain", "ask", "assert", "beg", "believe", "bet",
+              "boast", "calculate", "certify", "check", "claim", "command",
+              "comment", "complain", "concede", "conclude", "confess",
+              "confide", "confirm", "conjecture", "consider", "contend",
+              "convey", "decide", "declare", "decree", "deduce", "deem",
+              "demand", "demonstrate", "deny", "desire", "determine", "discern",
+              "disclose", "discover", "doubt", "dream", "enjoin", "ensure",
+              "ensure", "entreat", "establish", "estimate", "exclaim", "expect",
+              "explain", "fancy", "fear", "feel", "find", "forecast", "foresee",
+              "foretell", "forget", "gather", "grant", "guarantee", "guess",
+              "hear", "hint", "hold", "hope", "imagine", "imply", "indicate",
+              "infer", "insist", "instruct", "insure", "intend", "judge",
+              "know", "learn", "maintain", "mean", "mention", "move", "moved",
+              "moves", "moving", "note", "notice", "object", "observe",
+              "ordain", "order", "perceive", "pledge", "pray", "predict",
+              "prefer", "presume", "presuppose", "pretend", "proclaim",
+              "promise", "pronounce", "prophesy", "propose", "protest", "prove",
+              "realise", "realize", "reason", "recall", "reckon", "recognise",
+              "recognize", "recommend", "reflect", "remark", "remember",
+              "repeat", "reply", "report", "request", "require", "resolve",
+              "reveal", "rule", "see", "seem", "sense", "show", "signify",
+              "state", "stipulate", "submit", "submits", "suggest", "suggest",
+              "suppose", "suspect", "swear", "testify", "think", "understand",
+              "urge", "vote", "vow", "warn", "write"]}
+          }
+        },
+        {
+          "LEFT_ID": "verb_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "comp_verb",
+          "RIGHT_ATTRS": {"DEP": "ccomp"}
+        },
+        {
+          "LEFT_ID": "comp_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "subject",
+          "RIGHT_ATTRS": {"DEP": "nsubj"}
+        },
+        {
+          "LEFT_ID": "comp_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "wh_clause",
+          "RIGHT_ATTRS": {
+            "LOWER": {"IN": [
+              "who", "whom", "whose", "which", "what",
+              "where", "when", "why", "how",
+              "whoever", "whomever", "whatever", "whenever", "wherever"
+            ]}
+          }
+        }
+      ]]
     }
   },
 
@@ -1524,12 +1593,16 @@
       "examples": [
         "I think he went.",
         "She denies a problem occurred.",
-        "He alleges a small problem occurred."
+        "He alleges a small problem occurred.",
+        "The reporter reported the election was over.",
+        "He admitted he had made a catastrophic mistake."
       ],
       "counterexamples": [
         "I think that he went.",
         "She denies that a problem occurred.",
-        "He alleges that a small problem occurred."
+        "He alleges that a small problem occurred.",
+        "The rationale helps ensure that workers understand what they should do.",
+        "He admitted that he had made a catastrophic mistake."
       ]
     }
   }
