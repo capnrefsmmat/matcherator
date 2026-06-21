@@ -96,7 +96,10 @@ def feature_counts(nlp, doc, normalize=False):
         matches = getattr(doc._, pipe)
         features = getattr(doc._, pipe + "_features")
 
-        counts |= {name: len(matches[name]) * factor
+        # matches should be a defaultdict, but if the spacy pipeline is
+        # parallel, it's serialized into a normal dict, so we have to watch out
+        # for missing entries
+        counts |= {name: len(matches.get(name, [])) * factor
                    for name in features}
 
     return counts
