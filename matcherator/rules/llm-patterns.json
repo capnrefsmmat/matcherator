@@ -64,6 +64,19 @@
         {"POS": "ADV", "DEP": "advmod", "IS_SENT_START": true},
         {"IS_PUNCT": true}
       ]]
+    },
+
+    "non_verb_roots": {
+      "description": "Sentences whose roots are not verbs",
+      "examples": [
+        "The way you strip land.",
+        "Just something to pick from.",
+        "Just enough to stop pretending she didn't.",
+        "Evenings."
+      ],
+      "rules": [[
+        {"POS": {"NOT_IN": ["VERB"]}, "DEP": "ROOT"}
+      ]]
     }
   },
 
