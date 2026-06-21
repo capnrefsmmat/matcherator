@@ -2,6 +2,8 @@
 
 from collections import defaultdict
 
+import pandas as pd
+
 import spacy
 from spacy.language import Language
 from spacy.tokens import Doc, Span
@@ -70,3 +72,67 @@ def _collect_features(rules):
             collect_one(rules["DependencyMatcher"]) |
             collect_one(rules["PhraseMatcher"]) |
             collect_one(rules["Derived"]))
+
+
+def feature_counts(nlp, doc, normalize=False):
+    """Return a dictionary of feature counts for a Document.
+
+    The document `doc` must have already been analyzed through a spaCy pipeline
+    containing one or more Matcherator counters. If `normalize` is True, counts
+    are normalized to rates per 1,000 tokens.
+
+    """
+
+    matcherator_pipes = [p for p in nlp.pipe_names
+                         if p.startswith("matcherator_")]
+
+    if normalize:
+        factor = 1000 / len(doc)
+    else:
+        factor = 1
+
+    counts = {}
+    for pipe in matcherator_pipes:
+        matches = getattr(doc._, pipe)
+        features = getattr(doc._, pipe + "_features")
+
+        counts |= {name: len(matches[name]) * factor
+                   for name in features}
+
+    return counts
+
+
+def feature_df(corpus, nlp, normalize=False, n_process=1):
+    """Count the features in a data frame of texts.
+
+    `corpus` must be a data frame with a `doc_id` column and a `text` column.
+    The features will be counted in each row. `nlp` must be a spaCy object with
+    one or more Matcherator pipelines enabled.
+
+    If `normalize` is True, counts are normalized to rates per 1,000 tokens.
+
+    Returns a data frame with a `doc_id` column and columns for each counted
+    feature.
+
+    n_process sets the number of parallel processes to use in the spaCy
+    pipeline. There is a high fixed cost to spawning processes, so only set this
+    greater than 1 when there are many texts. Set to -1 to use all available
+    cores.
+
+    """
+
+    # Eliminate Nones in texts
+    doc_ids = corpus["doc_id"].tolist()
+    texts = corpus["text"].tolist()
+
+    doc_ids = [doc_ids[ii]
+               for ii in range(len(doc_ids))
+               if texts[ii] is not None]
+    texts = [t for t in texts if t is not None]
+
+    counts = [feature_counts(nlp, doc, normalize)
+              for doc in nlp.pipe(texts, n_process=n_process)]
+
+    return pd.DataFrame.from_records(counts, index=doc_ids) \
+                       .fillna(0) \
+                       .rename_axis("doc_id")

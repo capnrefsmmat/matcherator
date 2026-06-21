@@ -3,8 +3,6 @@
 import json
 import importlib.resources
 
-import pandas as pd
-
 from spacy.language import Language
 from spacy.tokens import Doc
 
@@ -89,57 +87,3 @@ class BiberMatcherator(Matcherator):
                   assigns=["doc._.matcherator_biber"])
 def matcherator_biber(nlp, name):
     return BiberMatcherator(nlp)
-
-
-def biber_counts(doc, normalize=False):
-    """Return a dictionary of Biber feature counts for a Document.
-
-    The document `doc` must have already been analyzed through a spaCy pipeline
-    containing `matcherator_biber`. If `normalize` is True, counts are
-    normalized to rates per 1,000 tokens.
-    """
-
-    if normalize:
-        n_tokens = len(doc)
-
-        return {name: len(doc._.matcherator_biber[name]) / n_tokens * 1000
-                for name in doc._.matcherator_biber_features}
-
-    return {name: len(doc._.matcherator_biber[name])
-            for name in doc._.matcherator_biber_features}
-
-
-def biber_df(corpus, nlp, normalize=False, n_process=1):
-    """Count the Biber features in a data frame of texts.
-
-    `corpus` must be a data frame with a `doc_id` column and a `text` column.
-    The features will be counted in each row. `nlp` must be a spaCy object with
-    the `matcherator_biber` pipeline enabled.
-
-    If `normalize` is True, counts are normalized to rates per 1,000 tokens.
-
-    Returns a data frame with a `doc_id` column and columns for each counted
-    Biber feature.
-
-    n_process sets the number of parallel processes to use in the spaCy
-    pipeline. There is a high fixed cost to spawning processes, so only set this
-    greater than 1 when there are many texts. Set to -1 to use all available
-    cores.
-
-    """
-
-    # Eliminate Nones in texts
-    doc_ids = corpus["doc_id"].tolist()
-    texts = corpus["text"].tolist()
-
-    doc_ids = [doc_ids[ii]
-               for ii in range(len(doc_ids))
-               if texts[ii] is not None]
-    texts = [t for t in texts if t is not None]
-
-    counts = [biber_counts(doc, normalize)
-              for doc in nlp.pipe(texts, n_process=n_process)]
-
-    return pd.DataFrame.from_records(counts, index=doc_ids) \
-                       .fillna(0) \
-                       .rename_axis("doc_id")
