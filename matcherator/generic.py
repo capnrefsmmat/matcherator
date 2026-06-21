@@ -29,7 +29,7 @@ class GenericMatcherator(Matcherator):
                 .joinpath(rules) \
                 .read_text()
 
-            rules = json.loads(text)
+            rules = json.loads(rule_text)
 
         if not Doc.has_extension("matcherator_generic"):
             Doc.set_extension("matcherator_generic", default=None)
