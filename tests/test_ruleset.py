@@ -7,7 +7,7 @@ import pytest
 
 import spacy
 
-import matcherator.biber
+import matcherator.biber, matcherator.generic
 import matcherator.generic
 
 MODEL = "en_core_web_sm"
@@ -60,3 +60,20 @@ def test_biber(subtests):
     nlp.add_pipe("matcherator_biber")
 
     check_rule_examples(nlp, rules, "matcherator_biber", subtests)
+
+def test_llm_patterns(subtests):
+    rules = json.loads(
+        importlib.resources.files("matcherator.rules") \
+        .joinpath("llm-patterns.json") \
+        .read_text()
+    )
+
+    nlp = spacy.load(MODEL, disable=["ner"])
+
+    # Add emoji detection pipeline
+    nlp.add_pipe("emoji", first=True)
+
+    # Add matcherator pipeline
+    nlp.add_pipe("matcherator_generic", config={"rules": rules})
+
+    check_rule_examples(nlp, rules, "matcherator_generic", subtests)

@@ -15,7 +15,7 @@ from spacy.tokens import Doc
 from .matcherator import Matcherator
 
 class GenericMatcherator(Matcherator):
-    def __init__(self, rules):
+    def __init__(self, nlp, rules):
         """Set up a generic matcher.
 
         `rules` can either be a dictionary containing the rules or the name of a
@@ -48,5 +48,5 @@ class GenericMatcherator(Matcherator):
 
 @Language.factory("matcherator_generic",
                   assigns=["doc._.matcherator_generic"])
-def matcherator_generic(nlp, name):
-    return GenericMatcherator(nlp)
+def matcherator_generic(nlp, name, rules):
+    return GenericMatcherator(nlp, rules)
