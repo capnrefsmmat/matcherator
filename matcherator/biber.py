@@ -79,7 +79,8 @@ class BiberMatcherator(Matcherator):
         matches = self._filter_that_deletion(doc, matches)
 
         doc._.matcherator_biber = matches
-        doc._.matcherator_biber_features = self.features
+        # _ attributes must be serializable; sets aren't, so use a list
+        doc._.matcherator_biber_features = list(self.features)
 
         return doc
 

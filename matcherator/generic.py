@@ -41,7 +41,8 @@ class GenericMatcherator(Matcherator):
 
     def __call__(self, doc):
         doc._.matcherator_generic = self._match(doc)
-        doc._.matcherator_generic_features = self.features
+        # _ attributes must be serializable; sets aren't, so use a list
+        doc._.matcherator_generic_features = list(self.features)
 
         return doc
 
