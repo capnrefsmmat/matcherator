@@ -1028,7 +1028,8 @@
     "f_29_that_subj": {
       "description": "*that* relative clauses on subject position",
       "examples": [
-        "The dog that bit me was big."
+        "The dog that bit me was big.",
+        "The Marine that bit me was big."
       ],
       "counterexamples": [
         "The dog that I saw was big."
@@ -1036,7 +1037,7 @@
       "rules": [[
         {
           "RIGHT_ID": "noun_anchor",
-          "RIGHT_ATTRS": {"POS": "NOUN"}
+          "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
         },
         {
           "LEFT_ID": "noun_anchor",
@@ -1056,7 +1057,8 @@
     "f_30_that_obj": {
       "description": "*that* relative clauses on object position",
       "examples": [
-        "The dog that I saw was big."
+        "The dog that I saw was big.",
+        "The Marine that I saw was big."
       ],
       "counterexamples": [
         "The dog that bit me was big."
@@ -1064,7 +1066,7 @@
       "rules": [[
         {
           "RIGHT_ID": "noun_anchor",
-          "RIGHT_ATTRS": {"POS": "NOUN"}
+          "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
         },
         {
           "LEFT_ID": "noun_anchor",
