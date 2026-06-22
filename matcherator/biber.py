@@ -70,11 +70,33 @@ class BiberMatcherator(Matcherator):
 
         return matches
 
+    def _filter_other_nouns(self, matches):
+        """Produce f_16_other_nouns.
+
+        "Other nouns" means nouns and proper nouns, except for gerunds and
+        nominalizations.
+
+        """
+
+        nominalizations = {(m[0], m[1])
+                   for m in matches["f_14_nominalizations"]}
+        gerunds = {(m[0], m[1])
+                   for m in matches["f_15_gerunds"]}
+
+        other_nouns = [m for m in matches["f_16_other_nouns:all"]
+                       if (m[0], m[1]) not in nominalizations
+                       and (m[0], m[1]) not in gerunds]
+
+        matches["f_16_other_nouns"] = other_nouns
+
+        return matches
+
     def __call__(self, doc):
         matches = self._match(doc)
 
         matches = self._filter_passives(matches)
         matches = self._filter_that_deletion(matches)
+        matches = self._filter_other_nouns(matches)
 
         doc._.matcherator_biber = matches
         # _ attributes must be serializable; sets aren't, so use a list

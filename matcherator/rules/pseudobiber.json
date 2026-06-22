@@ -285,6 +285,14 @@
       ]]
     },
 
+    "f_16_other_nouns:all": {
+      "description": "All other nouns",
+      "derived": true,
+      "rules": [[
+        {"POS": {"IN": ["NOUN", "PROPN"]}}
+      ]]
+    },
+
     "f_19_be_main_verb": {
       "description": "*be* as main verb of a clause",
       "examples": [
@@ -1578,6 +1586,17 @@
   },
 
   "Derived": {
+    "f_16_other_nouns": {
+      "description": "Other nouns (not counting gerunds and nominalizations)",
+      "examples": [
+        "There is a cat."
+      ],
+      "counterexamples": [
+        "The adjustment was necessary.",
+        "Running is good."
+      ]
+    },
+
     "f_17_agentless_passives": {
       "description": "Agentless passive voice",
       "examples": [
