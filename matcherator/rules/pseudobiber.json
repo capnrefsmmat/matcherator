@@ -889,7 +889,8 @@
     "f_21_that_verb_comp": {
       "description": "*that* verb complements",
       "examples": [
-        "I said that he went."
+        "I said that he went.",
+        "This finding suggests that the item may be green."
       ],
       "rules": [[
         {
@@ -900,7 +901,7 @@
           "LEFT_ID": "verb",
           "REL_OP": ">",
           "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {"DEP": "ccomp", "POS": "VERB"}
+          "RIGHT_ATTRS": {"DEP": "ccomp", "POS": {"IN": ["VERB", "AUX"]}}
         },
         {
           "LEFT_ID": "comp_verb",
@@ -914,7 +915,8 @@
     "f_22_that_adj_comp": {
       "description": "*that* adjective complements",
       "examples": [
-        "I'm glad that you like it."
+        "I'm glad that you like it.",
+        "I'm sorry that you're sick."
       ],
       "rules": [[
         {
@@ -925,7 +927,7 @@
           "LEFT_ID": "adjective",
           "REL_OP": ">",
           "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {"DEP": "ccomp", "POS": "VERB"}
+          "RIGHT_ATTRS": {"DEP": "ccomp", "POS": {"IN": ["VERB", "AUX"]}}
         },
         {
           "LEFT_ID": "comp_verb",
