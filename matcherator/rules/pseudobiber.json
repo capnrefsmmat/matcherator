@@ -892,6 +892,12 @@
         "I said that he went.",
         "This finding suggests that the item may be green."
       ],
+      "failed_counterexamples": [
+        {
+          "text": "Traditional exposure therapy operates on the premise that habituation and fear extinction constitute the primary mechanisms of change.",
+          "comment": "This matches the pattern perfectly, but *that* is modifying *premise*, a noun. Possibly mis-parsed by spaCy?"
+        }
+      ],
       "rules": [[
         {
           "RIGHT_ID": "verb",
@@ -917,6 +923,9 @@
       "examples": [
         "I'm glad that you like it.",
         "I'm sorry that you're sick."
+      ],
+      "counterexamples": [
+        "It is plausible that aberrant prediction error processing could result in sustained relief."
       ],
       "rules": [[
         {
