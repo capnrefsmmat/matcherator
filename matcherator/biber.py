@@ -42,7 +42,7 @@ class BiberMatcherator(Matcherator):
 
         return matches
 
-    def _filter_that_deletion(self, doc, matches):
+    def _filter_that_deletion(self, matches):
         """Produce f_60_that_deletion.
 
         We match subordinator clauses with or without "that", and separately
@@ -74,7 +74,7 @@ class BiberMatcherator(Matcherator):
         matches = self._match(doc)
 
         matches = self._filter_passives(matches)
-        matches = self._filter_that_deletion(doc, matches)
+        matches = self._filter_that_deletion(matches)
 
         doc._.matcherator_biber = matches
         # _ attributes must be serializable; sets aren't, so use a list
