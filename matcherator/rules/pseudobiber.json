@@ -301,10 +301,13 @@
         "Workers, being closest to the actual work processes, often possess valuable insights into where error precursors exist and where system vulnerabilities are most likely to manifest."
       ],
       "counterexamples": [
-        "I am running."
+        "I am running.",
+        "If it proves to be desirable, we can upgrade the system."
       ],
       "rules": [[
-        {"LEMMA": "be", "DEP": {"NOT_IN": ["aux", "auxpass"]}}
+        {"LEMMA": "be",
+         "TAG": {"IN": ["VBD", "VBP", "VBZ"]},
+         "DEP": {"NOT_IN": ["aux", "auxpass"]}}
       ]]
     },
 
