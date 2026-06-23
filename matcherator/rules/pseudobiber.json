@@ -314,7 +314,8 @@
     "f_20_existential_there": {
       "description": "Existential *there*",
       "examples": [
-        "There is a feature in this sentence."
+        "There is a feature in this sentence.",
+        "We see that there exist four variables."
       ],
       "rules": [[
         {"TAG": "EX"}
@@ -890,7 +891,8 @@
       "description": "*that* verb complements",
       "examples": [
         "I said that he went.",
-        "This finding suggests that the item may be green."
+        "This finding suggests that the item may be green.",
+        "We see that the data is unimodal."
       ],
       "failed_counterexamples": [
         {
@@ -922,6 +924,7 @@
       "description": "*that* adjective complements",
       "examples": [
         "I'm glad that you like it.",
+        "The values were so small that they did not have much of an effect on our model.",
         "I'm sorry that you're sick."
       ],
       "counterexamples": [
@@ -1029,10 +1032,13 @@
       "description": "*that* relative clauses on subject position",
       "examples": [
         "The dog that bit me was big.",
-        "The Marine that bit me was big."
+        "The Marine that bit me was big.",
+        "The graphs that are presented above allow us to understand the relationship."
       ],
       "counterexamples": [
-        "The dog that I saw was big."
+        "The dog that I saw was big.",
+        "The Marine that I saw was big.",
+        "The number of shares that an article gets is related to which day of the week it is published."
       ],
       "rules": [[
         {
@@ -1058,10 +1064,13 @@
       "description": "*that* relative clauses on object position",
       "examples": [
         "The dog that I saw was big.",
-        "The Marine that I saw was big."
+        "The Marine that I saw was big.",
+        "The number of shares that an article gets is related to which day of the week it is published."
       ],
       "counterexamples": [
-        "The dog that bit me was big."
+        "The dog that bit me was big.",
+        "The Marine that bit me was big.",
+        "The graphs that are presented above allow us to understand the relationship."
       ],
       "rules": [[
         {
@@ -1309,7 +1318,8 @@
         "Because I was hungry, I ate.",
         "If it rains, we stay inside.",
         "Although it rained, we played.",
-        "It was a good game, though it was rainy."
+        "It was a good game, though it was rainy.",
+        "Furthermore, whilst the cognitive avoidance hypothesis represents a plausible mechanistic explanation, alternative accounts merit consideration."
       ],
       "rules": [[
         {
