@@ -9,13 +9,35 @@ features.
 
 ## Design
 
-Match rules are defined in JSON format in `rules/`. `match_rules.py` can set up
-a spaCy pipeline to apply these rules to texts. It can also be run at the
-command line:
+Match rules are defined in JSON format in `matcherator/rules/`. Some rules
+require post-processing in Python, so we provide spaCy pipelines that have the
+necessary code already loaded.
 
-```sh
-python match_rules.py rules/pseudobiber.json "The quick brown fox jumps over the lazy dog."
+For example, for Biber-style features:
+
+```python
+import spacy
+import matcherator
+import matcherator.biber
+
+nlp = spacy.load("en_core_web_sm", disable=["ner"])
+nlp.add_pipe("matcherator_biber")
+
+doc = nlp("The quick brown fox jumps over the lazy dog.")
+doc._.matcherator_biber # dictionary of all feature matches
 ```
+
+Alternately, if you simply want counts of features for texts in a corpus data
+frame, you can use the `matcherator.feature_df()` function:
+
+```python
+# suppose `corpus` is a pandas data frame with `doc_id` and `text` columns
+matcherator.feature_df(corpus, nlp, normalize=True)
+```
+
+This returns a data frame with one row per document, giving all the feature
+counts. Set the `n_process` to the number of processes you want to use to
+automatically get spaCy's pipeline parallelization.
 
 Unit tests work with pytest. Test data is defined in the same rule files, by
 `examples` and `counterexamples` files for each rule: the rule must match the
@@ -28,7 +50,9 @@ rule definitions.
 are expected to fail, since pybiber's rules are not as flexible, or sometimes
 are defined slightly differently.
 
-## pseudobiber
+## Rule sets
+
+### pseudobiber
 
 Rules like Biber's.
 
@@ -118,7 +142,7 @@ Audit notes, comparing to pybiber/pseudobibeR:
 - `f_66_neg_synthetic` and `f_66_neg_analytic`: good
 
 
-## LLM patterns
+### LLM patterns
 
 Stylistic features reported to be common among LLMs, so that they can be
 automatically detected and quantified. Does not replicate pseudobiber features
