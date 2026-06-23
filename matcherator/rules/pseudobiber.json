@@ -712,48 +712,6 @@
       ]]
     },
 
-    "f_62_split_infinitive": {
-      "description": "Split infinitives",
-      "examples": [
-        "He wants to definitively show the result.",
-        "I aim to boldly go where no man has gone before."
-      ],
-      "rules": [
-        [
-          {"TAG": "TO"},
-          {"TAG": "RB"},
-          {"TAG": "VB"}
-        ],
-        [
-          {"TAG": "TO"},
-          {"TAG": "RB"},
-          {"TAG": "RB"},
-          {"TAG": "VB"}
-        ]
-      ]
-    },
-
-    "f_63_split_auxiliary": {
-      "description": "Split auxiliaries",
-      "examples": [
-        "They are objectively shown to be split.",
-        "I have already written the example."
-      ],
-      "rules": [
-        [
-          {"POS": "AUX"},
-          {"POS": "ADV"},
-          {"POS": "VERB"}
-        ],
-        [
-          {"POS": "AUX"},
-          {"POS": "ADV"},
-          {"POS": "ADV"},
-          {"POS": "VERB"}
-        ]
-      ]
-    },
-
     "f_64_phrasal_coordination": {
       "description": "Phrases joined with coordinating conjunctions",
       "examples": [
@@ -1540,6 +1498,58 @@
               "whoever", "whomever", "whatever", "whenever", "wherever"
             ]}
           }
+        }
+      ]]
+    },
+
+    "f_62_split_infinitive": {
+      "description": "Split infinitives",
+      "examples": [
+        "He wants to definitively show the result.",
+        "I aim to boldly go where no man has gone before.",
+        "I aim to boldly and rapidly go where no man has gone before."
+      ],
+      "counterexamples": [
+        "He wants to show the result."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "verb_anchor",
+          "RIGHT_ATTRS": {"TAG": "VB"}
+        },
+        {
+          "LEFT_ID": "verb_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "to",
+          "RIGHT_ATTRS": {
+            "TAG": "TO", "DEP": "aux"
+          }
+        }
+      ]]
+    },
+
+    "f_63_split_auxiliary": {
+      "description": "Split auxiliaries",
+      "examples": [
+        "They are objectively shown to be split.",
+        "They are objectively and readily shown to be split.",
+        "I have already written the example.",
+        "The result cannot always be anticipated."
+      ],
+      "counterexamples": [
+        "They are shown to be split."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "verb_anchor",
+          "RIGHT_ATTRS": {"POS": "VERB"}
+        },
+        {
+          "LEFT_ID": "verb_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "auxiliary",
+          "RIGHT_ATTRS": {"POS": "AUX",
+                          "DEP": {"IN": ["aux", "auxpass"]}}
         }
       ]]
     }

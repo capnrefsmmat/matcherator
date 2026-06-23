@@ -91,12 +91,46 @@ class BiberMatcherator(Matcherator):
 
         return matches
 
+    def _filter_split_infinitive(self, matches):
+        """Produce f_62_split_infinitive.
+
+        Split infinitives have intervening words between "to" and the
+        infinitive, which we check by counting tokens.
+
+        """
+
+        matches["f_62_split_infinitive"] = [
+            [m[0], m[1]]
+            for m in matches["f_62_split_infinitive"]
+            if m[0] - m[1] > 1
+        ]
+
+        return matches
+
+    def _filter_split_auxiliary(self, matches):
+        """Produce f_63_split_auxiliary.
+
+        Split auxiliaries have intervening words between the auxiliary and the
+        verb, which we check by counting tokens.
+
+        """
+
+        matches["f_63_split_auxiliary"] = [
+            [m[0], m[1]]
+            for m in matches["f_63_split_auxiliary"]
+            if m[0] - m[1] > 1
+        ]
+
+        return matches
+
     def __call__(self, doc):
         matches = self._match(doc)
 
         matches = self._filter_passives(matches)
         matches = self._filter_that_deletion(matches)
         matches = self._filter_other_nouns(matches)
+        matches = self._filter_split_infinitive(matches)
+        matches = self._filter_split_auxiliary(matches)
 
         doc._.matcherator_biber = matches
         # _ attributes must be serializable; sets aren't, so use a list

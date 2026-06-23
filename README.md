@@ -109,11 +109,10 @@ Audit notes, comparing to pybiber/pseudobibeR:
 - `f_60_that_deletion`: good, though our approach is fancier than pybiber's
 - `f_61_stranded_preposition`: Good, though I don't understand why pybiber
   doesn't get tripped up by hyphens
-- `f_62_split_infinitive` and `f_63_split_auxiliary`: These simple patterns will
-  miss obvious cases where the split is long. ("To boldly and proudly go
-  where...") It'd be better to do it with DependencyMatcher. e.g., for split
-  infinitives, match the `to` to the verb, and then in Python check if they're
-  adjacent or not.
+- `f_62_split_infinitive` and `f_63_split_auxiliary`: We use a DependencyMatcher
+  rule that allows more complex split structures than pybiber (or Biber's book),
+  which only allows adverbs in the split. We allow any intervening structure,
+  such as the split infinitive "to boldly and rapidly go".
 - `f_64_phrasal_coordination` and `f_65_clausal_coordination`: good, modulo
   spaCy tagging differences
 - `f_66_neg_synthetic` and `f_66_neg_analytic`: good
