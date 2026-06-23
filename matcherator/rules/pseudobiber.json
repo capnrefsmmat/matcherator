@@ -384,16 +384,19 @@
     "f_34_sentence_relatives": {
       "description": "Sentence relatives",
       "examples": [
-        "Bob likes fried mangoes, which is the most disgusting thing I've ever heard of."
+        "Bob likes fried mangoes, which is the most disgusting thing I've ever heard of.",
+        "Bob likes fried mangoes---which is the most disgusting thing I've ever heard of.",
+        "None of our variables have a VIF of greater than 2.5, which means that we do not need to be concerned about multicollinearity."
       ],
       "comment": "TODO Feels like this should be done with DependencyMatcher instead of matching on commas",
       "rules": [[
         {
-          "ORTH": ","
+          "IS_PUNCT": true,
+          "IS_SENT_START": false
         },
         {
           "LOWER": "which",
-          "DEP": "nsubj"
+          "DEP": {"IN": ["nsubj", "nsubjpass"]}
         }
       ]]
     },
