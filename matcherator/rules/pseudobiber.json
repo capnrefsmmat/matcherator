@@ -696,11 +696,16 @@
       "description": "Prepositions stranded at the end of a sentence or clause",
       "examples": [
         "She is the candidate that I was thinking of.",
+        "She is the candidate that I was thinking of, before the meeting.",
+        "She is the candidate that I was thinking of---before the meeting.",
         "I don't know who she laughed at."
+      ],
+      "counterexamples": [
+        "Let's meet face-to-face."
       ],
       "rules": [[
         {"TAG": "IN", "DEP": "prep"},
-        {"POS": "PUNCT"}
+        {"POS": "PUNCT", "TAG": {"IN": [".", ",", ":"]}}
       ]]
     },
 
