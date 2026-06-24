@@ -9,7 +9,7 @@ import pandas as pd
 
 import matcherator.biber
 
-def print_matches(doc):
+def print_matches(doc, raw=False):
     def stringify_match(m):
         if isinstance(m, tuple):
             # span of (begin, end) tokens
@@ -19,14 +19,22 @@ def print_matches(doc):
         # must be a list of token IDs
         return ", ".join(doc[t].text for t in m)
 
-    for feature, matches in doc._.matcherator_biber.items():
-        out = "; ".join([stringify_match(m) for m in matches])
-        print(f"{feature}: {out}")
+    if raw:
+        it = doc._.matcherator_biber.items()
+    else:
+        it = ((feature, doc._.matcherator_biber[feature])
+              for feature in doc._.matcherator_biber_features)
+
+    for feature, matches in it:
+        if len(matches) > 0:
+            out = "; ".join([stringify_match(m) for m in matches])
+            print(f"{feature}: {out}")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Match a text against a JSON ruleset.")
     parser.add_argument("--model", help="spaCy model to use", default="en_core_web_sm")
+    parser.add_argument("--raw", help="Show raw matches, before post-processing to calculate derived features", action="store_true")
     parser.add_argument("text")
 
     args = parser.parse_args()
@@ -42,4 +50,4 @@ if __name__ == "__main__":
 
     doc = nlp(args.text)
 
-    print_matches(doc)
+    print_matches(doc, args.raw)
