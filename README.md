@@ -7,7 +7,20 @@ corpus linguistic analyses.
 The ultimate goal is to provide a package with several rulesets for different
 features.
 
-## Design
+## Basic use
+
+### Installation
+
+Clone the repository. Inside its root directory, run
+
+```sh
+pip install -e .
+```
+
+This should install all the dependencies you need as well; feel free to set up a
+virtual environment first.
+
+### Matching patterns in text
 
 Match rules are defined in JSON format in `matcherator/rules/`. Some rules
 require post-processing in Python, so we provide spaCy pipelines that have the
@@ -39,16 +52,47 @@ This returns a data frame with one row per document, giving all the feature
 counts. Set the `n_process` to the number of processes you want to use to
 automatically get spaCy's pipeline parallelization.
 
-Unit tests work with pytest. Test data is defined in the same rule files, by
-`examples` and `counterexamples` files for each rule: the rule must match the
-`examples` and must not match the `counterexamples`.
+### Debugging and quick use
 
-`test/test_ruleset.py` uses these to test the matcherator matching engine and
-rule definitions.
+To quickly see how a sentence is tagged by the Biber matcher, you can use the
+`match_biber.py` script:
 
-`test/test_pybiber.py` uses these examples to test pybiber. Many of these tests
-are expected to fail, since pybiber's rules are not as flexible, or sometimes
-are defined slightly differently.
+```
+$ python match_biber.py "The quick brown fox jumps over the lazy dog."
+f_40_adj_attr: quick; brown; lazy
+f_16_other_nouns: fox; dog
+f_03_present_tense: jumps
+f_39_prepositions: over
+```
+
+When you're developing new patterns, it may be helpful to see how spaCy tags a
+sample sentence:
+
+```
+$ python show-tagging.py "Here's a sample sentence."
+Text      Lemma     POS    TAG    DEP
+--------  --------  -----  -----  --------
+Here      here      ADV    RB     advmod
+'s        be        AUX    VBZ    ROOT
+a         a         DET    DT     det
+sample    sample    NOUN   NN     compound
+sentence  sentence  NOUN   NN     nsubj
+.         .         PUNCT  .      punct
+```
+
+Or to see its dependency parse in graphical form:
+
+```
+$ python display-dependencies.py "Here's a sample sentence."
+/Users/alex/miniconda3/lib/python3.12/site-packages/spacy/util.py:1893: UserWarning: [W124] 0.0.0.0:5000 is already in use, using the nearest available port 5001 as an alternative.
+  warnings.warn(Warnings.W124.format(host=host, port=start, serve_port=port))
+
+Using the 'dep' visualizer
+Serving on http://0.0.0.0:5001 ...
+```
+
+Open your web browser to `http://127.0.0.1:5001` (or whatever port number is
+shown) to see a dependency graph.
 
 ## Rule sets
 
@@ -155,3 +199,18 @@ Sources for reported style features and examples:
 - [tropes.fyi](https://tropes.fyi/)
 - sneak's [LLM Prose
   Tells](https://git.eeqj.de/sneak/prompts/src/branch/main/prompts/LLM_PROSE_TELLS.md)
+
+TODO count postnominal and prenominal modification of nouns
+
+## Development
+
+Unit tests work with pytest. Test data is defined in the same rule files, by
+`examples` and `counterexamples` files for each rule: the rule must match the
+`examples` and must not match the `counterexamples`.
+
+`test/test_ruleset.py` uses these to test the matcherator matching engine and
+rule definitions.
+
+`test/test_pybiber.py` uses these examples to test pybiber. Many of these tests
+are expected to fail, since pybiber's rules are not as flexible, or sometimes
+are defined slightly differently.
