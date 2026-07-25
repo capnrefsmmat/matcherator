@@ -766,7 +766,7 @@
     },
 
     "f_66_neg_synthetic": {
-      "description": "Synthetic negation",
+      "description": "Synthetic negation (using *no*, *neither*, or *nor*)",
       "examples": [
         "No answer is good enough for Jones.",
         "No better answer is available.",
@@ -791,8 +791,9 @@
     },
 
     "f_67_neg_analytic": {
-      "description": "Analytic negation",
+      "description": "Analytic negation (using *not* or contractions thereof)",
       "examples": [
+        "That is not good enough.",
         "That isn't good enough."
       ],
       "rules": [
