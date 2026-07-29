@@ -16,11 +16,18 @@ class BiberMatcherator(Matcherator):
 
         rules = json.loads(rule_text)
 
+        # Contains all matches
         if not Doc.has_extension("matcherator_biber"):
             Doc.set_extension("matcherator_biber", default=None)
 
+        # Set of feature names corresponding to matches
         if not Doc.has_extension("matcherator_biber_features"):
             Doc.set_extension("matcherator_biber_features", default=set())
+
+        # Statistics computed by calculation on the whole text, not by matching.
+        # Namely, f_43_type_token and f_44_mean_word_length
+        if not Doc.has_extension("matcherator_biber_stats"):
+            Doc.set_extension("matcherator_biber_stats", default=set())
 
         super().__init__(nlp, rules)
 
@@ -123,6 +130,20 @@ class BiberMatcherator(Matcherator):
 
         return matches
 
+    def _compute_mean_word_length(self, doc):
+        """Mean word length, excluding digits and URLs."""
+        lengths = [len(token.text)
+                   for token in doc
+                   if not token.is_punct
+                   and not token.is_digit
+                   and not token.like_url]
+
+        if len(lengths) == 0:
+            # No valid tokens
+            return None
+
+        return sum(lengths) / len(lengths)
+
     def __call__(self, doc):
         matches = self._match(doc)
 
@@ -135,6 +156,10 @@ class BiberMatcherator(Matcherator):
         doc._.matcherator_biber = matches
         # _ attributes must be serializable; sets aren't, so use a list
         doc._.matcherator_biber_features = list(self.features)
+
+        doc._.matcherator_biber_stats = {
+            "f_44_mean_word_length": self._compute_mean_word_length(doc)
+        }
 
         return doc
 
