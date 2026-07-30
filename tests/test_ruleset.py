@@ -53,9 +53,6 @@ def test_biber(subtests):
 
     nlp = spacy.load(MODEL, disable=["ner"])
 
-    # Add emoji detection pipeline
-    nlp.add_pipe("emoji", first=True)
-
     # Add matcherator pipeline
     nlp.add_pipe("matcherator_biber")
 
