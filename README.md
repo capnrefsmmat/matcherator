@@ -98,7 +98,12 @@ shown) to see a dependency graph.
 
 ### pseudobiber
 
-Rules like Biber's.
+Rules like Biber's. Based on
+[pseudobibeR](https://cran.r-project.org/package=pseudobibeR) and
+[pybiber](https://browndw.github.io/pybiber/), but with significant reference to
+Biber's Appendix II of *Variation across speech and writing* (Cambridge
+University Press). Some examples and test cases also based on
+[MFTE](https://github.com/mshakirDr/MFTE) when definitions coincide.
 
 Audit notes, comparing to pybiber/pseudobibeR:
 

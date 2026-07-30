@@ -13,7 +13,11 @@
     "f_02_perfect_aspect": {
       "description": "Words in the perfect aspect, indicated by *have* as an auxiliary verb",
       "examples": [
-        "I have written this sentence."
+        "I have written this sentence.",
+        "Have you been on a student excange?",
+        "She has already seen it.",
+        "He has been told before.",
+        "Is this the last novel you've read?"
       ],
       "rules": [[
         {"LEMMA": "have", "DEP": "aux"}
@@ -196,12 +200,14 @@
       "description": "Direct *wh-* questions",
       "examples": [
         "When are you leaving?",
-        "The difference between heights constitutes the gap, which can be measured with a depth micrometer."
+        "The difference between heights constitutes the gap, which can be measured with a depth micrometer.",
+        "What's happening?",
+        "Why don't we call the game off?"
       ],
       "counterexamples": [
         "I know when you are leaving."
       ],
-      "comment": "TODO Need examples for the first rule, where the WH- word is after one token; then determine if that should also apply to the second rule, for clause-initial WH-questions",
+      "comment": "TODO Need examples for the first rule, where the WH- word is after one token; then determine if that should also apply to the second rule, for clause-initial WH-questions; also, should this be restricted to questions and exclude the second example?",
       "rules": [
         [
           {"IS_SENT_START": true},
@@ -298,7 +304,10 @@
       "examples": [
         "I am happy.",
         "Additionally, the human performance approach acknowledges that communication, both formal and informal, is essential to maintaining an effective safety culture.",
-        "Workers, being closest to the actual work processes, often possess valuable insights into where error precursors exist and where system vulnerabilities are most likely to manifest."
+        "Workers, being closest to the actual work processes, often possess valuable insights into where error precursors exist and where system vulnerabilities are most likely to manifest.",
+        "She's irreplaceable.",
+        "It was nice to just be at home.",
+        "It's not long."
       ],
       "counterexamples": [
         "I am running.",
@@ -315,7 +324,9 @@
       "description": "Existential *there*",
       "examples": [
         "There is a feature in this sentence.",
-        "We see that there exist four variables."
+        "We see that there exist four variables.",
+        "There are students.",
+        "There is now a scholarship scheme."
       ],
       "rules": [[
         {"TAG": "EX"}
@@ -411,10 +422,15 @@
     "f_40_adj_attr": {
       "description": "Attributive adjectives",
       "examples": [
-        "The big horse is here."
+        "The big horse is here.",
+        "I have a terrible idea!",
+        "It's a quick and easy fix.",
+        "I didn't sleep at all last night."
       ],
       "counterexamples": [
-        "The horse is big."
+        "The horse is big.",
+        "That's right.",
+        "It must be terrible."
       ],
       "rules": [[
         {"POS": "ADJ", "DEP": "amod"}
@@ -424,10 +440,15 @@
     "f_41_adj_pred": {
       "description": "Predicative adjectives",
       "examples": [
-        "The horse is big."
+        "The horse is big.",
+        "That's right",
+        "It must be terrible."
       ],
       "counterexamples": [
-        "The big horse is here."
+        "The big horse is here.",
+        "I have a terrible idea!",
+        "It's a quick and easy fix.",
+        "I didn't sleep at all last night."
       ],
       "rules": [[
         {"POS": "ADJ", "DEP": "acomp"}
@@ -437,6 +458,7 @@
     "f_42_adverbs": {
       "description": "Total adverbs",
       "examples": [
+        "Unfortunately, that's the case."
       ],
       "rules": [[
         {"TAG": {"IN": ["RB", "RBR", "RBS", "WRB"]}}
@@ -484,6 +506,7 @@
 
     "f_50_discourse_particles": {
       "description": "Discourse particles",
+      "comment": "TODO Switch to anything with RP POS, like MFTE?",
       "examples": [
         "Well, that's not a good idea.",
         "Anyway, I started blasting.",
@@ -1535,7 +1558,10 @@
         "They are objectively shown to be split.",
         "They are objectively and readily shown to be split.",
         "I have already written the example.",
-        "The result cannot always be anticipated."
+        "The result cannot always be anticipated.",
+        "I would actually drive.",
+        "I can't ever imagine arguing with Jill.",
+        "They have not yet developed cancer."
       ],
       "counterexamples": [
         "They are shown to be split."
