@@ -1,0 +1,56 @@
+{
+  "Matcher": {
+    "emoji": {
+      "description": "Emoji",
+      "examples": [
+        "💩",
+        "🧠 Cognitive Dissonance Pattern"
+      ],
+      "rules": [[
+        {"_": {"is_emoji": true}}
+      ]]
+    },
+
+    "cardinal_number": {
+      "description": "Cardinal numbers",
+      "examples": [
+        "I have three cats.",
+        "The cats live in unit 311."
+      ],
+      "counterexamples": [
+        "One must do one's best."
+      ],
+      "rules": [[
+        {"TAG": "CD"}
+      ]]
+    },
+
+    "url": {
+      "description": "URLs",
+      "examples": [
+        "You can find my website at www.example.com",
+        "I got it from https://www.example.com."
+      ],
+      "rules": [[
+        {"LIKE_URL": true}
+      ]]
+    },
+
+    "email": {
+      "description": "Email addresses",
+      "examples": [
+        "Send me a message at example@example.com.",
+        "I got this weird message from weird@example.com and I don't know what it means."
+      ],
+      "rules": [[
+        {"LIKE_EMAIL": true}
+      ]]
+    }
+  },
+
+  "DependencyMatcher": {},
+
+  "PhraseMatcher": {},
+
+  "Derived": {}
+}

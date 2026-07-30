@@ -67,6 +67,20 @@ def test_llm_patterns(subtests):
 
     nlp = spacy.load(MODEL, disable=["ner"])
 
+    # Add matcherator pipeline
+    nlp.add_pipe("matcherator_generic", config={"rules": rules})
+
+    check_rule_examples(nlp, rules, "matcherator_generic", subtests)
+
+def test_symbols(subtests):
+    rules = json.loads(
+        importlib.resources.files("matcherator.rules") \
+        .joinpath("symbols.json") \
+        .read_text()
+    )
+
+    nlp = spacy.load(MODEL, disable=["ner"])
+
     # Add emoji detection pipeline
     nlp.add_pipe("emoji", first=True)
 

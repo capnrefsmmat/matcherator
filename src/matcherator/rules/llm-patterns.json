@@ -1,16 +1,5 @@
 {
   "Matcher": {
-    "emoji": {
-      "description": "Emoji",
-      "examples": [
-        "💩",
-        "🧠 Cognitive Dissonance Pattern"
-      ],
-      "rules": [[
-        {"_": {"is_emoji": true}}
-      ]]
-    },
-
     "em_dashes": {
       "description": "Em dashes",
       "examples": [
