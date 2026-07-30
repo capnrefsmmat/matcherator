@@ -6,10 +6,12 @@ import importlib.resources
 from spacy.language import Language
 from spacy.tokens import Doc
 
+import textacy.text_stats.diversity
+
 from .matcherator import Matcherator
 
 class BiberMatcherator(Matcherator):
-    def __init__(self, nlp):
+    def __init__(self, nlp, ttr_func, ttr_token_limit, ttr_args):
         rule_text = importlib.resources.files("matcherator.rules") \
             .joinpath("pseudobiber.json") \
             .read_text()
@@ -28,6 +30,10 @@ class BiberMatcherator(Matcherator):
         # Namely, f_43_type_token and f_44_mean_word_length
         if not Doc.has_extension("matcherator_biber_stats"):
             Doc.set_extension("matcherator_biber_stats", default=set())
+
+        self.ttr_func = ttr_func
+        self.ttr_token_limit = ttr_token_limit
+        self.ttr_args = ttr_args
 
         super().__init__(nlp, rules)
 
@@ -144,6 +150,13 @@ class BiberMatcherator(Matcherator):
 
         return sum(lengths) / len(lengths)
 
+    def _compute_ttr(self, doc):
+        """Type-token ratio based on a customizable TTR function."""
+        if self.ttr_token_limit is not None and len(doc) > self.ttr_token_limit:
+                doc = doc[:self.ttr_token_limit]
+
+        return self.ttr_func(doc, **self.ttr_args)
+
     def __call__(self, doc):
         matches = self._match(doc)
 
@@ -158,6 +171,7 @@ class BiberMatcherator(Matcherator):
         doc._.matcherator_biber_features = list(self.features)
 
         doc._.matcherator_biber_stats = {
+            "f_43_type_token": self._compute_ttr(doc),
             "f_44_mean_word_length": self._compute_mean_word_length(doc)
         }
 
@@ -165,6 +179,9 @@ class BiberMatcherator(Matcherator):
 
 
 @Language.factory("matcherator_biber",
+                  default_config={"ttr_func": textacy.text_stats.diversity.ttr,
+                                  "ttr_token_limit": None,
+                                  "ttr_args": {}},
                   assigns=["doc._.matcherator_biber"])
-def matcherator_biber(nlp, name):
-    return BiberMatcherator(nlp)
+def matcherator_biber(nlp, name, ttr_func, ttr_token_limit, ttr_args):
+    return BiberMatcherator(nlp, ttr_func, ttr_token_limit, ttr_args)

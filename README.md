@@ -174,8 +174,10 @@ Audit notes, comparing to pybiber/pseudobibeR:
 - `f_40_adj_attr` and `f_41_adj_pred`: pybiber uses word order to distinguish
   attributive and predicative adjectives; we use spaCy's dependency parse.
 - `f_42_adverbs`: pybiber does not count RBS (adverb, superlative); we do
-- `f_43_type_token` and `f_44_mean_word_length`: TODO we do not yet implement
-  these.
+- `f_43_type_token` and `f_44_mean_word_length`: Implemented, but slightly
+  differently. Mean word length skips digits and URLs. Type-token ratio defaults
+  to ordinary TTR with no token limit, but is configurable to any statistic and
+  on a fixed number of tokens (such as the first 100 tokens).
 - `f_45_conjuncts`: We match pybiber fine, but I suspect there's a better
   DependencyMatcher rule we could use.
 - `f_46_downtoners` through `f_59_contractions`: good
