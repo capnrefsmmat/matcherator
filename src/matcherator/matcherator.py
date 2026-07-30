@@ -31,9 +31,10 @@ class Matcherator:
         self.nlp = nlp
 
     def _match(self, doc):
-        match_matches = self.matcher(doc)
-        dep_matches = self.dep_matcher(doc)
-        phrase_matches = self.phrase_matcher(doc)
+        # some matchers warn when there are 0 rules, so don't use them in that case
+        match_matches = self.matcher(doc) if len(self.matcher) > 0 else []
+        dep_matches = self.dep_matcher(doc) if len(self.dep_matcher) > 0 else []
+        phrase_matches = self.phrase_matcher(doc) if len(self.phrase_matcher) > 0 else []
 
         matches = defaultdict(list)
 
