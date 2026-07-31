@@ -172,7 +172,7 @@ pattern-matches on sequences of token attributes.
 :f_25_present_participle:
    Present participial adverbial clauses
 
-   Syntacticaly detached clauses only, to match Biber's definition
+   Syntactically detached clauses only, to match Biber's definition
 
    * Stuffing his mouth with cookies, Joe ran out the door.
    * Joe ran out the door, stuffing his mouth with cookies.
@@ -198,11 +198,12 @@ pattern-matches on sequences of token attributes.
 :f_34_sentence_relatives:
    Sentence relatives
 
-   TODO Feels like this should be done with DependencyMatcher instead of matching on commas
+   Relative clauses that refer to the predicate of a clause or to a whole clause or sentence, rather than just to a noun phrase. Detected heuristically by *which* after punctuation. TODO Is there a better DependencyMatcher rule that would work?
 
    * Bob likes fried mangoes, which is the most disgusting thing I've ever heard of.
    * Bob likes fried mangoes---which is the most disgusting thing I've ever heard of.
    * None of our variables have a VIF of greater than 2.5, which means that we do not need to be concerned about multicollinearity.
+   * He walks for an hour each morning, which would bore me.
 
 :f_39_prepositions:
    Total prepositional phrases
@@ -212,6 +213,7 @@ pattern-matches on sequences of token attributes.
 :f_40_adj_attr:
    Attributive adjectives
 
+   Adjectives that modify a noun simply by preceding it.
 
    * The big horse is here.
    * I have a terrible idea!
@@ -226,9 +228,10 @@ pattern-matches on sequences of token attributes.
 :f_41_adj_pred:
    Predicative adjectives
 
+   Adjectives that are linked to a noun clause with a copula (*is*).
 
    * The horse is big.
-   * That's right
+   * That's right.
    * It must be terrible.
 
    Counterexamples:
@@ -246,7 +249,7 @@ pattern-matches on sequences of token attributes.
 :f_45_conjuncts:
    Conjuncts
 
-   There is a PhraseMatcher rule for all other conjunct phrases
+   Connective phrases that mark relations between clauses, such as *altogether*, *in comparison*, *nonetheless*. There is also a PhraseMatcher rule to detect the remaining patterns.
 
    * It's a whole different kind of flying, altogether.
    * Rather than treating workers as passive recipients of safety procedures, this approach encourages workers to actively participate in identifying error-prone conditions, contributing to hazard analysis, and providing feedback on the effectiveness of existing controls and procedures.
@@ -645,7 +648,7 @@ phrases.
 :f_45_conjuncts:
    Conjuncts
 
-   There is also a Matcher rule for else, altogether, and rather following punctuation
+   There is also a Matcher rule for *else*, *altogether*, and *rather* following punctuation
 
    * I need an example of a conjunct, e.g., one like this.
    * However, it didn't work.

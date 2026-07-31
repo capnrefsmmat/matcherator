@@ -394,12 +394,17 @@
 
     "f_34_sentence_relatives": {
       "description": "Sentence relatives",
+      "comment": "Relative clauses that refer to the predicate of a clause or to a whole clause or sentence, rather than just to a noun phrase. Detected heuristically by *which* after punctuation. TODO Is there a better DependencyMatcher rule that would work?",
       "examples": [
         "Bob likes fried mangoes, which is the most disgusting thing I've ever heard of.",
         "Bob likes fried mangoes---which is the most disgusting thing I've ever heard of.",
-        "None of our variables have a VIF of greater than 2.5, which means that we do not need to be concerned about multicollinearity."
+        "None of our variables have a VIF of greater than 2.5, which means that we do not need to be concerned about multicollinearity.",
+        "He walks for an hour each morning, which would bore me."
       ],
-      "comment": "TODO Feels like this should be done with DependencyMatcher instead of matching on commas",
+      "failed_examples": [
+        "They say he plays truant, which he doesn't.",
+        "The plane may be several hours late, in which case there's no point in our waiting."
+      ],
       "rules": [[
         {
           "IS_PUNCT": true,
@@ -421,6 +426,7 @@
 
     "f_40_adj_attr": {
       "description": "Attributive adjectives",
+      "comment": "Adjectives that modify a noun simply by preceding it.",
       "examples": [
         "The big horse is here.",
         "I have a terrible idea!",
@@ -439,9 +445,10 @@
 
     "f_41_adj_pred": {
       "description": "Predicative adjectives",
+      "comment": "Adjectives that are linked to a noun clause with a copula (*is*).",
       "examples": [
         "The horse is big.",
-        "That's right",
+        "That's right.",
         "It must be terrible."
       ],
       "counterexamples": [
@@ -467,11 +474,11 @@
 
     "f_45_conjuncts": {
       "description": "Conjuncts",
+      "comment": "Connective phrases that mark relations between clauses, such as *altogether*, *in comparison*, *nonetheless*. There is also a PhraseMatcher rule to detect the remaining patterns.",
       "examples": [
         "It's a whole different kind of flying, altogether.",
         "Rather than treating workers as passive recipients of safety procedures, this approach encourages workers to actively participate in identifying error-prone conditions, contributing to hazard analysis, and providing feedback on the effectiveness of existing controls and procedures."
       ],
-      "comment": "There is a PhraseMatcher rule for all other conjunct phrases",
       "rules": [
         [
           {"IS_PUNCT": true},
@@ -1593,7 +1600,7 @@
         "I need an example of a conjunct, e.g., one like this.",
         "However, it didn't work."
       ],
-      "comment": "There is also a Matcher rule for else, altogether, and rather following punctuation",
+      "comment": "There is also a Matcher rule for *else*, *altogether*, and *rather* following punctuation",
       "rules": [
         "alternatively", "consequently", "conversely", "e.g.", "furthermore",
         "hence", "however", "i.e.", "instead", "likewise", "moreover", "namely",

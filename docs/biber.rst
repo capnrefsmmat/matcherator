@@ -33,4 +33,16 @@ API
 Feature reference
 -----------------
 
+References
+^^^^^^^^^^
+
+* Rules based on Appendix II of Douglas Biber (1988). *Variation across speech
+  and writing.* Cambridge University Press.
+* For some examples and definitions used below: Quirk, Greenham, Leech, Svartvik
+  (1985). *A Comprehensive Grammar of the English Language.* Longman.
+
+Note that some rules show up twice under different matchers. In these cases, two
+different strategies are used to find different cases of the pattern, then
+combined when computing results.
+
 .. include:: pseudobiber-reference.rst
