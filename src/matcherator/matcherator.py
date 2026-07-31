@@ -78,10 +78,15 @@ def _collect_features(rules):
 def feature_counts(nlp, doc, normalize=False):
     """Return a dictionary of feature counts for a Document.
 
-    The document `doc` must have already been analyzed through a spaCy pipeline
-    containing one or more Matcherator counters. If `normalize` is True, counts
-    are normalized to rates per 1,000 tokens.
+    :param nlp: spaCy pipeline
+    :param doc: spaCy ``Doc`` object from a spaCy pipeline containing one or
+      more Matcherator feature counters.
 
+    For example::
+
+      doc = nlp("The quick brown fox jumps over the lazy dog.")
+      counts = matcherator.feature_counts(nlp, doc)
+      counts["f_03_present_tense"]
     """
 
     matcherator_pipes = [p for p in nlp.pipe_names
@@ -109,19 +114,18 @@ def feature_counts(nlp, doc, normalize=False):
 def feature_df(corpus, nlp, normalize=False, n_process=1):
     """Count the features in a data frame of texts.
 
-    `corpus` must be a data frame with a `doc_id` column and a `text` column.
-    The features will be counted in each row. `nlp` must be a spaCy object with
-    one or more Matcherator pipelines enabled.
-
-    If `normalize` is True, counts are normalized to rates per 1,000 tokens.
-
     Returns a data frame with a `doc_id` column and columns for each counted
     feature.
 
-    n_process sets the number of parallel processes to use in the spaCy
-    pipeline. There is a high fixed cost to spawning processes, so only set this
-    greater than 1 when there are many texts. Set to -1 to use all available
-    cores.
+    :param corpus: Pandas data frame with a ``doc_id`` column and a `text`
+      column. The features will be counted in each row.
+    :param nlp: spaCy object with one or more Matcherator pipelines enabled.
+    :param normalize: If ``True``, counts are normalized to rates per 1,000
+      tokens.
+    :param n_process: Sets the number of parallel processes to use in the spaCy
+      pipeline. There is a high fixed cost to spawning processes, so only set
+      this greater than 1 when there are many texts. Set to -1 to use all
+      available cores.
 
     """
 

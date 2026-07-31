@@ -11,6 +11,37 @@ import textacy.text_stats.diversity
 from .matcherator import Matcherator
 
 class BiberMatcherator(Matcherator):
+    """Calculate features based on Biber's set of register features.
+
+    Feature definitions are given in ``rules/pseudobiber.json`` and are based on
+    Biber (1988), Variation across speech and writing, Cambridge University
+    Press, Appendix II. Additional examples and clarification based on Le Foll
+    and Shakir (2023), Multi-Feature Tagger of English,
+    <https://github.com/mshakirDr/MFTE>.
+
+    By default, the type-token ratio is computed using the entire document. The
+    ``f_43_type_token`` feature can instead be computed with a different
+    diversity statistic or on a subset of tokens by configuring the
+    ``ttr_func``, ``ttr_token_limit``, and ``ttr_args`` parameters.
+
+    :param nlp: spaCy NLP object to use; must be the same one used to process
+      the documents.
+    :param ttr_func: Function to use to calculate type-token ratio. Defaults to
+      ``textacy.text_stats.diversity.ttr``, which calculates the Type-Token
+      Ratio (number of types / number of words). Can use any function that takes
+      a spaCy ``Doc`` object as its first argument, such as the other functions
+      in the `textacy.text_stats.diversity
+      <https://textacy.readthedocs.io/en/latest/api_reference/text_stats.html#lexical-diversity-stats>`_
+      module.
+    :param ttr_token_limit: If ``None`` (the default), the TTR function is given
+      all tokens. If an integer, only the first ``ttr_token_limit`` tokens are
+      used to calculate the TTR.
+    :param ttr_args: Optional dictionary of additional arguments to give to the
+      ``ttr_func``. For example, if the function takes a ``variant`` argument to
+      determine which version of TTR to use (as the default does),
+      ``ttr_args={"variant": "root"}`` would select the desired variant.
+
+    """
     def __init__(self, nlp, ttr_func, ttr_token_limit, ttr_args):
         rule_text = importlib.resources.files("matcherator.rules") \
             .joinpath("pseudobiber.json") \
