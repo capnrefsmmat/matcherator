@@ -29,3 +29,8 @@ API
 ---
 
 .. autoclass:: matcherator.biber::BiberMatcherator
+
+Feature reference
+-----------------
+
+.. include:: pseudobiber-reference.rst
