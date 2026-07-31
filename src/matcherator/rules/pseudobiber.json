@@ -14,7 +14,7 @@
       "description": "Words in the perfect aspect, indicated by *have* as an auxiliary verb",
       "examples": [
         "I have written this sentence.",
-        "Have you been on a student excange?",
+        "Have you been on a student exchange?",
         "She has already seen it.",
         "He has been told before.",
         "Is this the last novel you've read?"
@@ -231,7 +231,7 @@
     },
 
     "f_14_nominalizations": {
-      "description": "Nominalizations (nouns ending in *-tion*, *-ment*, *-ness*, *-ity*, e.g. *adjustment*, *abandonment*)",
+      "description": "Nominalizations (nouns ending in *-tion*, *-ment*, *-ness*, *-ity*, e.g., *adjustment*, *abandonment*)",
       "examples": [
         "The adjustment was necessary."
       ],
