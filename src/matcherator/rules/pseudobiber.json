@@ -346,7 +346,7 @@
 
     "f_25_present_participle": {
       "description": "Present participial adverbial clauses",
-      "comment": "Syntacticaly detached clauses only, to match Biber's definition",
+      "comment": "Syntactically detached clauses only, to match Biber's definition",
       "examples": [
         "Stuffing his mouth with cookies, Joe ran out the door.",
         "Joe ran out the door, stuffing his mouth with cookies.",
@@ -833,6 +833,7 @@
   "DependencyMatcher": {
     "f_17_agentless_passives:all": {
       "description": "All passives",
+      "derived": true,
       "rules": [[
         {
           "RIGHT_ID": "passive_verb",
@@ -849,6 +850,7 @@
 
     "f_18_by_passives": {
       "description": "*by-* passives",
+      "comment": "Passive voice with *by* to indicate the actor",
       "examples": [
         "The task was done by Steve.",
         "The task was done by Steve rather than by Sharon."
@@ -1528,6 +1530,7 @@
 
     "f_62_split_infinitive": {
       "description": "Split infinitives",
+      "comment": "Biber's definition is *to* + ADV + (ADV) + VB, allowing only one or two intervening adverbs. We use the dependency structure to allow any number of intervening words.",
       "examples": [
         "He wants to definitively show the result.",
         "I aim to boldly go where no man has gone before.",
@@ -1554,6 +1557,7 @@
 
     "f_63_split_auxiliary": {
       "description": "Split auxiliaries",
+      "comment": "Biber's definition is AUX + ADV + (ADV) + VB, allowing only one or two intervening adverbs. We use the dependency structure to allow any number of intervening words.",
       "examples": [
         "They are objectively shown to be split.",
         "They are objectively and readily shown to be split.",
@@ -1670,6 +1674,7 @@
 
     "f_17_agentless_passives": {
       "description": "Agentless passive voice",
+      "comment": "Passive voice without *by* to indicate the actor",
       "examples": [
         "The task was done."
       ],
