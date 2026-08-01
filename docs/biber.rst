@@ -33,13 +33,17 @@ API
 Feature reference
 -----------------
 
-References
-^^^^^^^^^^
+Rules based on Appendix II of Douglas Biber (1988). *Variation across speech
+and writing.* Cambridge University Press.
 
-* Rules based on Appendix II of Douglas Biber (1988). *Variation across speech
-  and writing.* Cambridge University Press.
-* For some examples and definitions used below: Quirk, Greenham, Leech, Svartvik
-  (1985). *A Comprehensive Grammar of the English Language.* Longman.
+Additional examples and definitions used below were drawn from:
+
+* Quirk, Greenham, Leech, Svartvik (1985). *A Comprehensive Grammar of the
+  English Language.* Longman.
+* Biber, Johansson, Leech, Conrad, and Finegan (2021). *Grammar of Spoken and
+  Written English.* John Benjamins Publishing Company.
+* Le Foll and Shakir (2023), Multi-Feature Tagger of English,
+  <https://github.com/mshakirDr/MFTE>.
 
 Note that some rules show up twice under different matchers. In these cases, two
 different strategies are used to find different cases of the pattern, then
