@@ -101,19 +101,6 @@ pattern-matches on sequences of token attributes.
    Counterexamples:
 
    * I do not know.
-:f_13_wh_question:
-   Direct *wh-* questions
-
-   TODO Need examples for the first rule, where the WH- word is after one token; then determine if that should also apply to the second rule, for clause-initial WH-questions; also, should this be restricted to questions and exclude the second example?
-
-   * When are you leaving?
-   * The difference between heights constitutes the gap, which can be measured with a depth micrometer.
-   * What's happening?
-   * Why don't we call the game off?
-
-   Counterexamples:
-
-   * I know when you are leaving.
 :f_14_nominalizations:
    Nominalizations (nouns ending in *-tion*, *-ment*, *-ness*, *-ity*, e.g., *adjustment*, *abandonment*)
 
@@ -442,6 +429,30 @@ DependencyMatcher rules use spaCy's `DependencyMatcher
 <https://spacy.io/api/dependencymatcher>`_ class, which pattern-matches on
 structures in the dependency trees.
 
+:f_13_wh_question:
+   Direct *wh-* questions
+
+   Biber's original rule admits constructions with *wh-* words that are not questions, which was repeated in some existing taggers, but we can more reliably detect questions. It also only admits *wh-* questions that use an auxiliary verb, omitting questions like *who borrowed my widget?* We correct both of these deficiencies.
+
+   * I know who she is, but who are you?
+   * When are you leaving?
+   * Yes, but who cares?
+   * What's happening?
+   * Who are you talking about?
+   * So who is it for?
+   * Who borrowed my widget?
+   * Who has borrowed my widget?
+   * Which widget should I use?
+   * Why did you do that?
+   * Why don't we call the game off?
+   * How long is the wait?
+
+   Counterexamples:
+
+   * I know when you are leaving.
+   * The difference between heights constitutes the gap, which can be measured with a depth micrometer.
+   * Have you borrowed my widget?
+   * Could I have another?
 :f_18_by_passives:
    *by-* passives
 

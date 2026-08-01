@@ -196,40 +196,6 @@
       ]]
     },
 
-    "f_13_wh_question": {
-      "description": "Direct *wh-* questions",
-      "examples": [
-        "When are you leaving?",
-        "The difference between heights constitutes the gap, which can be measured with a depth micrometer.",
-        "What's happening?",
-        "Why don't we call the game off?"
-      ],
-      "counterexamples": [
-        "I know when you are leaving."
-      ],
-      "comment": "TODO Need examples for the first rule, where the WH- word is after one token; then determine if that should also apply to the second rule, for clause-initial WH-questions; also, should this be restricted to questions and exclude the second example?",
-      "rules": [
-        [
-          {"IS_SENT_START": true},
-          {"TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
-           "POS": {"NOT_IN": ["DET"]}},
-          {"DEP": "aux"}
-        ],
-        [
-          {"IS_PUNCT": true},
-          {"TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
-           "POS": {"NOT_IN": ["DET"]}},
-          {"DEP": "aux"}
-        ],
-        [
-          {"TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
-           "POS": {"NOT_IN": ["DET"]},
-           "IS_SENT_START": true},
-          {"DEP": "aux"}
-        ]
-      ]
-    },
-
     "f_14_nominalizations": {
       "description": "Nominalizations (nouns ending in *-tion*, *-ment*, *-ness*, *-ity*, e.g., *adjustment*, *abandonment*)",
       "examples": [
@@ -838,6 +804,83 @@
   },
 
   "DependencyMatcher": {
+    "f_13_wh_question": {
+      "description": "Direct *wh-* questions",
+      "comment": "Biber's original rule admits constructions with *wh-* words that are not questions, which was repeated in some existing taggers, but we can more reliably detect questions. It also only admits *wh-* questions that use an auxiliary verb, omitting questions like *who borrowed my widget?* We correct both of these deficiencies.",
+      "examples": [
+        "I know who she is, but who are you?",
+        "When are you leaving?",
+        "Yes, but who cares?",
+        "What's happening?",
+        "Who are you talking about?",
+        "So who is it for?",
+        "Who borrowed my widget?",
+        "Who has borrowed my widget?",
+        "Which widget should I use?",
+        "Why did you do that?",
+        "Why don't we call the game off?",
+        "How long is the wait?"
+      ],
+      "counterexamples": [
+        "I know when you are leaving.",
+        "The difference between heights constitutes the gap, which can be measured with a depth micrometer.",
+        "Have you borrowed my widget?",
+        "Could I have another?"
+      ],
+      "rules": [
+        [
+          {
+            "RIGHT_ID": "aux_verb",
+            "RIGHT_ATTRS": {"POS": "AUX"}
+          },
+          {
+            "LEFT_ID": "aux_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "question_mark",
+            "RIGHT_ATTRS": {
+              "DEP": "punct",
+              "IS_PUNCT": true,
+              "ORTH": "?"
+            }
+          },
+          {
+            "LEFT_ID": "aux_verb",
+            "REL_OP": ">>",
+            "RIGHT_ID": "wh_word",
+            "RIGHT_ATTRS": {
+              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
+              "DEP": {"IN": ["attr", "advmod"]}
+            }
+          }
+        ],
+        [
+          {
+            "RIGHT_ID": "root_verb",
+            "RIGHT_ATTRS": {"POS": "VERB"}
+          },
+          {
+            "LEFT_ID": "root_verb",
+            "REL_OP": ">>",
+            "RIGHT_ID": "wh_word",
+            "RIGHT_ATTRS": {
+              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
+              "DEP": {"IN": ["nsubj", "advmod", "pobj", "det"]}
+            }
+          },
+          {
+            "LEFT_ID": "root_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "question_mark",
+            "RIGHT_ATTRS": {
+              "DEP": "punct",
+              "IS_PUNCT": true,
+              "ORTH": "?"
+            }
+          }
+        ]
+      ]
+    },
+
     "f_17_agentless_passives:all": {
       "description": "All passives",
       "derived": true,
