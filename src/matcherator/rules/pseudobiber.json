@@ -994,12 +994,20 @@
 
     "f_23_wh_clause": {
       "description": "*wh-* clauses",
+      "comment": "*wh-* clauses acting as object complements to verbs. Biber originally restricted this to public, private, and suasive verbs due to limitations in automatic recognition, but we extend this to all verbs. See Quirk et al., 16.35, and Biber et al., 9.3.",
       "examples": [
         "I believed what he told me.",
         "We had a discussion about how the agency operates.",
         "They investigated which chemical was responsible.",
         "I believed in what he told me.",
-        "I believed a little of what he told me."
+        "I believed a little of what he told me.",
+        "She was asking what happened.",
+        "Can you confirm which flight we're taking?"
+      ],
+      "counterexamples": [
+        "When are you leaving?",
+        "Yes, but who cares?",
+        "What's happening?"
       ],
       "rules": [[
         {
@@ -1019,11 +1027,7 @@
           "REL_OP": ">>",
           "RIGHT_ID": "wh_word",
           "RIGHT_ATTRS": {
-            "LOWER": {"IN": [
-              "who", "whom", "whose", "which", "what",
-              "where", "when", "why", "how",
-              "whoever", "whomever", "whatever", "whenever", "wherever"
-            ]}
+            "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
           }
         }
       ]]

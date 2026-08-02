@@ -487,13 +487,21 @@ structures in the dependency trees.
 :f_23_wh_clause:
    *wh-* clauses
 
+   *wh-* clauses acting as object complements to verbs. Biber originally restricted this to public, private, and suasive verbs due to limitations in automatic recognition, but we extend this to all verbs. See Quirk et al., 16.35, and Biber et al., 9.3.
 
    * I believed what he told me.
    * We had a discussion about how the agency operates.
    * They investigated which chemical was responsible.
    * I believed in what he told me.
    * I believed a little of what he told me.
+   * She was asking what happened.
+   * Can you confirm which flight we're taking?
 
+   Counterexamples:
+
+   * When are you leaving?
+   * Yes, but who cares?
+   * What's happening?
 :f_27_past_participle_whiz:
    Past participial postnominal (reduced relative) clauses
 
