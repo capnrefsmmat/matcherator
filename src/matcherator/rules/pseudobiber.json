@@ -145,8 +145,16 @@
 
     "f_10_demonstrative_pronoun": {
       "description": "Demonstrative pronouns, i.e., pronouns being used to replace a noun",
+      "comment": "See Quirk et al., 6.40-44.",
       "examples": [
-        "That is an example sentence."
+        "That is an example sentence.",
+        "This is silly.",
+        "You're better than this.",
+        "One day, all of this will be yours.",
+        "Have you seen this?"
+      ],
+      "counterexamples": [
+        "That duck is cute."
       ],
       "rules": [
         [
@@ -197,7 +205,8 @@
     },
 
     "f_14_nominalizations": {
-      "description": "Nominalizations (nouns ending in *-tion*, *-ment*, *-ness*, *-ity*, e.g., *adjustment*, *abandonment*)",
+      "description": "Nominalizations",
+      "comment": "Verbs, adjectives, or other parts of speech made to function as nouns by adding a suffix such as *-tion*, *-ment*, *-ness*, or *-ity* (e.g., *adjustment*, *abandonment*).",
       "examples": [
         "The adjustment was necessary."
       ],
@@ -478,7 +487,7 @@
     },
 
     "f_50_discourse_particles": {
-      "description": "Discourse particles",
+      "description": "Discourse particles (e.g., *well*, *anyhow*, *anyway*)",
       "comment": "TODO Switch to anything with RP POS, like MFTE?",
       "examples": [
         "Well, that's not a good idea.",
@@ -566,6 +575,7 @@
 
     "f_55_verb_public": {
       "description": "Public verbs",
+      "comment": "Verbs describing speech actions (e.g., *allege*, *insist*, *reply*). See Quirk et al., 16.31.",
       "examples": [
         "He announced his opinions.",
         "She remarked that this example is stupid.",
@@ -594,6 +604,7 @@
 
     "f_56_verb_private": {
       "description": "Private verbs",
+      "comment": "Verbs describing private intellectual states or intellectual acts (e.g., *realize*, *think*). See Quirk et al., 16.31.",
       "examples": [
         "I anticipate a raise.",
         "I did not realise the issue.",
@@ -622,6 +633,7 @@
 
     "f_57_verb_suasive": {
       "description": "Suasive verbs",
+      "comment": "Verbs describing intentions to cause a future change (e.g., *arrange*, *propose*, *suggest*). See Quirk et al., 16.32.",
       "examples": [
         "She decreed that none will survive.",
         "I will ensure that you succeed.",
@@ -762,7 +774,8 @@
     },
 
     "f_66_neg_synthetic": {
-      "description": "Synthetic negation (using *no*, *neither*, or *nor*)",
+      "description": "Synthetic negation",
+      "comment": "Negation using *no*, *neither*, or *nor*.",
       "examples": [
         "No answer is good enough for Jones.",
         "No better answer is available.",
@@ -787,7 +800,8 @@
     },
 
     "f_67_neg_analytic": {
-      "description": "Analytic negation (using *not* or contractions thereof)",
+      "description": "Analytic negation",
+      "comment": "Negation using *not* or contractions thereof.",
       "examples": [
         "That is not good enough.",
         "That isn't good enough."

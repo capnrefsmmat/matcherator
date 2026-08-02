@@ -78,9 +78,17 @@ pattern-matches on sequences of token attributes.
 :f_10_demonstrative_pronoun:
    Demonstrative pronouns, i.e., pronouns being used to replace a noun
 
+   See Quirk et al., 6.40-44.
 
    * That is an example sentence.
+   * This is silly.
+   * You're better than this.
+   * One day, all of this will be yours.
+   * Have you seen this?
 
+   Counterexamples:
+
+   * That duck is cute.
 :f_11_indefinite_pronouns:
    Indefinite pronouns (e.g., *anybody*, *nothing*, *someone*)
 
@@ -102,8 +110,9 @@ pattern-matches on sequences of token attributes.
 
    * I do not know.
 :f_14_nominalizations:
-   Nominalizations (nouns ending in *-tion*, *-ment*, *-ness*, *-ity*, e.g., *adjustment*, *abandonment*)
+   Nominalizations
 
+   Verbs, adjectives, or other parts of speech made to function as nouns by adding a suffix such as *-tion*, *-ment*, *-ness*, or *-ity* (e.g., *adjustment*, *abandonment*).
 
    * The adjustment was necessary.
 
@@ -250,7 +259,7 @@ pattern-matches on sequences of token attributes.
    * It's a real big problem.
 
 :f_50_discourse_particles:
-   Discourse particles
+   Discourse particles (e.g., *well*, *anyhow*, *anyway*)
 
    TODO Switch to anything with RP POS, like MFTE?
 
@@ -307,6 +316,7 @@ pattern-matches on sequences of token attributes.
 :f_55_verb_public:
    Public verbs
 
+   Verbs describing speech actions (e.g., *allege*, *insist*, *reply*). See Quirk et al., 16.31.
 
    * He announced his opinions.
    * She remarked that this example is stupid.
@@ -319,6 +329,7 @@ pattern-matches on sequences of token attributes.
 :f_56_verb_private:
    Private verbs
 
+   Verbs describing private intellectual states or intellectual acts (e.g., *realize*, *think*). See Quirk et al., 16.31.
 
    * I anticipate a raise.
    * I did not realise the issue.
@@ -327,6 +338,7 @@ pattern-matches on sequences of token attributes.
 :f_57_verb_suasive:
    Suasive verbs
 
+   Verbs describing intentions to cause a future change (e.g., *arrange*, *propose*, *suggest*). See Quirk et al., 16.32.
 
    * She decreed that none will survive.
    * I will ensure that you succeed.
@@ -407,16 +419,18 @@ pattern-matches on sequences of token attributes.
 
    * I want ducks and drakes.
 :f_66_neg_synthetic:
-   Synthetic negation (using *no*, *neither*, or *nor*)
+   Synthetic negation
 
+   Negation using *no*, *neither*, or *nor*.
 
    * No answer is good enough for Jones.
    * No better answer is available.
    * Neither answer is satisfactory.
 
 :f_67_neg_analytic:
-   Analytic negation (using *not* or contractions thereof)
+   Analytic negation
 
+   Negation using *not* or contractions thereof.
 
    * That is not good enough.
    * That isn't good enough.
