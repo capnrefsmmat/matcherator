@@ -1572,11 +1572,7 @@
           "REL_OP": ">",
           "RIGHT_ID": "wh_clause",
           "RIGHT_ATTRS": {
-            "LOWER": {"IN": [
-              "who", "whom", "whose", "which", "what",
-              "where", "when", "why", "how",
-              "whoever", "whomever", "whatever", "whenever", "wherever"
-            ]}
+            "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
           }
         }
       ]]
