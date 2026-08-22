@@ -13,5 +13,4 @@ including those based on Douglas Biber's works.
 
    comparison
    matching-functions
-   biber
-   symbols
+   rulesets
