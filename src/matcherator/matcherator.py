@@ -78,26 +78,32 @@ def _collect_features(rules):
 def feature_counts(nlp, doc, normalize=False):
     """Return a dictionary of feature counts for a Document.
 
+    This always adds an ``n_tokens`` feature counting the number of tokens in
+    the Document.
+
     :param nlp: spaCy pipeline
     :param doc: spaCy ``Doc`` object from a spaCy pipeline containing one or
       more Matcherator feature counters.
+    :param normalize: if ``True``, normalize counts to rate per 1,000 tokens.
 
     For example::
 
       doc = nlp("The quick brown fox jumps over the lazy dog.")
       counts = matcherator.feature_counts(nlp, doc)
       counts["f_03_present_tense"]
+
     """
 
     matcherator_pipes = [p for p in nlp.pipe_names
                          if p.startswith("matcherator_")]
 
+    n_tokens = len(doc)
     if normalize:
-        factor = 1000 / len(doc)
+        factor = 1000 / n_tokens
     else:
         factor = 1
 
-    counts = {}
+    counts = {"n_tokens": n_tokens}
     for pipe in matcherator_pipes:
         matches = getattr(doc._, pipe)
         features = getattr(doc._, pipe + "_features")
@@ -108,16 +114,20 @@ def feature_counts(nlp, doc, normalize=False):
         counts |= {name: len(matches.get(name, [])) * factor
                    for name in features}
 
+        # add stats, which are not normalized to counts
+        counts |= getattr(doc._, pipe + "_stats", {})
+
     return counts
 
 
 def feature_df(corpus, nlp, normalize=False, n_process=1):
     """Count the features in a data frame of texts.
 
-    Returns a data frame with a `doc_id` column and columns for each counted
-    feature.
+    Returns a data frame with a ``doc_id`` column and columns for each counted
+    feature. Also includes an ``n_tokens`` column with the number of tokens in
+    each document.
 
-    :param corpus: Pandas data frame with a ``doc_id`` column and a `text`
+    :param corpus: Pandas data frame with a ``doc_id`` column and a ``text``
       column. The features will be counted in each row.
     :param nlp: spaCy object with one or more Matcherator pipelines enabled.
     :param normalize: If ``True``, counts are normalized to rates per 1,000
