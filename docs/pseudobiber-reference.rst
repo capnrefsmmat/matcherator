@@ -450,7 +450,7 @@ structures in the dependency trees.
 :f_13_wh_question:
    Direct *wh-* questions
 
-   Biber's original rule admits constructions with *wh-* words that are not questions, which was repeated in some existing taggers, but we can more reliably detect questions. It also only admits *wh-* questions that use an auxiliary verb, omitting questions like *who borrowed my widget?* We correct both of these deficiencies.
+   Biber's original rule admits constructions with *wh-* words that are not questions, which was repeated in some existing taggers, but we can more reliably detect questions. It also only admits *wh-* questions that use an auxiliary verb, omitting questions like *who borrowed my widget?* We correct both of these deficiencies. See Biber et al., 3.13.2.1.
 
    * I know who she is, but who are you?
    * When are you leaving?
@@ -757,6 +757,7 @@ directly, but are calculated from the results of several.
 :f_60_that_deletion:
    Subordinator *that* deletion
 
+   Public, private, or suasive verbs with subordinator clauses with an omitted *that*. See Biber et al., 9.2.8.
 
    * I think he went.
    * She denies a problem occurred.
