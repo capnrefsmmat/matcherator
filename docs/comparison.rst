@@ -24,6 +24,16 @@ text, particularly the Biber features:
   Biber's features.
 
 Why write a new tagger? The main motivation is *how* the features are detected.
+The matcherator uses the detailed structural information available from
+dependency parsers, which lets us match on the grammatical structure of
+sentences instead of using heuristics based on particular sequences of words.
+Because it is difficult to write rules that correctly identify complicated
+features, the matcherator also is designed to be extensively tested, so we can
+easily verify that every pattern-matching rule finds what it is supposed to.
+
+Feature matching strategy
+-------------------------
+
 The taggers above rely on rules based on sequences of tokens in texts, checking
 for certain words of one type followed by words of other types in various
 sequences. For example, here is how BiberPlus documents its function for finding
@@ -115,3 +125,49 @@ structure, rather than using heuristics. We also benefit from any clever
 pattern-matching algorithms built into spaCy that make the rules more efficient,
 as well as benefiting from spaCy's facilities for parallel processing of large
 corpora.
+
+Software design and testing
+---------------------------
+
+Devising pattern-matching rules to detect grammatical features is hard, because
+English is endlessly varied and complex. When we have written a rule, it is
+important to know that it matches what we expect it to and *doesn't* match
+irrelevant features. And as we tweak and update rules to detect cases we
+originally missed, it's important to ensure the new rules still match all the
+cases they are supposed to.
+
+This means using unit testing: for each rule, having a set of test cases that
+can be automatically checked to ensure the rule behaves as it should. Unit
+testing is widespread practice in software engineering to ensure complex
+software functions correctly.
+
+However, as best as I can tell, most of the prior Biber taggers have no
+automated testing or only limited testing. BiberPlus has a suite of test cases
+mainly giving a single example per rule; MFTE uses hand-annotated spreadsheets
+from corpora; and pybiber and pseudobibeR have a limited set of test cases that
+do not cover every rule.
+
+By contrast, Matcherator allows every rule to have associated examples (which
+the rule must match) and counterexamples (which it must not)::
+
+  "f_29_that_subj": {
+    "description": "*that* relative clauses on subject position",
+    "examples": [
+      "The dog that bit me was big.",
+      "The Marine that bit me was big.",
+      "The graphs that are presented above allow us to understand the relationship."
+    ],
+    "counterexamples": [
+      "The dog that I saw was big.",
+      "The Marine that I saw was big.",
+      "The number of shares that an article gets is related to which day of the week it is published."
+    ],
+    ...
+
+Here the counterexamples are *that* relative clauses on *object* position, not
+subject position, which a poorly written rule could easily accidentally match.
+Including the counterexamples ensures the rule is not too liberal.
+
+The test harness automatically tests every one of these examples and
+counterexamples to verify the rules behave as intended, and new cases can easily
+be added whenever a rule is updated.

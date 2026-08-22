@@ -19,6 +19,13 @@ class BiberMatcherator(Matcherator):
     and Shakir (2023), Multi-Feature Tagger of English,
     <https://github.com/mshakirDr/MFTE>.
 
+    Declared as a spaCy pipeline component called ``matcherator_biber``, which
+    can be added to any pipeline::
+
+      import spacy, matcherator.biber
+      nlp = spacy.load("en_core_web_sm", disable=["ner"])
+      nlp.add_pipe("matcherator_biber")
+
     By default, the type-token ratio is computed using the entire document. The
     ``f_43_type_token`` feature can instead be computed with a different
     diversity statistic or on a subset of tokens by configuring the
