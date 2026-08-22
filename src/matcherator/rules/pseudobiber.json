@@ -984,32 +984,61 @@
 
     "f_22_that_adj_comp": {
       "description": "*that* adjective complements",
+      "comment": "*that* clauses controlled by adjectival predicates. See Biber et al., 9.2.5.",
       "examples": [
         "I'm glad that you like it.",
         "The values were so small that they did not have much of an effect on our model.",
-        "I'm sorry that you're sick."
+        "I'm sorry that you're sick.",
+        "It seems likely that you're nice.",
+        "It's nice that people say it to you unprompted.",
+        "It is plausible that aberrant prediction error processing could result in sustained relief.",
+        "You are undoubtedly right that this is a matching sentence.",
+        "I'm afraid that it's a bad idea."
       ],
-      "counterexamples": [
-        "It is plausible that aberrant prediction error processing could result in sustained relief."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "adjective",
-          "RIGHT_ATTRS": {"POS": "ADJ"}
-        },
-        {
-          "LEFT_ID": "adjective",
-          "REL_OP": ">",
-          "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {"DEP": "ccomp", "POS": {"IN": ["VERB", "AUX"]}}
-        },
-        {
-          "LEFT_ID": "comp_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "that_comp",
-          "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
-        }
-      ]]
+      "rules": [
+        [
+          {
+            "RIGHT_ID": "adjective",
+            "RIGHT_ATTRS": {"POS": "ADJ"}
+          },
+          {
+            "LEFT_ID": "adjective",
+            "REL_OP": ">",
+            "RIGHT_ID": "comp_verb",
+            "RIGHT_ATTRS": {"DEP": "ccomp", "POS": {"IN": ["VERB", "AUX"]}}
+          },
+          {
+            "LEFT_ID": "comp_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "that_comp",
+            "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
+          }
+        ],
+        [
+          {
+            "RIGHT_ID": "verb",
+            "RIGHT_ATTRS": {"POS": "AUX"}
+          },
+          {
+            "LEFT_ID": "verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "adjective",
+            "RIGHT_ATTRS": {"POS": "ADJ", "DEP": "acomp"}
+          },
+          {
+            "LEFT_ID": "verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "comp_verb",
+            "RIGHT_ATTRS": {"DEP": "ccomp", "POS": {"IN": ["VERB", "AUX"]}}
+          },
+          {
+            "LEFT_ID": "comp_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "that_comp",
+            "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
+          }
+        ]
+      ]
     },
 
     "f_23_wh_clause": {

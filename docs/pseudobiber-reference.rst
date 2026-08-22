@@ -496,14 +496,17 @@ structures in the dependency trees.
 :f_22_that_adj_comp:
    *that* adjective complements
 
+   *that* clauses controlled by adjectival predicates. See Biber et al., 9.2.5.
 
    * I'm glad that you like it.
    * The values were so small that they did not have much of an effect on our model.
    * I'm sorry that you're sick.
-
-   Counterexamples:
-
+   * It seems likely that you're nice.
+   * It's nice that people say it to you unprompted.
    * It is plausible that aberrant prediction error processing could result in sustained relief.
+   * You are undoubtedly right that this is a matching sentence.
+   * I'm afraid that it's a bad idea.
+
 :f_23_wh_clause:
    *wh-* clauses
 
