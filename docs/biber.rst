@@ -33,8 +33,12 @@ API
 Feature reference
 -----------------
 
-Rules based on Appendix II of Douglas Biber (1988). *Variation across speech
-and writing.* Cambridge University Press.
+Rules based on Appendix II of Douglas Biber (1988). *Variation across speech and
+writing.* Cambridge University Press. However, many rules do not use Biber's
+simple patterns to detect; as Biber was working without modern dependency
+parsers, he relied on simple rules and then hand-edited the results. Many of
+these rules have been derived to better match the feature without requiring
+hand-editing, and use the full dependency structure to do so.
 
 Additional examples and definitions used below were drawn from:
 
