@@ -113,8 +113,6 @@ pattern-matches on sequences of token attributes.
 
    * I do not know.
    * Why do we need it?
-   * Do me a favor.
-   * It does the job.
 :f_14_nominalizations:
    Nominalizations
 

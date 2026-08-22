@@ -201,9 +201,11 @@
       ],
       "counterexamples": [
         "I do not know.",
-        "Why do we need it?",
-        "Do me a favor.",
-        "It does the job."
+        "Why do we need it?"
+      ],
+      "failed_counterexamples": [
+        "It does the job.",
+        "Do me a favor."
       ],
       "rules": [[
         {"LEMMA": "do", "DEP": {"NOT_IN": ["aux"]}}
