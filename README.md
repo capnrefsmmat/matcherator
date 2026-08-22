@@ -128,10 +128,10 @@ Audit notes, comparing to pybiber/pseudobibeR:
 - `f_21_that_verb_comp`, `f_22_that_adj_comp`: We incorrectly match some clauses
   do to spaCy's tagging; pybiber incorrectly matches some because it is looking
   at a word sequence and not the dependency structure.
-- `f_23_wh_clause`: TODO does not match pybiber at all. Need some more examples
-  to understand what rule to write. I can do it with DependencyMatcher, but what
-  dependency to look for? Dative comes up in the one example, but is that the
-  right thing to match?
+- `f_23_wh_clause`: Replaces Biber's heuristic rule with a dependency-based
+  rule. TODO Also, Biber only looks for WH clauses with public, private, or
+  suasive verbs, because "other WH clauses could not be identified reliably by
+  automatic analysis". Should we replicate this restriction?
 - `f_24_infinitives`: good
 - For `f_25_present_participle` and `f_26_past_participle`, pseudobibeR requires
   the verb to start the sentence. But is that necessary? Consider "Joe ran out
