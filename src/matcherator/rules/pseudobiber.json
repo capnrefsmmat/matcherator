@@ -192,12 +192,18 @@
 
     "f_12_proverb_do": {
       "description": "Pro-verb *do*",
+      "comment": "*do* used to substitute for some other lexical verb. See Biber et al., 5.4.3.2.",
       "examples": [
         "The cat did it.",
-        "I did it."
+        "I did it.",
+        "He does!",
+        "I helped you, didn't I?"
       ],
       "counterexamples": [
-        "I do not know."
+        "I do not know.",
+        "Why do we need it?",
+        "Do me a favor.",
+        "It does the job."
       ],
       "rules": [[
         {"LEMMA": "do", "DEP": {"NOT_IN": ["aux"]}}

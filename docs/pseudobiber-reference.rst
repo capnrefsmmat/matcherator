@@ -102,13 +102,19 @@ pattern-matches on sequences of token attributes.
 :f_12_proverb_do:
    Pro-verb *do*
 
+   *do* used to substitute for some other lexical verb. See Biber et al., 5.4.3.2.
 
    * The cat did it.
    * I did it.
+   * He does!
+   * I helped you, didn't I?
 
    Counterexamples:
 
    * I do not know.
+   * Why do we need it?
+   * Do me a favor.
+   * It does the job.
 :f_14_nominalizations:
    Nominalizations
 
