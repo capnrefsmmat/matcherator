@@ -151,11 +151,13 @@ class BiberMatcherator(Matcherator):
 
         return matches
 
-    def _filter_split_auxiliary(self, matches):
+    def _filter_split_auxiliary(self, doc, matches):
         """Produce f_63_split_auxiliary.
 
         Split auxiliaries have intervening words between the auxiliary and the
-        verb, which we check by counting tokens.
+        verb, which we check by counting tokens. We also ensure there is at
+        least one adverb in between, so we don't count cases like "I don't mind"
+        (where "n't" is in between the auxiliary "do" and verb "mind").
 
         """
 
@@ -163,6 +165,7 @@ class BiberMatcherator(Matcherator):
             [m[0], m[1]]
             for m in matches["f_63_split_auxiliary"]
             if m[0] - m[1] > 1
+            and any(doc[idx].pos_ == "ADV" for idx in range(m[1], m[0]))
         ]
 
         return matches
@@ -195,7 +198,7 @@ class BiberMatcherator(Matcherator):
         matches = self._filter_that_deletion(matches)
         matches = self._filter_other_nouns(matches)
         matches = self._filter_split_infinitive(matches)
-        matches = self._filter_split_auxiliary(matches)
+        matches = self._filter_split_auxiliary(doc, matches)
 
         doc._.matcherator_biber = matches
         # _ attributes must be serializable; sets aren't, so use a list

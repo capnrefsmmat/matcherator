@@ -1658,7 +1658,7 @@
 
     "f_63_split_auxiliary": {
       "description": "Split auxiliaries",
-      "comment": "Biber's definition is AUX + ADV + (ADV) + VB, allowing only one or two intervening adverbs. We use the dependency structure to allow any number of intervening words.",
+      "comment": "Biber's definition is AUX + ADV + (ADV) + VB, allowing only one or two intervening adverbs. We use the dependency structure to allow any number of intervening words, including at least one adverb.",
       "examples": [
         "They are objectively shown to be split.",
         "They are objectively and readily shown to be split.",
@@ -1669,7 +1669,10 @@
         "They have not yet developed cancer."
       ],
       "counterexamples": [
-        "They are shown to be split."
+        "They are shown to be split.",
+        "I don't mind.",
+        "Don't stop.",
+        "I've been kidnapped."
       ],
       "rules": [[
         {

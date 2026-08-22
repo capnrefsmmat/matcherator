@@ -664,7 +664,7 @@ structures in the dependency trees.
 :f_63_split_auxiliary:
    Split auxiliaries
 
-   Biber's definition is AUX + ADV + (ADV) + VB, allowing only one or two intervening adverbs. We use the dependency structure to allow any number of intervening words.
+   Biber's definition is AUX + ADV + (ADV) + VB, allowing only one or two intervening adverbs. We use the dependency structure to allow any number of intervening words, including at least one adverb.
 
    * They are objectively shown to be split.
    * They are objectively and readily shown to be split.
@@ -677,6 +677,9 @@ structures in the dependency trees.
    Counterexamples:
 
    * They are shown to be split.
+   * I don't mind.
+   * Don't stop.
+   * I've been kidnapped.
 
 PhraseMatcher rules
 ^^^^^^^^^^^^^^^^^^^
