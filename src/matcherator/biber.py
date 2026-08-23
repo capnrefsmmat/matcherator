@@ -107,15 +107,17 @@ class BiberMatcherator(Matcherator):
 
         """
 
-
         subord_thats = {(m[0], m[1], m[2])
                         for m in matches["f_60_that_deletion:that"]}
         wh_clauses = {(m[0], m[1], m[2])
                       for m in matches["f_60_that_deletion:wh_clause"]}
+        to_infinitives = {(m[0], m[1], m[2])
+                          for m in matches["f_60_that_deletion:to_infinitive"]}
+
+        dont_match = subord_thats | wh_clauses | to_infinitives
 
         that_deleted = [m for m in matches["f_60_that_deletion:all"]
-                        if (m[0], m[1], m[2]) not in subord_thats
-                        and (m[0], m[1], m[2]) not in wh_clauses]
+                        if (m[0], m[1], m[2]) not in dont_match]
 
         matches["f_60_that_deletion"] = that_deleted
 
