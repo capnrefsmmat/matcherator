@@ -1493,7 +1493,7 @@
           "LEFT_ID": "comp_verb",
           "REL_OP": ">",
           "RIGHT_ID": "subject",
-          "RIGHT_ATTRS": {"DEP": "nsubj"}
+          "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
         }
       ]]
     },
@@ -1795,7 +1795,9 @@
         "She denies a problem occurred.",
         "He alleges a small problem occurred.",
         "The reporter reported the election was over.",
-        "He admitted he had made a catastrophic mistake."
+        "He admitted he had made a catastrophic mistake.",
+        "I believe he was arrested.",
+        "She thought the election was stolen."
       ],
       "counterexamples": [
         "I think that he went.",
