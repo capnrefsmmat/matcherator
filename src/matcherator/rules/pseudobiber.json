@@ -1560,7 +1560,7 @@
           "LEFT_ID": "comp_verb",
           "REL_OP": ">",
           "RIGHT_ID": "subject",
-          "RIGHT_ATTRS": {"DEP": "nsubj"}
+          "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
         },
         {
           "LEFT_ID": "comp_verb",
@@ -1623,7 +1623,7 @@
           "LEFT_ID": "comp_verb",
           "REL_OP": ">",
           "RIGHT_ID": "subject",
-          "RIGHT_ATTRS": {"DEP": "nsubj"}
+          "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
         },
         {
           "LEFT_ID": "comp_verb",
