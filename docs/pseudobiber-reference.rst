@@ -764,6 +764,9 @@ directly, but are calculated from the results of several.
    * He alleges a small problem occurred.
    * The reporter reported the election was over.
    * He admitted he had made a catastrophic mistake.
+   * I believe he was arrested.
+   * She thought the election was stolen.
+   * I said it was a bad idea.
 
    Counterexamples:
 
@@ -772,4 +775,12 @@ directly, but are calculated from the results of several.
    * He alleges that a small problem occurred.
    * The rationale helps ensure that workers understand what they should do.
    * He admitted that he had made a catastrophic mistake.
+   * I said whether you should do it.
+   * She asked if he was coming.
+   * This approach allows us to isolate the effect of bottom-up mechanisms.
+   * Our experimental design allowed us to record the brain's response to each individual stimulus
+   * Furthermore, we recorded event-related potentials (ERPs) simultaneously with BOLD fMRI signals, allowing us to relate the scalp topography of the vMMN to its neuroanatomical origins.
+   * He explained which method they used.
+   * I know whether you did it.
+   * She asked what time it was.
 
