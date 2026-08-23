@@ -597,15 +597,16 @@
         {
           "POS": "VERB",
           "LEMMA": {"IN": [
-            "acknowledge", "add", "admit", "affirm", "agree", "allege", "announce",
-            "argue", "assert", "bet", "boast", "certify", "claim", "comment",
-            "complain", "concede", "confess", "confide", "confirm", "contend",
-            "convey", "declare", "deny", "disclose", "exclaim", "explain",
-            "forecast", "foretell", "guarantee", "hint", "insist", "maintain",
-            "mention", "object", "predict", "proclaim", "promise", "pronounce",
-            "prophesy", "protest", "remark", "repeat", "reply", "report", "say",
-            "state", "submit", "suggest", "swear", "testify", "vow", "warn",
-            "write"]}
+            "acknowledge", "add", "admit", "affirm", "agree", "allege",
+            "announce", "argue", "assert", "bet", "boast", "certify", "claim",
+            "comment", "complain", "concede", "confess", "confide", "confirm",
+            "contend", "convey", "declare", "deny", "disclose", "exclaim",
+            "explain", "forecast", "foretell", "guarantee", "hint", "insist",
+            "maintain", "mention", "object", "predict", "proclaim", "promise",
+            "pronounce", "prophesy", "protest", "remark", "repeat", "reply",
+            "report", "retort", "say", "state", "submit", "suggest", "swear",
+            "testify", "vow", "warn", "write"
+          ]}
         }
       ]]
     },
@@ -622,16 +623,16 @@
         {
           "POS": "VERB",
           "LEMMA": {"IN": [
-            "accept", "anticipate", "ascertain", "assume", "believe", "calculate",
-            "check", "conclude", "conjecture", "consider", "decide", "deduce",
-            "deem", "demonstrate", "determine", "discern", "discover", "doubt",
-            "dream", "ensure", "establish", "estimate", "expect", "fancy", "fear",
-            "feel", "find", "foresee", "forget", "gather", "guess", "hear",
-            "hold", "hope", "imagine", "imply", "indicate", "infer", "insure",
-            "judge", "know", "learn", "mean", "note", "notice", "observe",
-            "perceive", "presume", "presuppose", "pretend", "prove", "realize",
-            "realise",
-            "reason", "recall", "reckon", "recognize", "reflect", "remember",
+            "accept", "anticipate", "ascertain", "assume", "believe",
+            "calculate", "check", "conclude", "conjecture", "consider",
+            "decide", "deduce", "deem", "demonstrate", "determine", "discern",
+            "discover", "doubt", "dream", "ensure", "establish", "estimate",
+            "expect", "fancy", "fear", "feel", "find", "foresee", "forget",
+            "gather", "guess", "hear", "hold", "hope", "imagine", "imply",
+            "indicate", "infer", "insure", "judge", "know", "learn", "mean",
+            "note", "notice", "observe", "perceive", "presume", "presuppose",
+            "pretend", "prove", "realize", "realise", "reason", "recall",
+            "reckon", "recognise", "recognize", "reflect", "remember",
             "reveal", "see", "sense", "show", "signify", "suppose", "suspect",
             "think", "understand"
           ]}
@@ -1456,7 +1457,7 @@
             "POS": "VERB",
             "LEMMA": {"IN": [
               "accept", "acknowledge", "add", "admit", "affirm", "agree",
-              "allege", "allow", "announce", "anticipate", "appear", "argue",
+              "allege", "allow", "announce", "anticipate", "argue",
               "arrange", "ascertain", "ask", "assert", "assume", "beg",
               "believe", "bet", "boast", "calculate", "certify", "check",
               "claim", "command", "comment", "complain", "concede", "conclude",
@@ -1470,16 +1471,16 @@
               "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
               "imply", "indicate", "infer", "insist", "instruct", "insure",
               "intend", "judge", "know", "learn", "maintain", "mean",
-              "mention", "move", "moved", "moves", "moving", "note", "notice",
+              "mention", "move", "note", "notice",
               "object", "observe", "ordain", "order", "perceive", "pledge",
               "pray", "predict", "prefer", "presume", "presuppose", "pretend",
               "proclaim", "promise", "pronounce", "prophesy", "propose",
               "protest", "prove", "realise", "realize", "reason", "recall",
               "reckon", "recognise", "recognize", "recommend", "reflect",
               "remark", "remember", "repeat", "reply", "report", "request",
-              "require", "resolve", "reveal", "rule", "say", "see", "seem",
+              "require", "resolve", "retort", "reveal", "rule", "say", "see",
               "sense", "show", "signify", "state", "stipulate", "submit",
-              "submits", "suggest", "suggest", "suppose", "suspect", "swear",
+              "suggest", "suggest", "suppose", "suspect", "swear",
               "testify", "think", "understand", "urge", "vote", "vow", "warn",
               "write"
             ]}
@@ -1520,7 +1521,7 @@
             "POS": "VERB",
             "LEMMA": {"IN": [
               "accept", "acknowledge", "add", "admit", "affirm", "agree",
-              "allege", "allow", "announce", "anticipate", "appear", "argue",
+              "allege", "allow", "announce", "anticipate", "argue",
               "arrange", "ascertain", "ask", "assert", "assume", "beg",
               "believe", "bet", "boast", "calculate", "certify", "check",
               "claim", "command", "comment", "complain", "concede", "conclude",
@@ -1534,16 +1535,16 @@
               "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
               "imply", "indicate", "infer", "insist", "instruct", "insure",
               "intend", "judge", "know", "learn", "maintain", "mean",
-              "mention", "move", "moved", "moves", "moving", "note", "notice",
+              "mention", "move", "note", "notice",
               "object", "observe", "ordain", "order", "perceive", "pledge",
               "pray", "predict", "prefer", "presume", "presuppose", "pretend",
               "proclaim", "promise", "pronounce", "prophesy", "propose",
               "protest", "prove", "realise", "realize", "reason", "recall",
               "reckon", "recognise", "recognize", "recommend", "reflect",
               "remark", "remember", "repeat", "reply", "report", "request",
-              "require", "resolve", "reveal", "rule", "say", "see", "seem",
+              "require", "resolve", "retort", "reveal", "rule", "say", "see",
               "sense", "show", "signify", "state", "stipulate", "submit",
-              "submits", "suggest", "suggest", "suppose", "suspect", "swear",
+              "suggest", "suggest", "suppose", "suspect", "swear",
               "testify", "think", "understand", "urge", "vote", "vow", "warn",
               "write"
             ]}
@@ -1583,7 +1584,7 @@
             "POS": "VERB",
             "LEMMA": {"IN": [
               "accept", "acknowledge", "add", "admit", "affirm", "agree",
-              "allege", "allow", "announce", "anticipate", "appear", "argue",
+              "allege", "allow", "announce", "anticipate", "argue",
               "arrange", "ascertain", "ask", "assert", "assume", "beg",
               "believe", "bet", "boast", "calculate", "certify", "check",
               "claim", "command", "comment", "complain", "concede", "conclude",
@@ -1597,16 +1598,16 @@
               "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
               "imply", "indicate", "infer", "insist", "instruct", "insure",
               "intend", "judge", "know", "learn", "maintain", "mean",
-              "mention", "move", "moved", "moves", "moving", "note", "notice",
+              "mention", "move", "note", "notice",
               "object", "observe", "ordain", "order", "perceive", "pledge",
               "pray", "predict", "prefer", "presume", "presuppose", "pretend",
               "proclaim", "promise", "pronounce", "prophesy", "propose",
               "protest", "prove", "realise", "realize", "reason", "recall",
               "reckon", "recognise", "recognize", "recommend", "reflect",
               "remark", "remember", "repeat", "reply", "report", "request",
-              "require", "resolve", "reveal", "rule", "say", "see", "seem",
+              "require", "resolve", "retort", "reveal", "rule", "say", "see",
               "sense", "show", "signify", "state", "stipulate", "submit",
-              "submits", "suggest", "suggest", "suppose", "suspect", "swear",
+              "suggest", "suggest", "suppose", "suspect", "swear",
               "testify", "think", "understand", "urge", "vote", "vow", "warn",
               "write"
             ]}
