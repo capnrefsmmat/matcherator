@@ -1578,7 +1578,8 @@
       "derived": true,
       "description": "Subordinator *that* deletion: clauses with a wh-clause",
       "examples": [
-        "The rationale helps ensure that workers understand what they should do."
+        "The rationale helps ensure that workers understand what they should do.",
+        "He explained which method they used."
       ],
       "rules": [[
         {
@@ -1630,7 +1631,7 @@
         },
         {
           "LEFT_ID": "comp_verb",
-          "REL_OP": ">",
+          "REL_OP": ">>",
           "RIGHT_ID": "wh_clause",
           "RIGHT_ATTRS": {
             "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
