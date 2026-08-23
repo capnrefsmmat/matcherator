@@ -1503,16 +1503,19 @@
 
     "f_60_that_deletion:that": {
       "derived": true,
-      "description": "Subordinator *that* deletion: clauses with *that*",
+      "description": "Subordinator *that* deletion: clauses with *that* or other subordinators (*whether*, *if*, etc.)",
       "examples": [
         "I think that he went.",
         "She denies that a problem occurred.",
-        "He alleges that a small problem occurred."
+        "He alleges that a small problem occurred.",
+        "I said whether you should do it.",
+        "She asked if he was coming."
       ],
       "counterexamples": [
         "I think he went.",
         "She denies a problem occurred.",
-        "He alleges a small problem occurred."
+        "He alleges a small problem occurred.",
+        "I said you should do it."
       ],
       "rules": [[
         {
@@ -1566,7 +1569,7 @@
           "LEFT_ID": "comp_verb",
           "REL_OP": ">",
           "RIGHT_ID": "that",
-          "RIGHT_ATTRS": {"LOWER": "that", "DEP": "mark"}
+          "RIGHT_ATTRS": {"DEP": "mark"}
         }
       ]]
     },
