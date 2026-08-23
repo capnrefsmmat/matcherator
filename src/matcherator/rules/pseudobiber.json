@@ -222,21 +222,21 @@
         "I went to the station."
       ],
       "rules": [[
-      {"POS": "NOUN",
-       "LOWER": {"REGEX": "tion$|tions$|ment$|ments$|ness$|nesses$|ity$|ities$",
-                 "NOT_IN": [
-                   "apartment", "apartments", "attention", "business",
-                   "businesses", "capacities", "capacity", "cities", "city",
-                   "comment", "comments", "condition", "conditions", "document",
-                   "documents", "edition", "editions", "element", "elements",
-                   "environment", "environments", "experiment", "experiments",
-                   "fiction", "fictions", "function", "functions", "humanity",
-                   "identities", "identity", "mention", "mentions", "moment",
-                   "moments", "motion", "motions", "nation", "nations", "notion",
-                   "notions", "pity", "position", "positions", "qualities",
-                   "quality", "section", "sections", "solution", "solutions",
-                   "station", "stations", "tradition", "traditions",
-                   "universities", "university", "witness", "witnesses"]}}
+        {"POS": "NOUN",
+         "LOWER": {"REGEX": "tion$|tions$|ment$|ments$|ness$|nesses$|ity$|ities$",
+                   "NOT_IN": [
+                     "apartment", "apartments", "attention", "business",
+                     "businesses", "capacities", "capacity", "cities", "city",
+                     "comment", "comments", "condition", "conditions", "document",
+                     "documents", "edition", "editions", "element", "elements",
+                     "environment", "environments", "experiment", "experiments",
+                     "fiction", "fictions", "function", "functions", "humanity",
+                     "identities", "identity", "mention", "mentions", "moment",
+                     "moments", "motion", "motions", "nation", "nations", "notion",
+                     "notions", "pity", "position", "positions", "qualities",
+                     "quality", "section", "sections", "solution", "solutions",
+                     "station", "stations", "tradition", "traditions",
+                     "universities", "university", "witness", "witnesses"]}}
       ]]
     },
 
