@@ -79,12 +79,15 @@ def feature_counts(nlp, doc, normalize=False):
     """Return a dictionary of feature counts for a Document.
 
     This always adds an ``n_tokens`` feature counting the number of tokens in
-    the Document.
+    the Document. The token count does not include punctuation or whitespace.
 
     :param nlp: spaCy pipeline
     :param doc: spaCy ``Doc`` object from a spaCy pipeline containing one or
       more Matcherator feature counters.
-    :param normalize: if ``True``, normalize counts to rate per 1,000 tokens.
+    :param normalize: if ``True``, normalize counts to rate per 1,000 tokens,
+      not including punctuation or whitespace. (A rule that matches punctuation
+      can hence have a normalized rate greater than 1,000 if the document is
+      mostly punctuation.)
 
     For example::
 
@@ -97,7 +100,7 @@ def feature_counts(nlp, doc, normalize=False):
     matcherator_pipes = [p for p in nlp.pipe_names
                          if p.startswith("matcherator_")]
 
-    n_tokens = len(doc)
+    n_tokens = len(doc) - len([t for t in doc if t.is_punct])
     if normalize:
         factor = 1000 / n_tokens
     else:
