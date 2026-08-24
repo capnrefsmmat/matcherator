@@ -430,6 +430,7 @@ pattern-matches on sequences of token attributes.
    * No answer is good enough for Jones.
    * No better answer is available.
    * Neither answer is satisfactory.
+   * No Work, No School, No Shopping, No Banking, No Housework, No Compliance.
 
 :f_67_neg_analytic:
    Analytic negation
