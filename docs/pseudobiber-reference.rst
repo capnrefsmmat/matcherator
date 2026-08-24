@@ -634,8 +634,9 @@ structures in the dependency trees.
    * If it rains, we stay inside.
 
 :f_38_other_adv_sub:
-   Other adverbial subordinators (*since*, *while*, *whereas*)
+   Other adverbial subordinators (*since*, *while*, *whereas*, etc.)
 
+   Other words or phrases used as adverbial subordinators. Rather than Biber's fixed list, we detect any adverbial clause with a subordinating conjunction that is not causative, concessive, or conditional.
 
    * Since it rained, we stayed inside.
    * The approach emphasizes creating redundancies, implementing cross-checks, and establishing feedback mechanisms that can catch errors before they propagate into accidents or serious incidents.
