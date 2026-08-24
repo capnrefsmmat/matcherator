@@ -105,7 +105,14 @@ class BiberMatcherator(Matcherator):
         Here "understand" it introduces a wh-question ("what they should do")
         and not a clause like "that it is bad."
 
+        We also remove cases where the comp_verb or subject appear before the
+        anchor verb. These are cases like "He was right, I think" or "'It's a
+        good idea,' he said."
+
         """
+
+        # match structure for all of these, with variations:
+        # verb, clausal complement, subject, [extra stuff]
 
         subord_thats = {(m[0], m[1], m[2])
                         for m in matches["f_60_that_deletion:that"]}
@@ -117,7 +124,8 @@ class BiberMatcherator(Matcherator):
         dont_match = subord_thats | wh_clauses | to_infinitives
 
         that_deleted = [m for m in matches["f_60_that_deletion:all"]
-                        if (m[0], m[1], m[2]) not in dont_match]
+                        if m[1] > m[0] and m[2] > m[0] and
+                        (m[0], m[1], m[2]) not in dont_match]
 
         matches["f_60_that_deletion"] = that_deleted
 

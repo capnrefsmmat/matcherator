@@ -785,4 +785,7 @@ directly, but are calculated from the results of several.
    * He explained which method they used.
    * I know whether you did it.
    * She asked what time it was.
+   * "It's a good idea," he said.
+   * They asked me if I drank beer; I said yeah.
+   * He was right, I think.
 
