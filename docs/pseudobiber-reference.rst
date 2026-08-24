@@ -786,6 +786,8 @@ directly, but are calculated from the results of several.
    * I know whether you did it.
    * She asked what time it was.
    * "It's a good idea," he said.
+   * She said, "It's a good idea."
    * They asked me if I drank beer; I said yeah.
+   * I asked, "How did you find it?"
    * He was right, I think.
 

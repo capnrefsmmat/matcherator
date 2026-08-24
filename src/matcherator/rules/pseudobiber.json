@@ -1707,6 +1707,72 @@
       ]]
     },
 
+    "f_60_that_deletion:quote": {
+      "derived": true,
+      "description": "Subordinator *that* deletion: clauses introducing a quotation",
+      "examples": [
+        "She said, \"It's a good idea.\"",
+        "He said, 'It's a good idea!'",
+        "I asked, \"How did you find it?\"",
+        "She said, “It's a good idea.”"
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "verb_anchor",
+          "RIGHT_ATTRS": {
+            "POS": "VERB",
+            "LEMMA": {"IN": [
+              "accept", "acknowledge", "add", "admit", "affirm", "agree",
+              "allege", "allow", "announce", "anticipate", "argue",
+              "arrange", "ascertain", "ask", "assert", "assume", "beg",
+              "believe", "bet", "boast", "calculate", "certify", "check",
+              "claim", "command", "comment", "complain", "concede", "conclude",
+              "confess", "confide", "confirm", "conjecture", "consider",
+              "contend", "convey", "decide", "declare", "decree", "decreed",
+              "deduce", "deem", "demand", "demonstrate", "deny", "desire",
+              "determine", "discern", "disclose", "discover", "doubt", "dream",
+              "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
+              "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
+              "forecast", "foresee", "foretell", "forget", "gather", "grant",
+              "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
+              "imply", "indicate", "infer", "insist", "instruct", "insure",
+              "intend", "judge", "know", "learn", "maintain", "mean",
+              "mention", "move", "note", "notice",
+              "object", "observe", "ordain", "order", "perceive", "pledge",
+              "pray", "predict", "prefer", "presume", "presuppose", "pretend",
+              "proclaim", "promise", "pronounce", "prophesy", "propose",
+              "protest", "prove", "realise", "realize", "reason", "recall",
+              "reckon", "recognise", "recognize", "recommend", "reflect",
+              "remark", "remember", "repeat", "reply", "report", "request",
+              "require", "resolve", "retort", "reveal", "rule", "say", "see",
+              "sense", "show", "signify", "state", "stipulate", "submit",
+              "suggest", "suggest", "suppose", "suspect", "swear",
+              "testify", "think", "understand", "urge", "vote", "vow", "warn",
+              "write"
+            ]}
+          }
+        },
+        {
+          "LEFT_ID": "verb_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "comp_verb",
+          "RIGHT_ATTRS": {"DEP": "ccomp"}
+        },
+        {
+          "LEFT_ID": "comp_verb",
+          "REL_OP": ">",
+          "RIGHT_ID": "subject",
+          "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
+        },
+        {
+          "LEFT_ID": "verb_anchor",
+          "REL_OP": ">",
+          "RIGHT_ID": "open_quote",
+          "RIGHT_ATTRS": {"TAG": "``"}
+        }
+      ]]
+    },
+
     "f_62_split_infinitive": {
       "description": "Split infinitives",
       "comment": "Biber's definition is *to* + ADV + (ADV) + VB, allowing only one or two intervening adverbs. We use the dependency structure to allow any number of intervening words.",
@@ -1893,7 +1959,9 @@
         "I know whether you did it.",
         "She asked what time it was.",
         "\"It's a good idea,\" he said.",
+        "She said, \"It's a good idea.\"",
         "They asked me if I drank beer; I said yeah.",
+        "I asked, \"How did you find it?\"",
         "He was right, I think."
       ]
     }

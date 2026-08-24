@@ -120,8 +120,10 @@ class BiberMatcherator(Matcherator):
                       for m in matches["f_60_that_deletion:wh_clause"]}
         to_infinitives = {(m[0], m[1], m[2])
                           for m in matches["f_60_that_deletion:to_infinitive"]}
+        quotes = {(m[0], m[1], m[2])
+                  for m in matches["f_60_that_deletion:quote"]}
 
-        dont_match = subord_thats | wh_clauses | to_infinitives
+        dont_match = subord_thats | wh_clauses | to_infinitives | quotes
 
         that_deleted = [m for m in matches["f_60_that_deletion:all"]
                         if m[1] > m[0] and m[2] > m[0] and
