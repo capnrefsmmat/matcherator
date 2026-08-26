@@ -114,7 +114,10 @@ Audit notes, comparing to pybiber/pseudobibeR:
   simple.
 - `f_12_proverb_do`: doesn't match pybiber due to [pybiber issue
   #8](https://github.com/browndw/pybiber/issues/8)
-- `f_13_wh_question`, `f_14_nominalizations`: good
+- `f_13_wh_question`: pseudobibeR/pybiber don't allow the WH-word to be a
+  determiner; not sure why, but this excludes WH-questions like "What factors
+  influence the choice of instruments?"
+- `f_14_nominalizations`: good
 - `f_15_gerunds`: doesn't match pybiber due to [pybiber issue
   #7](https://github.com/browndw/pybiber/issues/7)
 - `f_16_other_nouns`: pseudobibeR and pybiber filter out tokens containing "-",

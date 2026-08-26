@@ -451,7 +451,7 @@ structures in the dependency trees.
 :f_13_wh_question:
    Direct *wh-* questions
 
-   Biber's original rule admits constructions with *wh-* words that are not questions, which was repeated in some existing taggers, but we can more reliably detect questions. It also only admits *wh-* questions that use an auxiliary verb, omitting questions like *who borrowed my widget?* We correct both of these deficiencies. See Biber et al., 3.13.2.1.
+   Biber's original rule admits constructions with *wh-* words that are not questions, which was repeated in some existing taggers, but we can more reliably detect questions. It also only admits *wh-* questions that use an auxiliary verb, omitting questions like *who borrowed my widget?* We correct both of these deficiencies. His rule also excluded questions based on WH pronouns (who, whom, whose, which), but we include such questions. See Biber et al., 3.13.2.1.
 
    * I know who she is, but who are you?
    * When are you leaving?
