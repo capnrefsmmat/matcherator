@@ -1285,6 +1285,7 @@
     "f_33_pied_piping": {
       "description": "Pied-piping relative clauses",
       "examples": [
+        "That is the type of arrant pedantry up with which I shall not put!",
         "She resented the manner in which she was told.",
         "We felt that we needed a financial base on which to work.",
         "He is a linguist articles by whom the editors always reject.",
@@ -1302,7 +1303,8 @@
       "counterexamples": [
         "She resented the manner she was told in.",
         "We felt that we needed a financial base to work on.",
-        "Which manner was she told in?"
+        "Which manner was she told in?",
+        "There are many more events like those that you are interested in."
       ],
       "rules": [[
         {
@@ -1325,7 +1327,8 @@
           "RIGHT_ID": "wh_word",
           "RIGHT_ATTRS": {
             "DEP": "pobj",
-            "TAG": {"IN": ["WDT", "WP", "WP$"]}
+            "TAG": {"IN": ["WDT", "WP", "WP$"]},
+            "LOWER": {"NOT_IN": ["that"]}
           }
         }
       ]]

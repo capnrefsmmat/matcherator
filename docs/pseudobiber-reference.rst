@@ -472,6 +472,7 @@ structures in the dependency trees.
    * The difference between heights constitutes the gap, which can be measured with a depth micrometer.
    * Have you borrowed my widget?
    * Could I have another?
+   * Was the issue ignored, when it is so important?
 :f_18_by_passives:
    *by-* passives
 
@@ -597,6 +598,7 @@ structures in the dependency trees.
    Pied-piping relative clauses
 
 
+   * That is the type of arrant pedantry up with which I shall not put!
    * She resented the manner in which she was told.
    * We felt that we needed a financial base on which to work.
    * He is a linguist articles by whom the editors always reject.
@@ -610,6 +612,7 @@ structures in the dependency trees.
    * She resented the manner she was told in.
    * We felt that we needed a financial base to work on.
    * Which manner was she told in?
+   * There are many more events like those that you are interested in.
 :f_35_because:
    Causative adverbial subordinator (*because*)
 
