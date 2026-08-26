@@ -189,6 +189,26 @@ class BiberMatcherator(Matcherator):
 
         return matches
 
+    def _filter_wh_question(self, matches):
+        """Produce f_13_wh_question.
+
+        The DependencyMatcher rule generally performs well, but has false
+        positives for sentences like "Was the issue ignored, when it is so
+        important?" Where "when" is a WH-word and descends from "ignored", so
+        the rule matches. We can distinguish this case because the WH word is
+        *after* the verb; Biber et al. defines WH-questions to be when the
+        clause *opens* with the WH word.
+
+        """
+
+        matches["f_13_wh_question"] = [
+            [m[0], m[1], m[2]]
+            for m in matches["f_13_wh_question"]
+            if m[2] < m[0]
+        ]
+
+        return matches
+
     def _compute_mean_word_length(self, doc):
         """Mean word length, excluding digits and URLs."""
         lengths = [len(token.text)
@@ -218,6 +238,7 @@ class BiberMatcherator(Matcherator):
         matches = self._filter_other_nouns(matches)
         matches = self._filter_split_infinitive(matches)
         matches = self._filter_split_auxiliary(doc, matches)
+        matches = self._filter_wh_question(matches)
 
         doc._.matcherator_biber = matches
         # _ attributes must be serializable; sets aren't, so use a list

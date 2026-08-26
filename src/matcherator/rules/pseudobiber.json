@@ -849,7 +849,8 @@
         "I know when you are leaving.",
         "The difference between heights constitutes the gap, which can be measured with a depth micrometer.",
         "Have you borrowed my widget?",
-        "Could I have another?"
+        "Could I have another?",
+        "Was the issue ignored, when it is so important?"
       ],
       "rules": [
         [
@@ -884,21 +885,21 @@
           },
           {
             "LEFT_ID": "root_verb",
-            "REL_OP": ">>",
-            "RIGHT_ID": "wh_word",
-            "RIGHT_ATTRS": {
-              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
-              "DEP": {"IN": ["nsubj", "advmod", "pobj", "det"]}
-            }
-          },
-          {
-            "LEFT_ID": "root_verb",
             "REL_OP": ">",
             "RIGHT_ID": "question_mark",
             "RIGHT_ATTRS": {
               "DEP": "punct",
               "IS_PUNCT": true,
               "ORTH": "?"
+            }
+          },
+          {
+            "LEFT_ID": "root_verb",
+            "REL_OP": ">>",
+            "RIGHT_ID": "wh_word",
+            "RIGHT_ATTRS": {
+              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
+              "DEP": {"IN": ["nsubj", "advmod", "pobj", "det"]}
             }
           }
         ]
