@@ -163,8 +163,7 @@ class BiberMatcherator(Matcherator):
         """
 
         matches["f_62_split_infinitive"] = [
-            [m[0], m[1]]
-            for m in matches["f_62_split_infinitive"]
+            m for m in matches["f_62_split_infinitive"]
             if m[0] - m[1] > 1
         ]
 
@@ -181,8 +180,7 @@ class BiberMatcherator(Matcherator):
         """
 
         matches["f_63_split_auxiliary"] = [
-            [m[0], m[1]]
-            for m in matches["f_63_split_auxiliary"]
+            m for m in matches["f_63_split_auxiliary"]
             if m[0] - m[1] > 1
             and any(doc[idx].pos_ == "ADV" for idx in range(m[1], m[0]))
         ]
@@ -202,8 +200,7 @@ class BiberMatcherator(Matcherator):
         """
 
         matches["f_13_wh_question"] = [
-            [m[0], m[1], m[2]]
-            for m in matches["f_13_wh_question"]
+            m for m in matches["f_13_wh_question"]
             if m[2] < m[0]
         ]
 
