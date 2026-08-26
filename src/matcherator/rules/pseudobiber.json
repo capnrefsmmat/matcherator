@@ -1292,7 +1292,8 @@
         "The executive to whom I addressed the complaint has recently resigned.",
         "The crumbling stone bridge under which the river flows is scheduled for demolition.",
         "The ancient artifact, the exact origins of which remain a subject of fierce debate among historians, is kept in a climate-controlled vault.",
-        "This is the report, to the findings of which they referred."
+        "This is the report, to the findings of which they referred.",
+        "There are many more people like those in whom you are interested."
       ],
       "failed_examples": [
         {
@@ -1304,7 +1305,8 @@
         "She resented the manner she was told in.",
         "We felt that we needed a financial base to work on.",
         "Which manner was she told in?",
-        "There are many more events like those that you are interested in."
+        "There are many more events like those that you are interested in.",
+        "There are many more people like those who you are interested in."
       ],
       "rules": [[
         {

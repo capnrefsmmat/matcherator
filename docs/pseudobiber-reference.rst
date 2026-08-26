@@ -606,6 +606,7 @@ structures in the dependency trees.
    * The crumbling stone bridge under which the river flows is scheduled for demolition.
    * The ancient artifact, the exact origins of which remain a subject of fierce debate among historians, is kept in a climate-controlled vault.
    * This is the report, to the findings of which they referred.
+   * There are many more people like those in whom you are interested.
 
    Counterexamples:
 
@@ -613,6 +614,7 @@ structures in the dependency trees.
    * We felt that we needed a financial base to work on.
    * Which manner was she told in?
    * There are many more events like those that you are interested in.
+   * There are many more people like those who you are interested in.
 :f_35_because:
    Causative adverbial subordinator (*because*)
 

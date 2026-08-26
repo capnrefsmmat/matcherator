@@ -209,7 +209,25 @@ class BiberMatcherator(Matcherator):
 
         return matches
 
+    def _filter_pied_piping(self, matches):
+        """Produce f_33_pied_piping.
+
+        The DependencyMatcher rule is effective, but in pied-piping, the
+        preposition needs to precede the verb ("in whom you are interested", not
+        "who you are interested in"). The rule has some false positives unless
+        we filter these cases out.
+
+        """
+
+        matches["f_33_pied_piping"] = [
+            m for m in matches["f_33_pied_piping"]
+            if m[2] < m[1]
+        ]
+
+        return matches
+
     def _compute_mean_word_length(self, doc):
+
         """Mean word length, excluding digits and URLs."""
         lengths = [len(token.text)
                    for token in doc
@@ -239,6 +257,7 @@ class BiberMatcherator(Matcherator):
         matches = self._filter_split_infinitive(matches)
         matches = self._filter_split_auxiliary(doc, matches)
         matches = self._filter_wh_question(matches)
+        matches = self._filter_pied_piping(matches)
 
         doc._.matcherator_biber = matches
         # _ attributes must be serializable; sets aren't, so use a list
