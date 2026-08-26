@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{{ ruleset_name }} matcherator rules</title>
+  </head>
+  <body>
+    <h1>{{ ruleset_name }} matcherator rules</h1>
+
+    <h2>Matcher</h2>
+    <p>Matcher rules use spaCy's <a href="https://spacy.io/api/matcher">Matcher</a> class, which pattern-matches on sequences of token attributes.</p>
+
+    {% for rule in matcher_rules %}
+    <h3 id="{{ rule.id }}">{{ rule.name }}</h3>
+    <p>{{ rule.description }}</p>
+    {% if rule.examples %}
+    <p>Examples:</p>
+    <ul>
+      {% for example in rule.examples %}
+      <li>{{ example }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if rule.counterexamples %}
+    <p>Counterexamples:</p>
+    <ul>
+      {% for example in rule.counterexamples %}
+      <li>{{ example }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endfor %}
+
+    <h2>DependencyMatcher</h2>
+    <p>DependencyMatcher rules use spaCy's <a href="https://spacy.io/api/dependencymatcher">DependencyMatcher</a> class, which pattern-matches on structures in the dependency trees.</p>
+    {% for rule in dep_matcher_rules %}
+    <h3 id="{{ rule.id }}">{{ rule.name }}</h3>
+    <p>{{ rule.description }}</p>
+    {% if rule.examples %}
+    <p>Examples:</p>
+    <ul>
+      {% for example in rule.examples %}
+      <li>{{ example }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if rule.counterexamples %}
+    <p>Counterexamples:</p>
+    <ul>
+      {% for example in rule.counterexamples %}
+      <li>{{ example }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endfor %}
+
+    <h2>PhraseMatcher</h2>
+    <p>PhraseMatcher rules use spaCy's <a href="https://spacy.io/api/phrasematcher">PhraseMatcher</a> class, which matches exact words or phrases.</p>
+    {% for rule in phrase_matcher_rules %}
+    <h3 id="{{ rule.id }}">{{ rule.name }}</h3>
+    <p>{{ rule.description }}</p>
+    {% if rule.examples %}
+    <p>Examples:</p>
+    <ul>
+      {% for example in rule.examples %}
+      <li>{{ example }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if rule.counterexamples %}
+    <p>Counterexamples:</p>
+    <ul>
+      {% for example in rule.counterexamples %}
+      <li>{{ example }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endfor %}
+  </body>
+</html>
+  

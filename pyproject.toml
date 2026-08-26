@@ -4,7 +4,8 @@ version = "0.1.0"
 dependencies = [
     "spacy",
     "pandas",
-    "spacymoji"
+    "spacymoji",
+    "jinja2"
 ]
 description = "Detect various linguistic features in text using pattern-matching rules"
 authors = [
@@ -17,4 +18,3 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 include-package-data = true
-

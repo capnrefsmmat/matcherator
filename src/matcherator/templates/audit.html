@@ -1,0 +1,1238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --bg-page: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-secondary: #f1f5f9;
+      --bg-surface-hover: #e2e8f0;
+      --border-color: #cbd5e1;
+      --border-subtle: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-faint: #94a3b8;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-subtle: #eff6ff;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+    header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.6rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      z-index: 20;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .app-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      background: var(--bg-surface-secondary);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .badge-pill.highlight {
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border-color: #bfdbfe;
+    }
+
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.825rem;
+      color: var(--text-muted);
+    }
+
+    select, input[type="text"], button {
+      font-family: inherit;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.65rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    select:focus, input[type="text"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-subtle);
+    }
+
+    #feature-select {
+      font-weight: 500;
+      max-width: 320px;
+    }
+
+    .btn {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      font-weight: 500;
+    }
+
+    .btn:hover {
+      background: var(--bg-surface-hover);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-icon {
+      padding: 0.35rem 0.5rem;
+    }
+
+    /* Layout */
+    .app-main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Document Viewer */
+    .document-container {
+      flex: 1;
+      padding: 2rem 2.5rem;
+      overflow-y: auto;
+      background: var(--bg-surface);
+    }
+
+    .document-card {
+      max-width: 860px;
+      margin: 0 auto;
+      line-height: 2.2;
+      font-size: 1.15rem;
+      color: #1e293b;
+    }
+
+    .paragraph {
+      margin-bottom: 1.5rem;
+    }
+
+    .sentence-block {
+      display: inline;
+    }
+
+    /* Token styling */
+    .token {
+      position: relative;
+      display: inline-block;
+      padding: 0 2px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background-color 0.12s ease, box-shadow 0.12s ease, transform 0.1s ease;
+      white-space: pre;
+    }
+
+    .token:hover {
+      outline: 2px solid #3b82f6;
+      z-index: 10;
+    }
+
+    .token.selected {
+      outline: 2px solid #1d4ed8 !important;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3) !important;
+      z-index: 15;
+    }
+
+    .token.highlighted {
+      font-weight: 500;
+    }
+
+    .token.match-focus {
+      outline: 2px dashed #2563eb;
+      animation: pulse-ring 1.5s infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+      70% { box-shadow: 0 0 0 6px rgba(37, 99, 235, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    }
+
+    .token.multi-match {
+      border-bottom: 3px double #6366f1;
+    }
+
+    .match-count-indicator {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      vertical-align: super;
+      line-height: 1;
+      padding: 1px 3px;
+      border-radius: 3px;
+      margin-left: 1px;
+      background: #475569;
+      color: #fff;
+    }
+
+    .tag-subtext {
+      display: block;
+      font-size: 0.625rem;
+      line-height: 1;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: -0.3rem;
+      margin-bottom: 0.2rem;
+      user-select: none;
+    }
+
+    .whitespace {
+      white-space: pre-wrap;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 420px;
+      min-width: 340px;
+      max-width: 550px;
+      background: var(--bg-surface-secondary);
+      border-left: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sidebar-tabs {
+      display: flex;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.65rem 0.5rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: var(--bg-surface-secondary);
+    }
+
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .tab-pane.active {
+      display: flex;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 0.9rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Feature items */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .feature-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 0.8rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .feature-item:hover {
+      border-color: var(--border-color);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-1px);
+    }
+
+    .feature-item.active {
+      border-color: var(--primary);
+      background: var(--primary-subtle);
+    }
+
+    .feature-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .feature-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      overflow: hidden;
+    }
+
+    .color-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .feature-name {
+      font-family: var(--font-mono);
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .feature-desc {
+      font-size: 0.775rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .feature-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      color: var(--text-faint);
+    }
+
+    .match-instance-list {
+      margin-top: 0.4rem;
+      padding-top: 0.4rem;
+      border-top: 1px dashed var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .match-instance-btn {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.25rem 0.45rem;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface-secondary);
+      border: 1px solid var(--border-subtle);
+      text-align: left;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .match-instance-btn:hover {
+      background: #e2e8f0;
+      color: var(--primary);
+    }
+
+    /* Inspector detail tables */
+    .inspector-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .inspector-table th, .inspector-table td {
+      padding: 0.35rem 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .inspector-table th {
+      color: var(--text-muted);
+      width: 32%;
+      font-weight: 600;
+    }
+
+    .inspector-table td {
+      font-family: var(--font-mono);
+      color: var(--text-main);
+    }
+
+    /* Rule details */
+    .rule-card {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .rule-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .type-tag {
+      font-size: 0.675rem;
+      font-weight: 600;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .rule-examples-list {
+      list-style: none;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-top: 0.2rem;
+    }
+
+    .rule-examples-list li::before {
+      content: "• ";
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .rule-examples-list.counter li::before {
+      content: "✕ ";
+      color: #ef4444;
+    }
+
+    details {
+      margin-top: 0.3rem;
+      font-size: 0.75rem;
+    }
+
+    details summary {
+      cursor: pointer;
+      color: var(--primary);
+      font-weight: 500;
+      padding: 0.2rem 0;
+    }
+
+    pre.code-block {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: var(--font-mono);
+      font-size: 0.725rem;
+      padding: 0.5rem;
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+      margin-top: 0.3rem;
+    }
+
+    /* Floating Tooltip */
+    #hover-tooltip {
+      position: fixed;
+      display: none;
+      pointer-events: none;
+      z-index: 1000;
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-md);
+      font-size: 0.75rem;
+      box-shadow: var(--shadow-lg);
+      max-width: 320px;
+      line-height: 1.4;
+      opacity: 0;
+      transition: opacity 0.1s ease;
+    }
+
+    #hover-tooltip.visible {
+      display: block;
+      opacity: 1;
+    }
+
+    .tooltip-header {
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tooltip-item {
+      margin-top: 0.2rem;
+    }
+
+    /* Search and filters */
+    .search-box {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .app-main {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        max-width: 100%;
+        height: 350px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <div class="app-title">
+        <span>🔍</span>
+        <span>{{ title }}</span>
+      </div>
+      <span class="badge-pill highlight">{{ doc_data.stats.total_matches }} matches</span>
+      <span class="badge-pill">{{ doc_data.stats.distinct_features }} features</span>
+      <span class="badge-pill">{{ doc_data.stats.word_tokens }} tokens</span>
+    </div>
+
+    <div class="controls-bar">
+      <div class="control-group">
+        <label for="feature-select"><strong>Feature:</strong></label>
+        <select id="feature-select">
+          <option value="all">★ All Features ({{ doc_data.stats.total_matches }} matches)</option>
+          {% for fname, feat in doc_data.features.items() %}
+          <option value="{{ fname }}">{{ fname }} ({{ feat.match_count }})</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="control-group">
+        <button id="btn-prev-match" class="btn btn-icon" title="Previous Match (Hotkey: [)">◀</button>
+        <span id="match-nav-counter" style="font-size:0.8rem; min-width: 50px; text-align:center;">-</span>
+        <button id="btn-next-match" class="btn btn-icon" title="Next Match (Hotkey: ])">▶</button>
+      </div>
+
+      <div class="control-group">
+        <label for="tag-mode-select">Overlay:</label>
+        <select id="tag-mode-select">
+          <option value="none">None</option>
+          <option value="pos">POS</option>
+          <option value="tag">Fine Tag</option>
+          <option value="dep">Dependency</option>
+          <option value="lemma">Lemma</option>
+        </select>
+      </div>
+
+      <button id="btn-clear-selection" class="btn" title="Clear selection">Clear</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Document View -->
+    <div class="document-container" id="doc-container">
+      <div class="document-card" id="doc-text-card">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-tabs">
+        <button class="tab-btn active" data-tab="tab-features">Features ({{ doc_data.stats.distinct_features }})</button>
+        <button class="tab-btn" data-tab="tab-inspector">Inspector</button>
+        <button class="tab-btn" data-tab="tab-stats">Stats</button>
+      </div>
+
+      <div class="sidebar-content">
+        <!-- Tab 1: Features -->
+        <div id="tab-features" class="tab-pane active">
+          <input type="text" id="feature-search" class="search-box" placeholder="Search features...">
+          <div class="feature-list" id="feature-list-container">
+            <!-- Rendered by JS -->
+          </div>
+
+          {% if doc_data.unmatched_rules %}
+          <details style="margin-top: 1rem;">
+            <summary style="font-weight:600; color: var(--text-muted);">Unmatched Rules ({{ doc_data.unmatched_rules|length }})</summary>
+            <div class="feature-list" style="margin-top: 0.5rem;">
+              {% for ur in doc_data.unmatched_rules %}
+              <div class="feature-item" style="opacity: 0.75;">
+                <div class="feature-header">
+                  <span class="feature-name">{{ ur.name }}</span>
+                  <span class="type-tag">{{ ur.matcher_type }}</span>
+                </div>
+                <div class="feature-desc">{{ ur.description }}</div>
+              </div>
+              {% endfor %}
+            </div>
+          </details>
+          {% endif %}
+        </div>
+
+        <!-- Tab 2: Inspector -->
+        <div id="tab-inspector" class="tab-pane">
+          <div id="inspector-placeholder" class="empty-state">
+            Click on any token or highlighted match in the document to view detailed linguistics and pattern matching rules.
+          </div>
+          <div id="inspector-details" style="display: none; display: flex; flex-direction: column; gap: 0.85rem;">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Tab 3: Stats -->
+        <div id="tab-stats" class="tab-pane">
+          <div class="card">
+            <div class="card-title">Document Overview</div>
+            <table class="inspector-table">
+              <tbody>
+                <tr><th>Total Tokens</th><td>{{ doc_data.stats.total_tokens }}</td></tr>
+                <tr><th>Word Tokens</th><td>{{ doc_data.stats.word_tokens }}</td></tr>
+                <tr><th>Sentences</th><td>{{ doc_data.stats.sentence_count }}</td></tr>
+                <tr><th>Total Matches</th><td>{{ doc_data.stats.total_matches }}</td></tr>
+                <tr><th>Distinct Features</th><td>{{ doc_data.stats.distinct_features }}</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          {% if doc_data.stats.computed_stats %}
+          <div class="card">
+            <div class="card-title">Computed Pipeline Statistics</div>
+            <table class="inspector-table">
+              <tbody>
+                {% for stat_name, stat_val in doc_data.stats.computed_stats.items() %}
+                <tr>
+                  <th>{{ stat_name }}</th>
+                  <td>{{ "%.4f"|format(stat_val) if stat_val is number else stat_val }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Tooltip -->
+  <div id="hover-tooltip"></div>
+
+  <!-- Embedded Document Data -->
+  <script type="application/json" id="doc-data-json">
+    {{ doc_json | safe }}
+  </script>
+
+  <script>
+    (function() {
+      // 1. Load Data
+      const data = JSON.parse(document.getElementById('doc-data-json').textContent);
+      const tokens = data.tokens;
+      const features = data.features;
+      const sentences = data.sentences;
+
+      // Index matches by ID for quick lookup
+      const matchesById = {};
+      const matchesByFeature = {};
+      for (const [fname, fobj] of Object.entries(features)) {
+        matchesByFeature[fname] = fobj.matches || [];
+        for (const m of fobj.matches) {
+          matchesById[m.id] = m;
+        }
+      }
+
+      // App state
+      let selectedFeature = 'all';
+      let selectedTokenId = null;
+      let selectedMatchId = null;
+      let tagOverlayMode = 'none';
+      let currentMatchNavIndex = 0;
+      let activeMatchList = [];
+
+      // DOM Elements
+      const docCard = document.getElementById('doc-text-card');
+      const featureSelect = document.getElementById('feature-select');
+      const tagSelect = document.getElementById('tag-mode-select');
+      const btnPrev = document.getElementById('btn-prev-match');
+      const btnNext = document.getElementById('btn-next-match');
+      const matchNavCounter = document.getElementById('match-nav-counter');
+      const btnClear = document.getElementById('btn-clear-selection');
+      const featureSearch = document.getElementById('feature-search');
+      const featureListContainer = document.getElementById('feature-list-container');
+      const inspectorPlaceholder = document.getElementById('inspector-placeholder');
+      const inspectorDetails = document.getElementById('inspector-details');
+      const tooltip = document.getElementById('hover-tooltip');
+
+      // 2. Render Document Tokens
+      function renderDocument() {
+        docCard.innerHTML = '';
+        let currentSentIndex = 0;
+
+        let sentSpan = document.createElement('span');
+        sentSpan.className = 'sentence-block';
+
+        tokens.forEach((tok, idx) => {
+          // Token element
+          const span = document.createElement('span');
+          span.className = 'token';
+          span.id = `token-${tok.id}`;
+          span.dataset.tokenId = tok.id;
+          span.textContent = tok.text;
+
+          // Check if token has tag overlay
+          if (tagOverlayMode !== 'none') {
+            const tagSub = document.createElement('span');
+            tagSub.className = 'tag-subtext';
+            tagSub.textContent = tok[tagOverlayMode] || '';
+            span.appendChild(tagSub);
+          }
+
+          // Attach events
+          span.addEventListener('click', (e) => {
+            e.stopPropagation();
+            onTokenClick(tok.id);
+          });
+
+          span.addEventListener('mouseenter', (e) => onTokenHover(e, tok.id));
+          span.addEventListener('mouseleave', () => onTokenLeave());
+
+          sentSpan.appendChild(span);
+
+          // Whitespace
+          if (tok.whitespace) {
+            const wsSpan = document.createElement('span');
+            wsSpan.className = 'whitespace';
+            wsSpan.textContent = tok.whitespace;
+            sentSpan.appendChild(wsSpan);
+          }
+
+          // Check sentence boundary
+          if (sentences[currentSentIndex] && tok.id === sentences[currentSentIndex].end - 1) {
+            docCard.appendChild(sentSpan);
+            currentSentIndex++;
+            sentSpan = document.createElement('span');
+            sentSpan.className = 'sentence-block';
+          }
+        });
+
+        if (sentSpan.children.length > 0) {
+          docCard.appendChild(sentSpan);
+        }
+
+        updateHighlights();
+      }
+
+      // 3. Update Highlights Based on Filter
+      function updateHighlights() {
+        // Collect active matches
+        if (selectedFeature === 'all') {
+          activeMatchList = Object.values(matchesById);
+        } else {
+          activeMatchList = matchesByFeature[selectedFeature] || [];
+        }
+
+        // Reset all tokens
+        tokens.forEach(tok => {
+          const el = document.getElementById(`token-${tok.id}`);
+          if (!el) return;
+
+          el.className = 'token';
+          el.style.backgroundColor = '';
+          el.style.color = '';
+          el.style.border = '';
+          el.style.boxShadow = '';
+
+          // Remove any existing count badge
+          const badge = el.querySelector('.match-count-indicator');
+          if (badge) badge.remove();
+        });
+
+        // Map token ID to applicable matches under current filter
+        const tokenActiveMatches = {};
+        for (const m of activeMatchList) {
+          for (const tid of m.token_indices) {
+            if (!tokenActiveMatches[tid]) tokenActiveMatches[tid] = [];
+            tokenActiveMatches[tid].push(m);
+          }
+        }
+
+        // Apply highlights
+        for (const [tid, mList] of Object.entries(tokenActiveMatches)) {
+          const el = document.getElementById(`token-${tid}`);
+          if (!el) return;
+
+          el.classList.add('highlighted');
+
+          if (selectedFeature !== 'all') {
+            // Single feature focus
+            const feat = features[selectedFeature];
+            if (feat && feat.color) {
+              el.style.backgroundColor = feat.color.bg;
+              el.style.color = feat.color.text;
+              el.style.borderBottom = `2px solid ${feat.color.border}`;
+            }
+          } else {
+            // Multi-feature mode
+            const firstMatch = mList[0];
+            const color = firstMatch.color;
+            el.style.backgroundColor = color.bg;
+            el.style.color = color.text;
+            el.style.borderBottom = `2px solid ${color.border}`;
+
+            if (mList.length > 1) {
+              el.classList.add('multi-match');
+              const indicator = document.createElement('sup');
+              indicator.className = 'match-count-indicator';
+              indicator.textContent = mList.length;
+              el.appendChild(indicator);
+            }
+          }
+        }
+
+        // Keep selected token marked
+        if (selectedTokenId !== null) {
+          const selEl = document.getElementById(`token-${selectedTokenId}`);
+          if (selEl) selEl.classList.add('selected');
+        }
+
+        // Update navigation counter
+        updateMatchNav();
+      }
+
+      // 4. Match Navigation
+      function updateMatchNav() {
+        if (activeMatchList.length === 0) {
+          matchNavCounter.textContent = '0 / 0';
+          btnPrev.disabled = true;
+          btnNext.disabled = true;
+        } else {
+          matchNavCounter.textContent = `${currentMatchNavIndex + 1} / ${activeMatchList.length}`;
+          btnPrev.disabled = false;
+          btnNext.disabled = false;
+        }
+      }
+
+      function jumpToMatch(index) {
+        if (activeMatchList.length === 0) return;
+        currentMatchNavIndex = (index + activeMatchList.length) % activeMatchList.length;
+        const match = activeMatchList[currentMatchNavIndex];
+        if (!match) return;
+
+        // Clear previous match focus
+        document.querySelectorAll('.match-focus').forEach(el => el.classList.remove('match-focus'));
+
+        // Highlight tokens of this match
+        match.token_indices.forEach(tid => {
+          const el = document.getElementById(`token-${tid}`);
+          if (el) el.classList.add('match-focus');
+        });
+
+        // Scroll first token into view
+        const firstEl = document.getElementById(`token-${match.token_indices[0]}`);
+        if (firstEl) {
+          firstEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Select the match token
+        onTokenClick(match.token_indices[0], match.id);
+        updateMatchNav();
+      }
+
+      btnPrev.addEventListener('click', () => jumpToMatch(currentMatchNavIndex - 1));
+      btnNext.addEventListener('click', () => jumpToMatch(currentMatchNavIndex + 1));
+
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+        if (e.key === ']' || e.key === 'j') jumpToMatch(currentMatchNavIndex + 1);
+        if (e.key === '[' || e.key === 'k') jumpToMatch(currentMatchNavIndex - 1);
+      });
+
+      // 5. Token Interaction & Inspector
+      function onTokenClick(tokenId, focusMatchId = null) {
+        selectedTokenId = tokenId;
+        selectedMatchId = focusMatchId;
+
+        document.querySelectorAll('.token.selected').forEach(el => el.classList.remove('selected'));
+        const el = document.getElementById(`token-${tokenId}`);
+        if (el) el.classList.add('selected');
+
+        renderInspector(tokenId);
+
+        // Switch to Inspector tab
+        switchTab('tab-inspector');
+      }
+
+      function renderInspector(tokenId) {
+        const tok = tokens[tokenId];
+        if (!tok) return;
+
+        inspectorPlaceholder.style.display = 'none';
+        inspectorDetails.style.display = 'flex';
+        inspectorDetails.innerHTML = '';
+
+        // Token Linguistics Card
+        const tokenCard = document.createElement('div');
+        tokenCard.className = 'card';
+        tokenCard.innerHTML = `
+          <div class="card-title">Token Linguistics</div>
+          <table class="inspector-table">
+            <tbody>
+              <tr><th>Text</th><td><strong>${tok.text}</strong></td></tr>
+              <tr><th>Index</th><td>${tok.id} (char: ${tok.idx}-${tok.end_idx})</td></tr>
+              <tr><th>Lemma</th><td>${tok.lemma}</td></tr>
+              <tr><th>POS</th><td>${tok.pos} (${tok.tag})</td></tr>
+              <tr><th>Dep</th><td>${tok.dep} → head: ${tok.head_text} (#${tok.head})</td></tr>
+              ${tok.morph ? `<tr><th>Morph</th><td style="font-size:0.7rem;">${tok.morph}</td></tr>` : ''}
+            </tbody>
+          </table>
+        `;
+        inspectorDetails.appendChild(tokenCard);
+
+        // Matched Features Card
+        const matchIds = tok.matches || [];
+        const matchedFeaturesOnToken = [];
+        for (const mid of matchIds) {
+          const m = matchesById[mid];
+          if (m && features[m.feature_name]) {
+            matchedFeaturesOnToken.push({ match: m, feature: features[m.feature_name] });
+          }
+        }
+
+        const ruleSection = document.createElement('div');
+        ruleSection.className = 'card';
+        ruleSection.innerHTML = `
+          <div class="card-title">
+            <span>Matched Rules (${matchedFeaturesOnToken.length})</span>
+          </div>
+        `;
+
+        if (matchedFeaturesOnToken.length === 0) {
+          ruleSection.innerHTML += `
+            <div style="font-size: 0.8rem; color: var(--text-muted); padding: 0.4rem 0;">
+              No pattern rules matched on this specific token.
+            </div>
+          `;
+        } else {
+          matchedFeaturesOnToken.forEach(({ match, feature }) => {
+            const ruleCard = document.createElement('div');
+            ruleCard.className = 'rule-card';
+            ruleCard.style.borderLeft = `4px solid ${feature.color.border}`;
+
+            ruleCard.innerHTML = `
+              <div class="rule-card-header">
+                <span class="feature-name" style="color: ${feature.color.text}; font-size: 0.875rem;">
+                  ${feature.name}
+                </span>
+                <span class="type-tag">${feature.matcher_type}</span>
+              </div>
+              <div style="font-size: 0.775rem; color: var(--text-muted); margin-top: 0.2rem;">
+                <strong>Match:</strong> "${match.matched_text}" (tokens: ${match.token_indices.join(', ')})
+              </div>
+              ${feature.description ? `<div style="font-size: 0.775rem; color: var(--text-main); margin-top: 0.25rem;">${feature.description}</div>` : ''}
+              ${feature.comment ? `<div style="font-size: 0.725rem; color: var(--text-faint); font-style: italic;">Note: ${feature.comment}</div>` : ''}
+              
+              <div style="margin-top: 0.4rem; display: flex; gap: 0.4rem;">
+                <button class="btn btn-primary" style="font-size: 0.725rem; padding: 0.2rem 0.5rem;" onclick="filterToFeature('${feature.name}')">
+                  Filter to this rule
+                </button>
+              </div>
+
+              ${feature.examples && feature.examples.length > 0 ? `
+                <div style="margin-top: 0.4rem; font-size: 0.725rem; font-weight:600; color: var(--text-muted);">Examples:</div>
+                <ul class="rule-examples-list">
+                  ${feature.examples.map(ex => `<li>"${ex}"</li>`).join('')}
+                </ul>
+              ` : ''}
+
+              ${feature.counterexamples && feature.counterexamples.length > 0 ? `
+                <div style="margin-top: 0.4rem; font-size: 0.725rem; font-weight:600; color: var(--text-muted);">Counterexamples:</div>
+                <ul class="rule-examples-list counter">
+                  ${feature.counterexamples.map(ex => `<li>"${ex}"</li>`).join('')}
+                </ul>
+              ` : ''}
+
+              ${feature.rules && feature.rules.length > 0 ? `
+                <details>
+                  <summary>View Pattern Rule JSON</summary>
+                  <pre class="code-block">${JSON.stringify(feature.rules, null, 2)}</pre>
+                </details>
+              ` : ''}
+            `;
+            ruleSection.appendChild(ruleCard);
+          });
+        }
+        inspectorDetails.appendChild(ruleSection);
+      }
+
+      window.filterToFeature = function(fname) {
+        featureSelect.value = fname;
+        selectedFeature = fname;
+        updateHighlights();
+        updateFeatureList();
+      };
+
+      // 6. Hover Tooltip
+      function onTokenHover(e, tokenId) {
+        const tok = tokens[tokenId];
+        if (!tok) return;
+
+        const matchIds = tok.matches || [];
+        const featNames = matchIds.map(mid => matchesById[mid]?.feature_name).filter(Boolean);
+
+        let tooltipHtml = `
+          <div class="tooltip-header">
+            <span>${tok.text}</span>
+            <span style="color:#94a3b8; font-weight:normal;">#${tok.id}</span>
+          </div>
+          <div style="color:#cbd5e1; font-size:0.7rem;">
+            POS: <strong>${tok.pos}</strong> | Tag: <strong>${tok.tag}</strong> | Dep: <strong>${tok.dep}</strong>
+          </div>
+        `;
+
+        if (featNames.length > 0) {
+          tooltipHtml += `
+            <div style="margin-top: 0.4rem; font-weight: 600; color: #60a5fa;">
+              Matched Rules (${featNames.length}):
+            </div>
+            ${featNames.map(fn => `<div class="tooltip-item">• ${fn}</div>`).join('')}
+          `;
+        } else {
+          tooltipHtml += `<div style="margin-top: 0.3rem; color: #94a3b8; font-style:italic;">No pattern matches</div>`;
+        }
+
+        tooltip.innerHTML = tooltipHtml;
+        tooltip.classList.add('visible');
+
+        const x = Math.min(e.clientX + 12, window.innerWidth - 330);
+        const y = Math.min(e.clientY + 12, window.innerHeight - 150);
+        tooltip.style.left = `${x}px`;
+        tooltip.style.top = `${y}px`;
+      }
+
+      function onTokenLeave() {
+        tooltip.classList.remove('visible');
+      }
+
+      // 7. Sidebar Feature List
+      function updateFeatureList() {
+        const query = (featureSearch.value || '').toLowerCase();
+        featureListContainer.innerHTML = '';
+
+        for (const [fname, feat] of Object.entries(features)) {
+          if (query && !fname.toLowerCase().includes(query) && !feat.description.toLowerCase().includes(query)) {
+            continue;
+          }
+
+          const item = document.createElement('div');
+          item.className = `feature-item ${selectedFeature === fname ? 'active' : ''}`;
+
+          item.innerHTML = `
+            <div class="feature-header">
+              <div class="feature-title-row">
+                <span class="color-swatch" style="background: ${feat.color.border};"></span>
+                <span class="feature-name">${fname}</span>
+              </div>
+              <span class="badge-pill highlight">${feat.match_count}</span>
+            </div>
+            ${feat.description ? `<div class="feature-desc">${feat.description}</div>` : ''}
+            <div class="feature-meta-row">
+              <span>${feat.matcher_type}</span>
+              ${feat.ruleset ? `<span>• ${feat.ruleset}</span>` : ''}
+            </div>
+          `;
+
+          // If this feature is active, list its match snippets
+          if (selectedFeature === fname && feat.matches.length > 0) {
+            const mList = document.createElement('div');
+            mList.className = 'match-instance-list';
+            feat.matches.forEach((m, idx) => {
+              const mBtn = document.createElement('button');
+              mBtn.className = 'match-instance-btn';
+              mBtn.textContent = `#${idx + 1}: "${m.matched_text}"`;
+              mBtn.onclick = (e) => {
+                e.stopPropagation();
+                jumpToMatch(idx);
+              };
+              mList.appendChild(mBtn);
+            });
+            item.appendChild(mList);
+          }
+
+          item.addEventListener('click', () => {
+            if (selectedFeature === fname) {
+              selectedFeature = 'all';
+              featureSelect.value = 'all';
+            } else {
+              selectedFeature = fname;
+              featureSelect.value = fname;
+            }
+            currentMatchNavIndex = 0;
+            updateHighlights();
+            updateFeatureList();
+          });
+
+          featureListContainer.appendChild(item);
+        }
+      }
+
+      // 8. Event Listeners
+      featureSelect.addEventListener('change', (e) => {
+        selectedFeature = e.target.value;
+        currentMatchNavIndex = 0;
+        updateHighlights();
+        updateFeatureList();
+      });
+
+      tagSelect.addEventListener('change', (e) => {
+        tagOverlayMode = e.target.value;
+        renderDocument();
+      });
+
+      btnClear.addEventListener('click', () => {
+        selectedFeature = 'all';
+        selectedTokenId = null;
+        selectedMatchId = null;
+        featureSelect.value = 'all';
+        inspectorPlaceholder.style.display = 'block';
+        inspectorDetails.style.display = 'none';
+        document.querySelectorAll('.token.selected').forEach(el => el.classList.remove('selected'));
+        document.querySelectorAll('.match-focus').forEach(el => el.classList.remove('match-focus'));
+        updateHighlights();
+        updateFeatureList();
+      });
+
+      featureSearch.addEventListener('input', updateFeatureList);
+
+      // Tabs switching
+      function switchTab(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.tab === tabId);
+        });
+        document.querySelectorAll('.tab-pane').forEach(pane => {
+          pane.classList.toggle('active', pane.id === tabId);
+        });
+      }
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+      });
+
+      // Init
+      renderDocument();
+      updateFeatureList();
+    })();
+  </script>
+</body>
+</html>
