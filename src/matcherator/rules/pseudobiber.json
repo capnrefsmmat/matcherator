@@ -1584,10 +1584,14 @@
 
     "f_60_that_deletion:wh_clause": {
       "derived": true,
-      "description": "Subordinator *that* deletion: clauses with a wh-clause",
+      "description": "Subordinator *that* deletion: clauses where the verb introduces a *wh*-clause",
+      "comment": "When the verb introduces a *wh*-clause, *that* would not function grammatically, so its absence does not count as *that* deletion.",
       "examples": [
         "The rationale helps ensure that workers understand what they should do.",
         "He explained which method they used."
+      ],
+      "counterexamples": [
+        "I think she was the one who attacked me."
       ],
       "rules": [[
         {
@@ -1638,8 +1642,8 @@
           "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
         },
         {
-          "LEFT_ID": "comp_verb",
-          "REL_OP": ">>",
+          "LEFT_ID": "verb_anchor",
+          "REL_OP": ".",
           "RIGHT_ID": "wh_clause",
           "RIGHT_ATTRS": {
             "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
@@ -1948,7 +1952,9 @@
         "He admitted he had made a catastrophic mistake.",
         "I believe he was arrested.",
         "She thought the election was stolen.",
-        "I said it was a bad idea."
+        "I said it was a bad idea.",
+        "I think she attacked me.",
+        "I think she was the one who attacked me."
       ],
       "counterexamples": [
         "I think that he went.",
