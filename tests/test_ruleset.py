@@ -31,14 +31,15 @@ def check_rule_examples(nlp, rules, attr_name, subtests):
                                           rules["DependencyMatcher"].items(),
                                           rules["PhraseMatcher"].items(),
                                           rules["Derived"].items()):
-        with subtests.test(rulename):
-            for example in rule.get("examples", []):
+        for example in rule.get("examples", []):
+            with subtests.test(rulename + " examples"):
                 doc = nlp(example)
 
                 assert len(getattr(doc._, attr_name)[rulename]) > 0, \
                     f"Expected `{rulename}` to match `{example}`"
 
-            for example in rule.get("counterexamples", []):
+        for example in rule.get("counterexamples", []):
+            with subtests.test(rulename + " counterexamples"):
                 doc = nlp(example)
 
                 assert len(getattr(doc._, attr_name)[rulename]) == 0, \
