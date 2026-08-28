@@ -1051,40 +1051,163 @@
       "comment": "*wh-* clauses acting as object complements to verbs. Biber originally restricted this to public, private, and suasive verbs due to limitations in automatic recognition, but we extend this to all verbs. See Quirk et al., 16.35, and Biber et al., 9.3.",
       "examples": [
         "I believed what he told me.",
-        "We had a discussion about how the agency operates.",
         "They investigated which chemical was responsible.",
+        "They investigated which unpleasant chemical was responsible.",
         "I believed in what he told me.",
-        "I believed a little of what he told me.",
         "She was asking what happened.",
-        "Can you confirm which flight we're taking?"
+        "She was asking me what happened.",
+        "We discussed how the agency operates.",
+        "Can you confirm which flight we're taking?",
+        "Can you confirm where the flight departs?",
+        "Show me how this works.",
+        "I was thinking about what happened.",
+        "I listened to what you said.",
+        "I don't know what to do about it."
       ],
       "counterexamples": [
         "When are you leaving?",
         "Yes, but who cares?",
-        "What's happening?"
+        "What's happening?",
+        "We had a discussion about how the agency operates.",
+        "I believed a little of what he told me.",
+        "She is the person who confirmed our flight.",
+        "They knew I was affected by Hurricane Andrew, which struck Florida in 1992.",
+        "The flight departs when the pilots are ready.",
+        "I had doubts about what happened.",
+        "What happened was a surprise to everyone.",
+        "I was not sure about how to do it.",
+        "I was curious how to do it."
       ],
-      "rules": [[
-        {
-          "RIGHT_ID": "governor",
-          "RIGHT_ATTRS": {}
-        },
-        {
-          "LEFT_ID": "governor",
-          "REL_OP": ">",
-          "RIGHT_ID": "clause_root",
-          "RIGHT_ATTRS": {
-            "DEP": {"IN": ["ccomp", "csubj", "csubjpass", "pcomp"]}
+      "rules": [
+        [
+          {
+            "RIGHT_ID": "verb",
+            "RIGHT_ATTRS": {
+              "POS": "VERB"
+            }
+          },
+          {
+            "LEFT_ID": "verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "clause_root",
+            "RIGHT_ATTRS": {
+              "DEP": {"IN": ["ccomp", "xcomp"]}
+            }
+          },
+          {
+            "LEFT_ID": "clause_root",
+            "REL_OP": ">",
+            "RIGHT_ID": "wh_word",
+            "RIGHT_ATTRS": {
+              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
+            }
           }
-        },
-        {
-          "LEFT_ID": "clause_root",
-          "REL_OP": ">>",
-          "RIGHT_ID": "wh_word",
-          "RIGHT_ATTRS": {
-            "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
+        ],
+        [
+          {
+            "RIGHT_ID": "verb",
+            "RIGHT_ATTRS": {
+              "POS": "VERB"
+            }
+          },
+          {
+            "LEFT_ID": "verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "clause_root",
+            "RIGHT_ATTRS": {
+              "DEP": {"IN": ["ccomp", "xcomp"]}
+            }
+          },
+          {
+            "LEFT_ID": "clause_root",
+            "REL_OP": ">",
+            "RIGHT_ID": "argument",
+            "RIGHT_ATTRS": {
+              "DEP": {"IN": ["nsubj", "nsubjpass", "dobj", "pobj", "dative", "attr"]}
+            }
+          },
+          {
+            "LEFT_ID": "argument",
+            "REL_OP": ">",
+            "RIGHT_ID": "wh_word",
+            "RIGHT_ATTRS": {
+              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
+            }
           }
-        }
-      ]]
+        ],
+        [
+          {
+            "RIGHT_ID": "verb",
+            "RIGHT_ATTRS": {
+              "POS": "VERB"
+            }
+          },
+          {
+            "LEFT_ID": "verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "preposition",
+            "RIGHT_ATTRS": {
+              "DEP": "prep"
+            }
+          },
+          {
+            "LEFT_ID": "preposition",
+            "REL_OP": ">",
+            "RIGHT_ID": "clause_root",
+            "RIGHT_ATTRS": {
+              "DEP": {"IN": ["pcomp"]}
+            }
+          },
+          {
+            "LEFT_ID": "clause_root",
+            "REL_OP": ">",
+            "RIGHT_ID": "wh_word",
+            "RIGHT_ATTRS": {
+              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
+            }
+          }
+        ],
+        [
+          {
+            "RIGHT_ID": "verb",
+            "RIGHT_ATTRS": {
+              "POS": "VERB"
+            }
+          },
+          {
+            "LEFT_ID": "verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "preposition",
+            "RIGHT_ATTRS": {
+              "DEP": "prep"
+            }
+          },
+          {
+            "LEFT_ID": "preposition",
+            "REL_OP": ">",
+            "RIGHT_ID": "clause_root",
+            "RIGHT_ATTRS": {
+              "DEP": {"IN": ["pcomp"]}
+            }
+          },
+          {
+            "LEFT_ID": "clause_root",
+            "REL_OP": ">",
+            "RIGHT_ID": "argument",
+            "RIGHT_ATTRS": {
+              "DEP": {"IN": ["nsubj", "nsubjpass", "dobj", "pobj", "dative", "attr"]}
+            }
+          },
+          {
+            "LEFT_ID": "argument",
+            "REL_OP": ">",
+            "RIGHT_ID": "wh_word",
+            "RIGHT_ATTRS": {
+              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
+            }
+          }
+        ]
+      ]
     },
 
     "f_27_past_participle_whiz": {
