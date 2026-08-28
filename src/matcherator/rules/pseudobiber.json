@@ -1214,6 +1214,7 @@
 
     "f_27_past_participle_whiz": {
       "description": "Past participial postnominal (reduced relative) clauses",
+      "comment": "Includes participles inline in the text, as defined by Biber, as well as those in clauses set off by other punctuation.",
       "examples": [
         "The solution produced by this process is effective.",
         "Steve, considered here, is a serious man.",
@@ -1235,9 +1236,11 @@
 
     "f_28_present_participle_whiz": {
       "description": "Present participial postnominal (reduced relative) clauses",
+      "comment": "Includes participles inline in the text, as defined by Biber, as well as those in clauses set off by other punctuation.",
       "examples": [
         "The financial crisis was the event causing this decline.",
-        "She was the Karen causing this decline."
+        "She was the Karen causing this decline.",
+        "He was the man slowly running down the street."
       ],
       "rules": [[
         {
