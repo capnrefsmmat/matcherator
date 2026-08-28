@@ -1463,6 +1463,7 @@
 
     "f_35_because": {
       "description": "Causative adverbial subordinator (*because*)",
+      "comment": "See Quirk et al., 15.45-47.",
       "examples": [
         "I ate because I was hungry.",
         "Because I was hungry, I ate."
@@ -1490,6 +1491,7 @@
 
     "f_36_though": {
       "description": "Concessive adverbial subordinators (*although*, *though*)",
+      "comment": "See Quirk et al., 15.39-40.",
       "examples": [
         "Although it rained, we played.",
         "It was a good game, though it was rainy."
@@ -1514,8 +1516,15 @@
 
     "f_37_if": {
       "description": "Conditional adverbial subordinators (*if*, *unless*)",
+      "comment": "See Quirk et al., 15.33-38.",
       "examples": [
-        "If it rains, we stay inside."
+        "If it rains, we stay inside.",
+        "If it doesn't rain, we'll go outside.",
+        "Unless it rains, we'll go outside.",
+        "I think you shouldn't do it, if I may be so bold."
+      ],
+      "counterexamples": [
+        "It's difficult to say if she did it herself."
       ],
       "rules": [[
         {
