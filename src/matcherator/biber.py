@@ -125,9 +125,19 @@ class BiberMatcherator(Matcherator):
 
         dont_match = subord_thats | wh_clauses | to_infinitives | quotes
 
+        def check_match(m):
+            if len(m) == 3:
+                # first rule is (verb_anchor, comp_verb, subject)
+                return m[1] > m[0] and m[2] > m[0] and \
+                    (m[0], m[1], m[2]) not in dont_match
+            elif len(m) == 4:
+                # second and third rules are
+                # (verb_anchor, comp_verb, auxiliary, subject)
+                return m[1] > m[0] and m[3] > m[0] and \
+                    (m[0], m[1], m[3]) not in dont_match
+
         that_deleted = [m for m in matches["f_60_that_deletion:all"]
-                        if m[1] > m[0] and m[2] > m[0] and
-                        (m[0], m[1], m[2]) not in dont_match]
+                        if check_match(m)]
 
         matches["f_60_that_deletion"] = that_deleted
 
