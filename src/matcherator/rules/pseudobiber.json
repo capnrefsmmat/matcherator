@@ -731,6 +731,7 @@
 
     "f_64_phrasal_coordination": {
       "description": "Phrases joined with coordinating conjunctions",
+      "comment": "TODO This matches any coordinating conjunction, but Biber himself explicitly matches *and* only. Limit, or expand?",
       "examples": [
         "I want ducks and drakes.",
         "Swans are white and angry.",
@@ -767,6 +768,7 @@
 
     "f_65_clausal_coordination": {
       "description": "Independent clause coordination with *and*",
+      "comment": "TODO This actually also matches *or* and other CC, just like pseudobibeR and pybiber, but Biber himself explicitly matches *and*. Limit to *and*?",
       "examples": [
         "She wrote the example, and then she tested it.",
         "I came and I saw."
