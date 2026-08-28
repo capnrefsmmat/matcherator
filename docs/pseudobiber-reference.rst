@@ -513,18 +513,33 @@ structures in the dependency trees.
    *wh-* clauses acting as object complements to verbs. Biber originally restricted this to public, private, and suasive verbs due to limitations in automatic recognition, but we extend this to all verbs. See Quirk et al., 16.35, and Biber et al., 9.3.
 
    * I believed what he told me.
-   * We had a discussion about how the agency operates.
    * They investigated which chemical was responsible.
+   * They investigated which unpleasant chemical was responsible.
    * I believed in what he told me.
-   * I believed a little of what he told me.
    * She was asking what happened.
+   * She was asking me what happened.
+   * We discussed how the agency operates.
    * Can you confirm which flight we're taking?
+   * Can you confirm where the flight departs?
+   * Show me how this works.
+   * I was thinking about what happened.
+   * I listened to what you said.
+   * I don't know what to do about it.
 
    Counterexamples:
 
    * When are you leaving?
    * Yes, but who cares?
    * What's happening?
+   * We had a discussion about how the agency operates.
+   * I believed a little of what he told me.
+   * She is the person who confirmed our flight.
+   * They knew I was affected by Hurricane Andrew, which struck Florida in 1992.
+   * The flight departs when the pilots are ready.
+   * I had doubts about what happened.
+   * What happened was a surprise to everyone.
+   * I was not sure about how to do it.
+   * I was curious how to do it.
 :f_27_past_participle_whiz:
    Past participial postnominal (reduced relative) clauses
 
@@ -567,7 +582,7 @@ structures in the dependency trees.
    * The Marine that bit me was big.
    * The graphs that are presented above allow us to understand the relationship.
 :f_31_wh_subj:
-   *wh-* relatives on subject position
+   *wh-* relative clauses on subject position
 
 
    * The man who likes popcorn ate sixteen tons.
@@ -581,7 +596,7 @@ structures in the dependency trees.
    * Tom asked the man who went to the store.
    * The dog that saw me was big.
 :f_32_wh_obj:
-   *wh-* relatives on object position
+   *wh-* relative clauses on object position
 
 
    * The man who Sally likes is here.
@@ -774,6 +789,8 @@ directly, but are calculated from the results of several.
    * I believe he was arrested.
    * She thought the election was stolen.
    * I said it was a bad idea.
+   * I think she attacked me.
+   * I think she was the one who attacked me.
 
    Counterexamples:
 
