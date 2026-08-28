@@ -1316,7 +1316,7 @@
     },
 
     "f_31_wh_subj": {
-      "description": "*wh-* relatives on subject position",
+      "description": "*wh-* relative clauses on subject position",
       "examples": [
         "The man who likes popcorn ate sixteen tons.",
         "Our goal is to be a resource center with a reading library of materials and directors who are competent professionals.",
@@ -1361,7 +1361,7 @@
     },
 
     "f_32_wh_obj": {
-      "description": "*wh-* relatives on object position",
+      "description": "*wh-* relative clauses on object position",
       "examples": [
         "The man who Sally likes is here.",
         "I resent the man who Sally likes.",
