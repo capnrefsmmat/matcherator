@@ -1632,7 +1632,10 @@
           "LEFT_ID": "verb_anchor",
           "REL_OP": ">",
           "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {"DEP": "ccomp"}
+          "RIGHT_ATTRS": {
+            "POS": {"IN": ["VERB", "AUX"]},
+            "DEP": "ccomp"
+          }
         },
         {
           "LEFT_ID": "comp_verb",
@@ -1699,7 +1702,10 @@
           "LEFT_ID": "verb_anchor",
           "REL_OP": ">",
           "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {"DEP": "ccomp"}
+          "RIGHT_ATTRS": {
+            "POS": {"IN": ["VERB", "AUX"]},
+            "DEP": "ccomp"
+          }
         },
         {
           "LEFT_ID": "comp_verb",
@@ -1767,7 +1773,10 @@
           "LEFT_ID": "verb_anchor",
           "REL_OP": ">",
           "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {"DEP": "ccomp"}
+          "RIGHT_ATTRS": {
+            "POS": {"IN": ["VERB", "AUX"]},
+            "DEP": "ccomp"
+          }
         },
         {
           "LEFT_ID": "comp_verb",
@@ -1834,7 +1843,10 @@
           "LEFT_ID": "verb_anchor",
           "REL_OP": ">",
           "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {"DEP": "ccomp"}
+          "RIGHT_ATTRS": {
+            "POS": {"IN": ["VERB", "AUX"]},
+            "DEP": "ccomp"
+          }
         },
         {
           "LEFT_ID": "comp_verb",
@@ -1900,7 +1912,10 @@
           "LEFT_ID": "verb_anchor",
           "REL_OP": ">",
           "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {"DEP": "ccomp"}
+          "RIGHT_ATTRS": {
+            "POS": {"IN": ["VERB", "AUX"]},
+            "DEP": "ccomp"
+          }
         },
         {
           "LEFT_ID": "comp_verb",
@@ -2108,7 +2123,8 @@
         "She said, \"It's a good idea.\"",
         "They asked me if I drank beer; I said yeah.",
         "I asked, \"How did you find it?\"",
-        "He was right, I think."
+        "He was right, I think.",
+        "I found the door unlocked."
       ]
     }
   }
