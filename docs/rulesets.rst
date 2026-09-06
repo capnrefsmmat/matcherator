@@ -7,3 +7,4 @@ can be automatically matched.
 .. toctree::
    biber
    symbols
+   text-statistics
