@@ -38,9 +38,13 @@ class TextStats:
 
     def __call__(self, doc):
         nplens = noun_phrase_lengths(doc)
+        if len(nplens) > 0:
+            mean_nplens = statistics.mean(nplens)
+        else:
+            mean_nplens = None
 
         doc._.matcherator_text_stats_stats = {
-            "mean_noun_phrase_len": statistics.mean(nplens),
+            "mean_noun_phrase_len": mean_nplens,
             "mean_sentence_len": mean_sentence_length(doc),
             "flesch_reading_ease": textacy.text_stats.readability.flesch_reading_ease(doc)
         }
@@ -57,5 +61,10 @@ def noun_phrase_lengths(doc):
     return [len(c) for c in doc.noun_chunks]
 
 def mean_sentence_length(doc):
-    return textacy.text_stats.basics.n_words(doc) / \
-        textacy.text_stats.basics.n_sents(doc)
+    n_words = textacy.text_stats.basics.n_words(doc)
+    n_sents = textacy.text_stats.basics.n_sents(doc)
+
+    if n_sents > 0:
+        return n_words / n_sents
+
+    return None

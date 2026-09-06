@@ -11,3 +11,6 @@ def test_noun_phrase_lengths():
 
     # "the quick brown fox" and "the lazy dog"
     assert matcherator.text_stats.noun_phrase_lengths(doc) == [4, 3]
+
+    doc = nlp("")
+    assert matcherator.text_stats.noun_phrase_lengths(doc) == []
