@@ -845,7 +845,10 @@
         "Which widget should I use?",
         "Why did you do that?",
         "Why don't we call the game off?",
-        "How long is the wait?"
+        "How long is the wait?",
+        "What secrets did he want to take to his grave?",
+        "What do you mean?",
+        "\"What do you mean?\", Roger asked."
       ],
       "counterexamples": [
         "I know when you are leaving.",
@@ -901,7 +904,7 @@
             "RIGHT_ID": "wh_word",
             "RIGHT_ATTRS": {
               "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
-              "DEP": {"IN": ["nsubj", "advmod", "pobj", "det"]}
+              "DEP": {"IN": ["nsubj", "advmod", "pobj", "det", "dobj"]}
             }
           }
         ]
