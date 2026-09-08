@@ -43,10 +43,16 @@ class TextStats:
         else:
             mean_nplens = None
 
+        try:
+            fre = textacy.text_stats.readability.flesch_reading_ease(doc)
+        except ZeroDivisionError:
+            # no words!
+            fre = None
+
         doc._.matcherator_text_stats_stats = {
             "mean_noun_phrase_len": mean_nplens,
             "mean_sentence_len": mean_sentence_length(doc),
-            "flesch_reading_ease": textacy.text_stats.readability.flesch_reading_ease(doc)
+            "flesch_reading_ease": fre
         }
 
         return doc
