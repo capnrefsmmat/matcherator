@@ -426,25 +426,6 @@
       ]]
     },
 
-    "f_41_adj_pred": {
-      "description": "Predicative adjectives",
-      "comment": "Adjectives that are linked to a noun clause with a copula (*is*).",
-      "examples": [
-        "The horse is big.",
-        "That's right.",
-        "It must be terrible."
-      ],
-      "counterexamples": [
-        "The big horse is here.",
-        "I have a terrible idea!",
-        "It's a quick and easy fix.",
-        "I didn't sleep at all last night."
-      ],
-      "rules": [[
-        {"POS": "ADJ", "DEP": "acomp"}
-      ]]
-    },
-
     "f_42_adverbs": {
       "description": "Total adverbs",
       "examples": [
@@ -1580,6 +1561,43 @@
             "DEP": "mark",
             "POS": "SCONJ",
             "LEMMA": {"NOT_IN": ["because", "if", "unless", "though", "although", "tho"]}
+          }
+        }
+      ]]
+    },
+
+    "f_41_adj_pred": {
+      "description": "Predicative adjectives",
+      "comment": "Adjectives that are linked to a noun clause with a copula. Biber only considers forms of *be*; we extend to copulas such as *seem*, *appear*, *look*, etc. spaCy frequently mis-tags adjective complements of these verbs as object predicates, but as the verbs do not take object predicates, we can accept these cases without fear of false positives.",
+      "examples": [
+        "The horse is big.",
+        "The horse feels warm.",
+        "The horse is very big.",
+        "The horse seems big.",
+        "That's right.",
+        "It must be terrible."
+      ],
+      "counterexamples": [
+        "The big horse is here.",
+        "I have a terrible idea!",
+        "It's a quick and easy fix.",
+        "I didn't sleep at all last night."
+      ],
+      "rules": [[
+        {
+          "RIGHT_ID": "copula",
+          "RIGHT_ATTRS": {
+            "LEMMA": {"IN": ["be", "seem", "appear", "become", "remain", "look",
+                             "feel", "sound", "act", "get", "turn", "prove"]}
+          }
+        },
+        {
+          "LEFT_ID": "copula",
+          "REL_OP": ">",
+          "RIGHT_ID": "adj_pred",
+          "RIGHT_ATTRS": {
+            "POS": "ADJ",
+            "DEP": {"IN": ["acomp", "oprd"]}
           }
         }
       ]]
