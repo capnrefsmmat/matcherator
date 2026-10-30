@@ -377,7 +377,7 @@
 
     "f_34_sentence_relatives": {
       "description": "Sentence relatives",
-      "comment": "Relative clauses that refer to the predicate of a clause or to a whole clause or sentence, rather than just to a noun phrase. Detected heuristically by *which* after punctuation. TODO Is there a better DependencyMatcher rule that would work?",
+      "comment": "Relative clauses that refer to the predicate of a clause or to a whole clause or sentence, rather than just to a noun phrase. Detected heuristically by *which* after punctuation. TODO Is there a better DependencyMatcher rule that would work? This tends to match the same things as wh_subj does, which seems wrong.",
       "examples": [
         "Bob likes fried mangoes, which is the most disgusting thing I've ever heard of.",
         "Bob likes fried mangoes---which is the most disgusting thing I've ever heard of.",
@@ -1616,7 +1616,8 @@
         "She denies that a problem occurred.",
         "He alleges that a small problem occurred.",
         "She returned home from school and found that her mother was gone.",
-        "She returned home from school and found her mother was gone."
+        "She returned home from school and found her mother was gone.",
+        "I think there are two ways Apple could go."
       ],
       "counterexamples": [
         "She returned home from school and found her mother gone."
@@ -2257,7 +2258,8 @@
         "She thought the election was stolen.",
         "I said it was a bad idea.",
         "I think she attacked me.",
-        "I think she was the one who attacked me."
+        "I think she was the one who attacked me.",
+        "I think there are two ways Apple could go."
       ],
       "counterexamples": [
         "I think that he went.",
