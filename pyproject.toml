@@ -5,7 +5,8 @@ dependencies = [
     "spacy",
     "pandas",
     "spacymoji",
-    "jinja2"
+    "jinja2",
+    "textacy"
 ]
 description = "Detect various linguistic features in text using pattern-matching rules"
 authors = [
