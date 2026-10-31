@@ -1,2289 +1,2602 @@
 {
-  "Matcher": {
-    "f_01_past_tense": {
-      "description": "Verbs in the past tense",
-      "examples": [
-        "The cat walked slowly down the street."
-      ],
-      "rules": [[
-        {"TAG": "VBD"}
-      ]]
-    },
-
-    "f_02_perfect_aspect": {
-      "description": "Words in the perfect aspect, indicated by *have* as an auxiliary verb",
-      "examples": [
-        "I have written this sentence.",
-        "Have you been on a student exchange?",
-        "She has already seen it.",
-        "He has been told before.",
-        "Is this the last novel you've read?"
-      ],
-      "rules": [[
-        {"LEMMA": "have", "DEP": "aux"}
-      ]]
-    },
-
-    "f_03_present_tense": {
-      "description": "Verbs in the present tense",
-      "examples": [
-        "The quick brown fox jumps over the lazy dog."
-      ],
-      "rules": [[
-        {"TAG": {"IN": ["VBZ", "VBP"]}}
-      ]]
-    },
-
-    "f_04_place_adverbials": {
-      "description": "Place adverbials (e.g., *above*, *beside*, *outdoors*)",
-      "examples": [
-        "Far downstream, you can find the delta.",
-        "I haven't found any good restaurants locally."
-      ],
-      "comment": "TODO 'She flew west at high speed' seems like a place adverbial, but 'west' is tagged NOUN with advmod dep. Should it count?",
-      "rules": [
-        [
-          {"TAG": {"IN": ["RB", "RBR", "RBS", "RP"]},
-           "LOWER": {"IN": [
-             "aboard", "above", "abroad", "across", "ahead", "alongside",
-             "around", "ashore", "astern", "away", "behind", "below", "beneath",
-             "beside", "downhill", "downstairs", "downstream", "east", "far",
-             "hereabouts", "indoors", "inland", "inshore", "inside", "locally",
-             "near", "nearby", "north", "nowhere", "outdoors", "outside",
-             "overboard", "overland", "overseas", "south", "underfoot",
-             "underground", "underneath", "uphill", "upstairs", "upstream",
-             "west"
-           ]}
-          }
-        ],
-        [
-          {"TAG": "IN",
-           "LOWER": {"IN": [
-             "aboard", "above", "abroad", "across", "alongside", "around",
-             "behind", "below", "beneath", "beside", "inside", "near", "nearby",
-             "outside", "underneath"]}
-          }
-        ]
-      ]
-    },
-
-    "f_05_time_adverbials": {
-      "description": "Time adverbials (e.g., *early*, *instantly*, *soon*)",
-      "examples": [
-        "I will leave momentarily.",
-        "Previously, we saw an example.",
-        "Moreover, music engages multiple neural systems simultaneously—including those mediating perception, cognition, memory and emotion—thereby enabling investigation of how pathological disruption of distributed neural networks manifests in alterations of affective behaviour."
-      ],
-      "rules": [[
-        {"TAG": {"IN": ["RB", "RBR", "RBS", "RP"]},
-         "LOWER": {"IN": [
-           "again", "earlier", "early", "eventually", "formerly", "immediately",
-           "initially", "instantly", "late", "lately", "later", "momentarily",
-           "now", "nowadays", "once", "originally", "presently", "previously",
-           "recently", "shortly", "simultaneously", "subsequently", "today",
-           "to-day", "tomorrow", "to-morrow", "tonight", "to-night", "yesterday"
-         ]}
-        }
-      ]]
-    },
-
-    "f_06_first_person_pronouns": {
-      "description": "First-person pronouns",
-      "examples": [
-        "We are very confused.",
-        "I bought it for myself.",
-        "Our examples are too simplistic.",
-        "My cup runneth over."
-      ],
-      "rules": [[
-        {"TAG": {"IN": ["PRP", "PRP$"]},
-         "LOWER": {"IN": ["i", "me", "us", "my", "we", "our", "myself", "ourselves"]}}
-      ]]
-    },
-
-    "f_07_second_person_pronouns": {
-      "description": "Second-person pronouns",
-      "examples": [
-        "You are reading this example.",
-        "I noticed that thy pants are on fire.",
-        "Take control of thyself.",
-        "Your simian countenance suggests a heritage unusually rich in species diversity."
-      ],
-      "rules": [[
-        {"TAG": {"IN": ["PRP", "PRP$"]},
-         "LOWER": {"IN": ["you", "your", "yourself", "yourselves", "thy", "thee",
-                          "thyself", "thou"]}}
-      ]]
-    },
-
-    "f_08_third_person_pronouns": {
-      "description": "Third-person pronouns",
-      "examples": [
-        "Their pants are collectively on fire.",
-        "He is a liar.",
-        "When I asked her, she disagreed."
-      ],
-      "rules": [[
-        {"TAG": {"IN": ["PRP", "PRP$"]},
-         "LOWER": {"IN": [
-           "she", "he", "they", "her", "him", "them", "his", "their", "himself",
-           "herself", "themselves"]}}
-      ]]
-    },
-
-    "f_09_pronoun_it": {
-      "description": "Pronoun *it*, *its*, or *itself*",
-      "examples": [
-        "Its size is astounding.",
-        "It destroyed itself during the attempt."
-      ],
-      "rules": [[
-        {"TAG": {"IN": ["PRP", "PRP$"]},
-         "LOWER": {"IN": ["it", "its", "itself"]}}
-      ]]
-    },
-
-    "f_10_demonstrative_pronoun": {
-      "description": "Demonstrative pronouns, i.e., pronouns being used to replace a noun",
-      "comment": "See Quirk et al., 6.40-44.",
-      "examples": [
-        "That is an example sentence.",
-        "This is silly.",
-        "You're better than this.",
-        "One day, all of this will be yours.",
-        "Have you seen this?"
-      ],
-      "counterexamples": [
-        "That duck is cute."
-      ],
-      "rules": [
-        [
-          {"TAG": {"IN": ["NN", "NNS", "NNP", "NNPS",
-                          "CD", "DT"]},
-           "OP": "!"},
-          {"TAG": "DT", "DEP": {"IN": ["nsubj", "dobj", "pobj"]},
-           "LOWER": {"IN": ["that", "this", "these", "those"]}}
-        ],
-        [
-          {"TAG": "DT", "DEP": {"IN": ["nsubj", "dobj", "pobj"]},
-           "LOWER": {"IN": ["that", "this", "these", "those"]},
-           "IS_SENT_START": true}
-        ]
-      ]
-    },
-
-    "f_11_indefinite_pronouns": {
-      "description": "Indefinite pronouns (e.g., *anybody*, *nothing*, *someone*)",
-      "examples": [
-        "Well, someone has to do it.",
-        "Nobody is ever interested in this topic.",
-        "The project went nowhere.",
-        "Everyone likes this example.",
-        "Something's not right."
-      ],
-      "rules": [[
-        {"LOWER": {"IN": [
-          "anybody", "anyone", "anything", "everybody", "everyone",
-          "everything", "nobody", "none", "nothing", "nowhere", "somebody",
-          "someone", "something"
-        ]}}
-      ]]
-    },
-
-    "f_12_proverb_do": {
-      "description": "Pro-verb *do*",
-      "comment": "*do* used to substitute for some other lexical verb. See Biber et al., 5.4.3.2.",
-      "examples": [
-        "The cat did it.",
-        "I did it.",
-        "He does!",
-        "I helped you, didn't I?"
-      ],
-      "counterexamples": [
-        "I do not know.",
-        "Why do we need it?"
-      ],
-      "failed_counterexamples": [
-        "It does the job.",
-        "Do me a favor."
-      ],
-      "rules": [[
-        {"LEMMA": "do", "DEP": {"NOT_IN": ["aux"]}}
-      ]]
-    },
-
-    "f_14_nominalizations": {
-      "description": "Nominalizations",
-      "comment": "Verbs, adjectives, or other parts of speech made to function as nouns by adding a suffix such as *-tion*, *-ment*, *-ness*, or *-ity* (e.g., *adjustment*, *abandonment*).",
-      "examples": [
-        "The adjustment was necessary."
-      ],
-      "counterexamples": [
-        "I went to the station."
-      ],
-      "rules": [[
-        {"POS": "NOUN",
-         "LOWER": {"REGEX": "tion$|tions$|ment$|ments$|ness$|nesses$|ity$|ities$",
-                   "NOT_IN": [
-                     "apartment", "apartments", "attention", "business",
-                     "businesses", "capacities", "capacity", "cities", "city",
-                     "comment", "comments", "condition", "conditions", "document",
-                     "documents", "edition", "editions", "element", "elements",
-                     "environment", "environments", "experiment", "experiments",
-                     "fiction", "fictions", "function", "functions", "humanity",
-                     "identities", "identity", "mention", "mentions", "moment",
-                     "moments", "motion", "motions", "nation", "nations", "notion",
-                     "notions", "pity", "position", "positions", "qualities",
-                     "quality", "section", "sections", "solution", "solutions",
-                     "station", "stations", "tradition", "traditions",
-                     "universities", "university", "witness", "witnesses"]}}
-      ]]
-    },
-
-    "f_15_gerunds": {
-      "description": "Gerunds (participial forms functioning as nouns)",
-      "examples": [
-        "Running is fun.",
-        "Rather than seeking to eliminate all possibility of human error, organizations try to reduce it.",
-        "Future research should therefore adopt a more integrative approach that combines computational modeling of prediction errors with individual difference measures and clinical outcomes.",
-        "This approach focuses on reducing the likelihood of errors."
-      ],
-      "counterexamples": [
-        "I am running.",
-        "According to Steve, it's nice out.",
-        "I bought something."
-      ],
-      "comment": "TODO If David agrees in browndw/pybiber#7, replace with DependencyMatcher rule that checks if it is a dobj/pobj or, crucially, chains up/down to one",
-      "rules": [[
-        {"LOWER":
-         {"REGEX": ".*ings?$",
-          "NOT_IN": ["according", "anything", "beijing", "bing", "bings",
-                     "boeing", "bring", "ceiling", "ceilings", "cling",
-                     "clings", "darling", "ding", "dings", "during", "evening",
-                     "evenings", "everything", "fling", "flings", "inning",
-                     "innings", "irving", "king", "kings", "morning",
-                     "mornings", "nothing", "notwithstanding", "offspring",
-                     "offsprings", "outstanding", "ping", "pings", "ring",
-                     "rings", "sing", "sings", "something", "spring", "springs",
-                     "sterling", "sting", "stings", "string", "strings",
-                     "thanksgiving", "thanksgivings", "thing", "things",
-                     "wedding", "wing", "wing", "wings", "wings", "wrongdoing",
-                     "wyoming"]},
-         "DEP": {"IN": ["nsubj", "dobj", "pobj", "obj", "obl", "conj", "nmod", "csubj",
-                        "xcomp", "pcomp", "nsubjpass"]}}
-      ]]
-    },
-
-    "f_16_other_nouns:all": {
-      "description": "All other nouns",
-      "derived": true,
-      "rules": [[
-        {"POS": {"IN": ["NOUN", "PROPN"]}}
-      ]]
-    },
-
-    "f_19_be_main_verb": {
-      "description": "*be* as main verb of a clause",
-      "examples": [
-        "I am happy.",
-        "Additionally, the human performance approach acknowledges that communication, both formal and informal, is essential to maintaining an effective safety culture.",
-        "Workers, being closest to the actual work processes, often possess valuable insights into where error precursors exist and where system vulnerabilities are most likely to manifest.",
-        "She's irreplaceable.",
-        "It was nice to just be at home.",
-        "It's not long."
-      ],
-      "counterexamples": [
-        "I am running.",
-        "If it proves to be desirable, we can upgrade the system."
-      ],
-      "rules": [[
-        {"LEMMA": "be",
-         "TAG": {"IN": ["VBD", "VBP", "VBZ"]},
-         "DEP": {"NOT_IN": ["aux", "auxpass"]}}
-      ]]
-    },
-
-    "f_20_existential_there": {
-      "description": "Existential *there*",
-      "examples": [
-        "There is a feature in this sentence.",
-        "We see that there exist four variables.",
-        "There are students.",
-        "There is now a scholarship scheme."
-      ],
-      "rules": [[
-        {"TAG": "EX"}
-      ]]
-    },
-
-    "f_24_infinitives": {
-      "description": "Infinitives",
-      "examples": [
-        "I want to believe.",
-        "To be involved is unwise."
-      ],
-      "rules": [[
-        {"TAG": "TO"}
-      ]]
-    },
-
-    "f_25_present_participle": {
-      "description": "Present participial adverbial clauses",
-      "comment": "Syntactically detached clauses only, to match Biber's definition",
-      "examples": [
-        "Stuffing his mouth with cookies, Joe ran out the door.",
-        "Joe ran out the door, stuffing his mouth with cookies.",
-        "Realizing they were completely lost, the hikers finally stopped to check their compass.",
-        "Hoping to avoid the rush hour traffic, we left the city long before dawn.",
-        "Turning the blind corner, the cyclist suddenly collided with a pedestrian.",
-        "The ancient water pipes finally burst during the sudden freeze, flooding the entire basement in a matter of minutes.",
-        "The exhausted marathon runner collapsed just past the finish line, gasping for air and clutching his side.",
-        "Practicing for just twenty minutes a day, you can master the basic chords on a guitar within a single month."
-      ],
-      "rules": [
-        [
-          {"TAG": "VBG", "DEP": "advcl",
-           "IS_SENT_START": true}
-        ],
-        [
-          {"IS_PUNCT": true},
-          {"TAG": "VBG", "DEP": "advcl"}
-        ]
-      ]
-    },
-
-    "f_26_past_participle": {
-      "description": "Past participial adverbial clauses",
-      "comment": "Syntacticaly detached clauses only, to match Biber's definition",
-      "examples": [
-        "Built in a single week, the house would stand for fifty years.",
-        "Stored in a cool, dry place, these heirloom seeds can remain viable for up to five years.",
-        "The suspect finally confessed to the embezzlement scheme, cornered by the undeniable forensic evidence."
-      ],
-      "counterexamples": [
-        "After the bridge has been been built in a single week, it will fall down."
-      ],
-      "rules": [
-        [
-          {"TAG": "VBN", "DEP": "advcl",
-           "IS_SENT_START": true}
-        ],
-        [
-          {"IS_PUNCT": true},
-          {"TAG": "VBN", "DEP": "advcl"}
-        ]
-      ]
-    },
-
-    "f_34_sentence_relatives": {
-      "description": "Sentence relatives",
-      "comment": "Relative clauses that refer to the predicate of a clause or to a whole clause or sentence, rather than just to a noun phrase. Detected heuristically by *which* after punctuation. TODO Is there a better DependencyMatcher rule that would work? This tends to match the same things as wh_subj does, which seems wrong.",
-      "examples": [
-        "Bob likes fried mangoes, which is the most disgusting thing I've ever heard of.",
-        "Bob likes fried mangoes---which is the most disgusting thing I've ever heard of.",
-        "None of our variables have a VIF of greater than 2.5, which means that we do not need to be concerned about multicollinearity.",
-        "He walks for an hour each morning, which would bore me."
-      ],
-      "failed_examples": [
-        "They say he plays truant, which he doesn't.",
-        "The plane may be several hours late, in which case there's no point in our waiting."
-      ],
-      "rules": [[
-        {
-          "IS_PUNCT": true,
-          "IS_SENT_START": false
-        },
-        {
-          "LOWER": "which",
-          "DEP": {"IN": ["nsubj", "nsubjpass"]}
-        }
-      ]]
-    },
-
-    "f_39_prepositions": {
-      "description": "Total prepositional phrases",
-      "rules": [[
-        {"DEP": "prep"}
-      ]]
-    },
-
-    "f_40_adj_attr": {
-      "description": "Attributive adjectives",
-      "comment": "Adjectives that modify a noun simply by preceding it.",
-      "examples": [
-        "The big horse is here.",
-        "I have a terrible idea!",
-        "It's a quick and easy fix.",
-        "I didn't sleep at all last night."
-      ],
-      "counterexamples": [
-        "The horse is big.",
-        "That's right.",
-        "It must be terrible."
-      ],
-      "rules": [[
-        {"POS": "ADJ", "DEP": "amod"}
-      ]]
-    },
-
-    "f_42_adverbs": {
-      "description": "Total adverbs",
-      "examples": [
-        "Unfortunately, that's the case."
-      ],
-      "rules": [[
-        {"TAG": {"IN": ["RB", "RBR", "RBS", "WRB"]}}
-      ]]
-    },
-
-    "f_45_conjuncts": {
-      "description": "Conjuncts",
-      "comment": "Connective phrases that mark relations between clauses, such as *altogether*, *in comparison*, *nonetheless*. There is also a PhraseMatcher rule to detect the remaining patterns.",
-      "examples": [
-        "It's a whole different kind of flying, altogether.",
-        "Rather than treating workers as passive recipients of safety procedures, this approach encourages workers to actively participate in identifying error-prone conditions, contributing to hazard analysis, and providing feedback on the effectiveness of existing controls and procedures."
-      ],
-      "rules": [
-        [
-          {"IS_PUNCT": true},
-          {"LOWER": {"IN": ["else", "altogether", "rather"]}}
-        ],
-        [
-          {"IS_SENT_START": true,
-           "LOWER": {"IN": ["else", "altogether", "rather"]}}
-        ]
-      ]
-    },
-
-    "f_49_emphatics": {
-      "description": "Emphatics",
-      "examples": [
-        "The horse is so big.",
-        "He did do it.",
-        "It's a real big problem."
-      ],
-      "rules": [
-        [
-          {"LOWER": {"IN": ["so", "real"]}},
-          {"TAG": "JJ"}
-        ],
-        [
-          {"LOWER": {"IN": ["do", "does", "doing", "did"]},
-           "TAG": {"IN": ["VB", "VBD", "VBG", "VBN", "VBP", "VBN", "VBP", "VBZ"]}},
-          {"POS": "VERB"}
-        ]
-      ]
-    },
-
-    "f_50_discourse_particles": {
-      "description": "Discourse particles (e.g., *well*, *anyhow*, *anyway*)",
-      "comment": "TODO Switch to anything with RP POS, like MFTE?",
-      "examples": [
-        "Well, that's not a good idea.",
-        "Anyway, I started blasting.",
-        "She tried it, but, well, it didn't work."
-      ],
-      "counterexamples": [
-        "He dug a well."
-      ],
-      "rules": [
-        [
-          {"IS_PUNCT": true},
-          {"LOWER": {"IN": ["well", "now", "anyhow", "anyways", "anyway"]}}
-        ],
-        [
-          {"IS_SENT_START": true,
-           "LOWER": {"IN": ["well", "now", "anyhow", "anyways", "anyway"]}}
-        ]
-
-      ]
-    },
-
-    "f_51_demonstratives": {
-      "description": "Demonstratives (*that*, *this*, *these*, or *those* used as determiners)",
-      "comment": "Excludes demonstrative pronouns (f_10_demonstrative_pronoun)",
-      "examples": [
-        "That sentence illustrates the feature.",
-        "This cat is happy."
-      ],
-      "counterexamples": [
-        "That is an example sentence.",
-        "This is the feature.",
-        "Those are my penguins."
-      ],
-      "rules": [[
-        {"DEP": "det",
-         "LOWER": {"IN": ["that", "this", "these", "those"]}}
-      ]]
-    },
-
-    "f_52_modal_possibility": {
-      "description": "Possibility modals",
-      "examples": [
-        "You can do it!",
-        "The bridge might fall down."
-      ],
-      "counterexamples": [
-        "Stand in awe of my might."
-      ],
-      "rules": [[
-        {"LEMMA": {"IN": ["can", "may", "might", "could"]},
-         "TAG": "MD"}
-      ]]
-    },
-
-    "f_53_modal_necessity": {
-      "description": "Necessity modals",
-      "examples": [
-        "You should wright more examples.",
-        "One must write examples."
-      ],
-      "counterexamples": [
-        "It smells very musty in here."
-      ],
-      "rules": [[
-        {"LEMMA": {"IN": ["ought", "should", "must"]},
-         "TAG": "MD"}
-      ]]
-    },
-
-    "f_54_modal_predictive": {
-      "description": "Predictive modals",
-      "examples": [
-        "You will read this example.",
-        "It shall be done."
-      ],
-      "counterexamples": [
-        "He wrote a will."
-      ],
-      "rules": [[
-        {"LEMMA": {"IN": ["will", "would", "shall"]},
-         "TAG": "MD"}
-      ]]
-    },
-
-    "f_55_verb_public": {
-      "description": "Public verbs",
-      "comment": "Verbs describing speech actions (e.g., *allege*, *insist*, *reply*). See Quirk et al., 16.31.",
-      "examples": [
-        "He announced his opinions.",
-        "She remarked that this example is stupid.",
-        "I do solemly swear that this is an example."
-      ],
-      "counterexamples": [
-        "This is a swear word.",
-        "He placed a bet."
-      ],
-      "rules": [[
-        {
-          "POS": "VERB",
-          "LEMMA": {"IN": [
-            "acknowledge", "add", "admit", "affirm", "agree", "allege",
-            "announce", "argue", "assert", "bet", "boast", "certify", "claim",
-            "comment", "complain", "concede", "confess", "confide", "confirm",
-            "contend", "convey", "declare", "deny", "disclose", "exclaim",
-            "explain", "forecast", "foretell", "guarantee", "hint", "insist",
-            "maintain", "mention", "object", "predict", "proclaim", "promise",
-            "pronounce", "prophesy", "protest", "remark", "repeat", "reply",
-            "report", "retort", "say", "state", "submit", "suggest", "swear",
-            "testify", "vow", "warn", "write"
-          ]}
-        }
-      ]]
-    },
-
-    "f_56_verb_private": {
-      "description": "Private verbs",
-      "comment": "Verbs describing private intellectual states or intellectual acts (e.g., *realize*, *think*). See Quirk et al., 16.31.",
-      "examples": [
-        "I anticipate a raise.",
-        "I did not realise the issue.",
-        "She thinks it's an issue."
-      ],
-      "rules": [[
-        {
-          "POS": "VERB",
-          "LEMMA": {"IN": [
-            "accept", "anticipate", "ascertain", "assume", "believe",
-            "calculate", "check", "conclude", "conjecture", "consider",
-            "decide", "deduce", "deem", "demonstrate", "determine", "discern",
-            "discover", "doubt", "dream", "ensure", "establish", "estimate",
-            "expect", "fancy", "fear", "feel", "find", "foresee", "forget",
-            "gather", "guess", "hear", "hold", "hope", "imagine", "imply",
-            "indicate", "infer", "insure", "judge", "know", "learn", "mean",
-            "note", "notice", "observe", "perceive", "presume", "presuppose",
-            "pretend", "prove", "realize", "realise", "reason", "recall",
-            "reckon", "recognise", "recognize", "reflect", "remember",
-            "reveal", "see", "sense", "show", "signify", "suppose", "suspect",
-            "think", "understand"
-          ]}
-        }
-      ]]
-    },
-
-    "f_57_verb_suasive": {
-      "description": "Suasive verbs",
-      "comment": "Verbs describing intentions to cause a future change (e.g., *arrange*, *propose*, *suggest*). See Quirk et al., 16.32.",
-      "examples": [
-        "She decreed that none will survive.",
-        "I will ensure that you succeed.",
-        "They urged us to accept the proposal urgently."
-      ],
-      "counterexamples": [
-        "We followed the rules.",
-        "She read the decree."
-      ],
-      "rules": [[
-        {
-          "POS": "VERB",
-          "LEMMA": {"IN": [
-            "agree", "allow", "arrange", "ask", "beg", "command", "concede",
-            "decide", "decree", "decreed", "demand", "desire", "determine", "enjoin",
-            "ensure", "entreat", "grant", "insist", "instruct", "intend",
-            "move", "ordain", "order", "pledge", "pray", "prefer", "pronounce",
-            "propose", "recommend", "request", "require", "resolve", "rule",
-            "stipulate", "suggest", "urge", "vote"
-          ]}
-        }
-      ]]
-    },
-
-    "f_58_verb_seem": {
-      "description": "Verbs *seem* and *appear*",
-      "examples": [
-        "It seems to be the case.",
-        "It appears to be the case.",
-        "It just appeared in front of me!",
-        "While they were appearing, one went missing."
-      ],
-      "rules": [[
-        {"POS": "VERB",
-         "LEMMA": {"IN": ["seem", "appear"]}}
-      ]]
-    },
-
-    "f_59_contractions": {
-      "description": "Contractions",
-      "examples": [
-        "I can't do it.",
-        "They won't do it.",
-        "You shouldn't be involved.",
-        "They'll do it.",
-        "You could've done it.",
-        "It's a good idea.",
-        "She's a great teacher.",
-        "They're going to do it.",
-        "I can’t do it.",
-        "They won’t do it.",
-        "You shouldn’t be involved.",
-        "They’ll do it.",
-        "It’s a good idea.",
-        "She’s a great teacher.",
-        "They’re going to do it."
-      ],
-      "counterexamples": [
-        "The truck's fender was damaged.",
-        "Bob's truck was damaged.",
-        "The truck’s fender was damaged.",
-        "Bob’s truck was damaged."
-      ],
-      "rules": [[
-        {"LOWER": {"REGEX": "['’]"},
-         "TAG": {"IN": ["MD", "RB", "VB", "VBZ", "VBP"]}}
-      ]]
-    },
-
-    "f_61_stranded_preposition": {
-      "description": "Prepositions stranded at the end of a sentence or clause",
-      "examples": [
-        "She is the candidate that I was thinking of.",
-        "She is the candidate that I was thinking of, before the meeting.",
-        "She is the candidate that I was thinking of---before the meeting.",
-        "I don't know who she laughed at."
-      ],
-      "counterexamples": [
-        "Let's meet face-to-face."
-      ],
-      "rules": [[
-        {"TAG": "IN", "DEP": "prep"},
-        {"POS": "PUNCT", "TAG": {"IN": [".", ",", ":"]}}
-      ]]
-    },
-
-    "f_64_phrasal_coordination": {
-      "description": "Phrases joined with coordinating conjunctions",
-      "comment": "TODO This matches any coordinating conjunction, but Biber himself explicitly matches *and* only. Limit, or expand?",
-      "examples": [
-        "I want ducks and drakes.",
-        "Swans are white and angry.",
-        "The cat likes to run and jump.",
-        "The cat struck silently and swiftly."
-      ],
-      "counterexamples": [
-        "She wrote the example, and then she tested it.",
-        "I came and I saw."
-      ],
-      "rules": [
-        [
-          {"POS": "NOUN"},
-          {"TAG": "CC"},
-          {"POS": "NOUN"}
-        ],
-        [
-          {"POS": "VERB"},
-          {"TAG": "CC"},
-          {"POS": "VERB"}
-        ],
-        [
-          {"POS": "ADJ"},
-          {"TAG": "CC"},
-          {"POS": "ADJ"}
-        ],
-        [
-          {"POS": "ADV"},
-          {"TAG": "CC"},
-          {"POS": "ADV"}
-        ]
-      ]
-    },
-
-    "f_65_clausal_coordination": {
-      "description": "Independent clause coordination with *and*",
-      "comment": "TODO This actually also matches *or* and other CC, just like pseudobibeR and pybiber, but Biber himself explicitly matches *and*. Limit to *and*?",
-      "examples": [
-        "She wrote the example, and then she tested it.",
-        "I came and I saw."
-      ],
-      "counterexamples": [
-        "I want ducks and drakes."
-      ],
-      "rules": [[
-        {"TAG": "CC",
-         "DEP": {"NOT_IN": ["ROOT"]}},
-        {"OP": "{,2}"},
-        {"DEP": "nsubj"}
-      ]]
-    },
-
-    "f_66_neg_synthetic": {
-      "description": "Synthetic negation",
-      "comment": "Negation using *no*, *neither*, or *nor*.",
-      "examples": [
-        "No answer is good enough for Jones.",
-        "No better answer is available.",
-        "Neither answer is satisfactory.",
-        "No Work, No School, No Shopping, No Banking, No Housework, No Compliance."
-      ],
-      "rules": [
-        [
-          {"LOWER": "no"},
-          {"POS": {"IN": ["NOUN", "PROPN"]}}
-        ],
-        [
-          {"LOWER": "no"},
-          {"POS": "ADJ"}
-        ],
-        [
-          {"LOWER": "neither"}
-        ],
-        [
-          {"LOWER": "nor"}
-        ]
-      ]
-    },
-
-    "f_67_neg_analytic": {
-      "description": "Analytic negation",
-      "comment": "Negation using *not* or contractions thereof.",
-      "examples": [
-        "That is not good enough.",
-        "That isn't good enough."
-      ],
-      "rules": [
-        [
-          {"LOWER": "not"}
-        ],
-        [
-          {"LOWER": {"IN": ["n't", "n’t"]}}
-        ]
-      ]
+  "f_01_past_tense": {
+    "description": "Verbs in the past tense",
+    "examples": [
+      "The cat walked slowly down the street."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": "VBD"}
+        ]]
+      }
     }
   },
 
-  "DependencyMatcher": {
-    "f_13_wh_question": {
-      "description": "Direct *wh-* questions",
-      "comment": "Biber's original rule admits constructions with *wh-* words that are not questions, which was repeated in some existing taggers, but we can more reliably detect questions. It also only admits *wh-* questions that use an auxiliary verb, omitting questions like *who borrowed my widget?* We correct both of these deficiencies. His rule also excluded questions based on WH pronouns (who, whom, whose, which), but we include such questions. See Biber et al., 3.13.2.1.",
-      "examples": [
-        "I know who she is, but who are you?",
-        "When are you leaving?",
-        "Yes, but who cares?",
-        "What's happening?",
-        "Who are you talking about?",
-        "So who is it for?",
-        "Who borrowed my widget?",
-        "Who has borrowed my widget?",
-        "Which widget should I use?",
-        "Why did you do that?",
-        "Why don't we call the game off?",
-        "How long is the wait?",
-        "What secrets did he want to take to his grave?",
-        "What do you mean?",
-        "\"What do you mean?\", Roger asked."
-      ],
-      "counterexamples": [
-        "I know when you are leaving.",
-        "The difference between heights constitutes the gap, which can be measured with a depth micrometer.",
-        "Have you borrowed my widget?",
-        "Could I have another?",
-        "Was the issue ignored, when it is so important?"
-      ],
-      "rules": [
-        [
-          {
-            "RIGHT_ID": "aux_verb",
-            "RIGHT_ATTRS": {"POS": "AUX"}
-          },
-          {
-            "LEFT_ID": "aux_verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "question_mark",
-            "RIGHT_ATTRS": {
-              "DEP": "punct",
-              "IS_PUNCT": true,
-              "ORTH": "?"
+  "f_02_perfect_aspect": {
+    "description": "Words in the perfect aspect, indicated by *have* as an auxiliary verb",
+    "examples": [
+      "I have written this sentence.",
+      "Have you been on a student exchange?",
+      "She has already seen it.",
+      "He has been told before.",
+      "Is this the last novel you've read?"
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"LEMMA": "have", "DEP": "aux"}
+        ]]
+      }
+    }
+  },
+
+  "f_03_present_tense": {
+    "description": "Verbs in the present tense",
+    "examples": [
+      "The quick brown fox jumps over the lazy dog."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": {"IN": ["VBZ", "VBP"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_04_place_adverbials": {
+    "description": "Place adverbials (e.g., *above*, *beside*, *outdoors*)",
+    "comment": "TODO 'She flew west at high speed' seems like a place adverbial, but 'west' is tagged NOUN with advmod dep. Should it count?",
+    "examples": [
+      "Far downstream, you can find the delta.",
+      "I haven't found any good restaurants locally."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [
+          [
+            {"TAG": {"IN": ["RB", "RBR", "RBS", "RP"]},
+             "LOWER": {"IN": [
+               "aboard", "above", "abroad", "across", "ahead", "alongside",
+               "around", "ashore", "astern", "away", "behind", "below", "beneath",
+               "beside", "downhill", "downstairs", "downstream", "east", "far",
+               "hereabouts", "indoors", "inland", "inshore", "inside", "locally",
+               "near", "nearby", "north", "nowhere", "outdoors", "outside",
+               "overboard", "overland", "overseas", "south", "underfoot",
+               "underground", "underneath", "uphill", "upstairs", "upstream",
+               "west"
+             ]}
             }
-          },
-          {
-            "LEFT_ID": "aux_verb",
-            "REL_OP": ">>",
-            "RIGHT_ID": "wh_word",
-            "RIGHT_ATTRS": {
-              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
-              "DEP": {"IN": ["attr", "advmod"]}
+          ],
+          [
+            {"TAG": "IN",
+             "LOWER": {"IN": [
+               "aboard", "above", "abroad", "across", "alongside", "around",
+               "behind", "below", "beneath", "beside", "inside", "near", "nearby",
+               "outside", "underneath"]}
             }
+          ]
+        ]
+      }
+    }
+  },
+
+  "f_05_time_adverbials": {
+    "description": "Time adverbials (e.g., *early*, *instantly*, *soon*)",
+    "examples": [
+      "I will leave momentarily.",
+      "Previously, we saw an example.",
+      "Moreover, music engages multiple neural systems simultaneously—including those mediating perception, cognition, memory and emotion—thereby enabling investigation of how pathological disruption of distributed neural networks manifests in alterations of affective behaviour."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": {"IN": ["RB", "RBR", "RBS", "RP"]},
+           "LOWER": {"IN": [
+             "again", "earlier", "early", "eventually", "formerly", "immediately",
+             "initially", "instantly", "late", "lately", "later", "momentarily",
+             "now", "nowadays", "once", "originally", "presently", "previously",
+             "recently", "shortly", "simultaneously", "subsequently", "today",
+             "to-day", "tomorrow", "to-morrow", "tonight", "to-night", "yesterday"
+           ]}
           }
-        ],
-        [
+        ]]
+      }
+    }
+  },
+
+  "f_06_first_person_pronouns": {
+    "description": "First-person pronouns",
+    "examples": [
+      "We are very confused.",
+      "I bought it for myself.",
+      "Our examples are too simplistic.",
+      "My cup runneth over."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": {"IN": ["PRP", "PRP$"]},
+           "LOWER": {"IN": ["i", "me", "us", "my", "we", "our", "myself", "ourselves"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_07_second_person_pronouns": {
+    "description": "Second-person pronouns",
+    "examples": [
+      "You are reading this example.",
+      "I noticed that thy pants are on fire.",
+      "Take control of thyself.",
+      "Your simian countenance suggests a heritage unusually rich in species diversity."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": {"IN": ["PRP", "PRP$"]},
+           "LOWER": {"IN": ["you", "your", "yourself", "yourselves", "thy", "thee",
+                            "thyself", "thou"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_08_third_person_pronouns": {
+    "description": "Third-person pronouns",
+    "examples": [
+      "Their pants are collectively on fire.",
+      "He is a liar.",
+      "When I asked her, she disagreed."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": {"IN": ["PRP", "PRP$"]},
+           "LOWER": {"IN": [
+             "she", "he", "they", "her", "him", "them", "his", "their", "himself",
+             "herself", "themselves"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_09_pronoun_it": {
+    "description": "Pronoun *it*, *its*, or *itself*",
+    "examples": [
+      "Its size is astounding.",
+      "It destroyed itself during the attempt."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": {"IN": ["PRP", "PRP$"]},
+           "LOWER": {"IN": ["it", "its", "itself"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_10_demonstrative_pronoun": {
+    "description": "Demonstrative pronouns, i.e., pronouns being used to replace a noun",
+    "comment": "See Quirk et al., 6.40-44.",
+    "examples": [
+      "That is an example sentence.",
+      "This is silly.",
+      "You're better than this.",
+      "One day, all of this will be yours.",
+      "Have you seen this?"
+    ],
+    "counterexamples": [
+      "That duck is cute."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [
+          [
+            {"TAG": {"IN": ["NN", "NNS", "NNP", "NNPS",
+                            "CD", "DT"]},
+             "OP": "!"},
+            {"TAG": "DT", "DEP": {"IN": ["nsubj", "dobj", "pobj"]},
+             "LOWER": {"IN": ["that", "this", "these", "those"]}}
+          ],
+          [
+            {"TAG": "DT", "DEP": {"IN": ["nsubj", "dobj", "pobj"]},
+             "LOWER": {"IN": ["that", "this", "these", "those"]},
+             "IS_SENT_START": true}
+          ]
+        ]
+      }
+    }
+  },
+
+  "f_11_indefinite_pronouns": {
+    "description": "Indefinite pronouns (e.g., *anybody*, *nothing*, *someone*)",
+    "examples": [
+      "Well, someone has to do it.",
+      "Nobody is ever interested in this topic.",
+      "The project went nowhere.",
+      "Everyone likes this example.",
+      "Something's not right."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"LOWER": {"IN": [
+            "anybody", "anyone", "anything", "everybody", "everyone",
+            "everything", "nobody", "none", "nothing", "nowhere", "somebody",
+            "someone", "something"
+          ]}}
+        ]]
+      }
+    }
+  },
+
+  "f_12_proverb_do": {
+    "description": "Pro-verb *do*",
+    "comment": "*do* used to substitute for some other lexical verb. See Biber et al., 5.4.3.2.",
+    "examples": [
+      "The cat did it.",
+      "I did it.",
+      "He does!",
+      "I helped you, didn't I?"
+    ],
+    "counterexamples": [
+      "I do not know.",
+      "Why do we need it?"
+    ],
+    "failed_counterexamples": [
+      "It does the job.",
+      "Do me a favor."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"LEMMA": "do", "DEP": {"NOT_IN": ["aux"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_13_wh_question": {
+    "description": "Direct *wh-* questions",
+    "comment": "Biber's original rule admits constructions with *wh-* words that are not questions, which was repeated in some existing taggers, but we can more reliably detect questions. It also only admits *wh-* questions that use an auxiliary verb, omitting questions like *who borrowed my widget?* We correct both of these deficiencies. His rule also excluded questions based on WH pronouns (who, whom, whose, which), but we include such questions. See Biber et al., 3.13.2.1.",
+    "examples": [
+      "I know who she is, but who are you?",
+      "When are you leaving?",
+      "Yes, but who cares?",
+      "What's happening?",
+      "Who are you talking about?",
+      "So who is it for?",
+      "Who borrowed my widget?",
+      "Who has borrowed my widget?",
+      "Which widget should I use?",
+      "Why did you do that?",
+      "Why don't we call the game off?",
+      "How long is the wait?",
+      "What secrets did he want to take to his grave?",
+      "What do you mean?",
+      "\"What do you mean?\", Roger asked."
+    ],
+    "counterexamples": [
+      "I know when you are leaving.",
+      "The difference between heights constitutes the gap, which can be measured with a depth micrometer.",
+      "Have you borrowed my widget?",
+      "Could I have another?",
+      "Was the issue ignored, when it is so important?"
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [
+          [
+            {
+              "RIGHT_ID": "aux_verb",
+              "RIGHT_ATTRS": {"POS": "AUX"}
+            },
+            {
+              "LEFT_ID": "aux_verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "question_mark",
+              "RIGHT_ATTRS": {
+                "DEP": "punct",
+                "IS_PUNCT": true,
+                "ORTH": "?"
+              }
+            },
+            {
+              "LEFT_ID": "aux_verb",
+              "REL_OP": ">>",
+              "RIGHT_ID": "wh_word",
+              "RIGHT_ATTRS": {
+                "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
+                "DEP": {"IN": ["attr", "advmod"]}
+              }
+            }
+          ],
+          [
+            {
+              "RIGHT_ID": "root_verb",
+              "RIGHT_ATTRS": {"POS": "VERB"}
+            },
+            {
+              "LEFT_ID": "root_verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "question_mark",
+              "RIGHT_ATTRS": {
+                "DEP": "punct",
+                "IS_PUNCT": true,
+                "ORTH": "?"
+              }
+            },
+            {
+              "LEFT_ID": "root_verb",
+              "REL_OP": ">>",
+              "RIGHT_ID": "wh_word",
+              "RIGHT_ATTRS": {
+                "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
+                "DEP": {"IN": ["nsubj", "advmod", "pobj", "det", "dobj"]}
+              }
+            }
+          ]
+        ]
+      }
+    }
+  },
+
+  "f_14_nominalizations": {
+    "description": "Nominalizations",
+    "comment": "Verbs, adjectives, or other parts of speech made to function as nouns by adding a suffix such as *-tion*, *-ment*, *-ness*, or *-ity* (e.g., *adjustment*, *abandonment*).",
+    "examples": [
+      "The adjustment was necessary."
+    ],
+    "counterexamples": [
+      "I went to the station."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"POS": "NOUN",
+           "LOWER": {"REGEX": "tion$|tions$|ment$|ments$|ness$|nesses$|ity$|ities$",
+                     "NOT_IN": [
+                       "apartment", "apartments", "attention", "business",
+                       "businesses", "capacities", "capacity", "cities", "city",
+                       "comment", "comments", "condition", "conditions", "document",
+                       "documents", "edition", "editions", "element", "elements",
+                       "environment", "environments", "experiment", "experiments",
+                       "fiction", "fictions", "function", "functions", "humanity",
+                       "identities", "identity", "mention", "mentions", "moment",
+                       "moments", "motion", "motions", "nation", "nations", "notion",
+                       "notions", "pity", "position", "positions", "qualities",
+                       "quality", "section", "sections", "solution", "solutions",
+                       "station", "stations", "tradition", "traditions",
+                       "universities", "university", "witness", "witnesses"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_15_gerunds": {
+    "description": "Gerunds (participial forms functioning as nouns)",
+    "comment": "TODO If David agrees in browndw/pybiber#7, replace with DependencyMatcher rule that checks if it is a dobj/pobj or, crucially, chains up/down to one",
+    "examples": [
+      "Running is fun.",
+      "Rather than seeking to eliminate all possibility of human error, organizations try to reduce it.",
+      "Future research should therefore adopt a more integrative approach that combines computational modeling of prediction errors with individual difference measures and clinical outcomes.",
+      "This approach focuses on reducing the likelihood of errors."
+    ],
+    "counterexamples": [
+      "I am running.",
+      "According to Steve, it's nice out.",
+      "I bought something."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"LOWER":
+           {"REGEX": ".*ings?$",
+            "NOT_IN": ["according", "anything", "beijing", "bing", "bings",
+                       "boeing", "bring", "ceiling", "ceilings", "cling",
+                       "clings", "darling", "ding", "dings", "during", "evening",
+                       "evenings", "everything", "fling", "flings", "inning",
+                       "innings", "irving", "king", "kings", "morning",
+                       "mornings", "nothing", "notwithstanding", "offspring",
+                       "offsprings", "outstanding", "ping", "pings", "ring",
+                       "rings", "sing", "sings", "something", "spring", "springs",
+                       "sterling", "sting", "stings", "string", "strings",
+                       "thanksgiving", "thanksgivings", "thing", "things",
+                       "wedding", "wing", "wing", "wings", "wings", "wrongdoing",
+                       "wyoming"]},
+           "DEP": {"IN": ["nsubj", "dobj", "pobj", "obj", "obl", "conj", "nmod", "csubj",
+                          "xcomp", "pcomp", "nsubjpass"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_16_other_nouns": {
+    "description": "Other nouns (not counting gerunds and nominalizations)",
+    "examples": [
+      "There is a cat."
+    ],
+    "counterexamples": [
+      "The adjustment was necessary.",
+      "Running is good."
+    ],
+    "subrules": {
+      "all": {
+        "type": "Matcher",
+        "derived": true,
+        "description": "All other nouns",
+        "rules": [[
+          {"POS": {"IN": ["NOUN", "PROPN"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_17_agentless_passives": {
+    "description": "Agentless passive voice",
+    "comment": "Passive voice without *by* to indicate the actor",
+    "examples": [
+      "The task was done."
+    ],
+    "counterexamples": [
+      "The task was done by Steve."
+    ],
+    "subrules": {
+      "all": {
+        "type": "DependencyMatcher",
+        "derived": true,
+        "description": "All passives",
+        "rules": [[
           {
-            "RIGHT_ID": "root_verb",
+            "RIGHT_ID": "passive_verb",
+            "RIGHT_ATTRS": {"TAG": "VBN"}
+          },
+          {
+            "LEFT_ID": "passive_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "aux_pass",
+            "RIGHT_ATTRS": {"DEP": "auxpass"}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_18_by_passives": {
+    "description": "*by-* passives",
+    "comment": "Passive voice with *by* to indicate the actor",
+    "examples": [
+      "The task was done by Steve.",
+      "The task was done by Steve rather than by Sharon."
+    ],
+    "counterexamples": [
+      "The task was done.",
+      "By beginning this sentence with \"by\", I may break the feature detector."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "passive_verb",
+            "RIGHT_ATTRS": {"TAG": "VBN"}
+          },
+          {
+            "LEFT_ID": "passive_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "aux_pass",
+            "RIGHT_ATTRS": {"DEP": "auxpass"}
+          },
+          {
+            "LEFT_ID": "passive_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "agent_node",
+            "RIGHT_ATTRS": {"DEP": "agent"}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_19_be_main_verb": {
+    "description": "*be* as main verb of a clause",
+    "examples": [
+      "I am happy.",
+      "Additionally, the human performance approach acknowledges that communication, both formal and informal, is essential to maintaining an effective safety culture.",
+      "Workers, being closest to the actual work processes, often possess valuable insights into where error precursors exist and where system vulnerabilities are most likely to manifest.",
+      "She's irreplaceable.",
+      "It was nice to just be at home.",
+      "It's not long."
+    ],
+    "counterexamples": [
+      "I am running.",
+      "If it proves to be desirable, we can upgrade the system."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"LEMMA": "be",
+           "TAG": {"IN": ["VBD", "VBP", "VBZ"]},
+           "DEP": {"NOT_IN": ["aux", "auxpass"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_20_existential_there": {
+    "description": "Existential *there*",
+    "examples": [
+      "There is a feature in this sentence.",
+      "We see that there exist four variables.",
+      "There are students.",
+      "There is now a scholarship scheme."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": "EX"}
+        ]]
+      }
+    }
+  },
+
+  "f_21_that_verb_comp": {
+    "description": "*that* verb complements",
+    "examples": [
+      "I said that he went.",
+      "This finding suggests that the item may be green.",
+      "We see that the data is unimodal."
+    ],
+    "failed_counterexamples": [
+      {
+        "text": "Traditional exposure therapy operates on the premise that habituation and fear extinction constitute the primary mechanisms of change.",
+        "comment": "This matches the pattern perfectly, but *that* is modifying *premise*, a noun. Possibly mis-parsed by spaCy?"
+      }
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "verb",
             "RIGHT_ATTRS": {"POS": "VERB"}
           },
           {
-            "LEFT_ID": "root_verb",
+            "LEFT_ID": "verb",
             "REL_OP": ">",
-            "RIGHT_ID": "question_mark",
+            "RIGHT_ID": "comp_verb",
+            "RIGHT_ATTRS": {"DEP": "ccomp", "POS": {"IN": ["VERB", "AUX"]}}
+          },
+          {
+            "LEFT_ID": "comp_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "that_comp",
+            "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_22_that_adj_comp": {
+    "description": "*that* adjective complements",
+    "comment": "*that* clauses controlled by adjectival predicates. See Biber et al., 9.2.5.",
+    "examples": [
+      "I'm glad that you like it.",
+      "The values were so small that they did not have much of an effect on our model.",
+      "I'm sorry that you're sick.",
+      "It seems likely that you're nice.",
+      "It's nice that people say it to you unprompted.",
+      "It is plausible that aberrant prediction error processing could result in sustained relief.",
+      "You are undoubtedly right that this is a matching sentence.",
+      "I'm afraid that it's a bad idea."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [
+          [
+            {
+              "RIGHT_ID": "adjective",
+              "RIGHT_ATTRS": {"POS": "ADJ"}
+            },
+            {
+              "LEFT_ID": "adjective",
+              "REL_OP": ">",
+              "RIGHT_ID": "comp_verb",
+              "RIGHT_ATTRS": {"DEP": "ccomp", "POS": {"IN": ["VERB", "AUX"]}}
+            },
+            {
+              "LEFT_ID": "comp_verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "that_comp",
+              "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
+            }
+          ],
+          [
+            {
+              "RIGHT_ID": "verb",
+              "RIGHT_ATTRS": {"POS": "AUX"}
+            },
+            {
+              "LEFT_ID": "verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "adjective",
+              "RIGHT_ATTRS": {"POS": "ADJ", "DEP": "acomp"}
+            },
+            {
+              "LEFT_ID": "verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "comp_verb",
+              "RIGHT_ATTRS": {"DEP": "ccomp", "POS": {"IN": ["VERB", "AUX"]}}
+            },
+            {
+              "LEFT_ID": "comp_verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "that_comp",
+              "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
+            }
+          ]
+        ]
+      }
+    }
+  },
+
+  "f_23_wh_clause": {
+    "description": "*wh-* clauses",
+    "comment": "*wh-* clauses acting as object complements to verbs. Biber originally restricted this to public, private, and suasive verbs due to limitations in automatic recognition, but we extend this to all verbs. See Quirk et al., 16.35, and Biber et al., 9.3.",
+    "examples": [
+      "I believed what he told me.",
+      "They investigated which chemical was responsible.",
+      "They investigated which unpleasant chemical was responsible.",
+      "I believed in what he told me.",
+      "She was asking what happened.",
+      "She was asking me what happened.",
+      "We discussed how the agency operates.",
+      "Can you confirm which flight we're taking?",
+      "Can you confirm where the flight departs?",
+      "Show me how this works.",
+      "I was thinking about what happened.",
+      "I listened to what you said.",
+      "I don't know what to do about it."
+    ],
+    "counterexamples": [
+      "When are you leaving?",
+      "Yes, but who cares?",
+      "What's happening?",
+      "We had a discussion about how the agency operates.",
+      "I believed a little of what he told me.",
+      "She is the person who confirmed our flight.",
+      "They knew I was affected by Hurricane Andrew, which struck Florida in 1992.",
+      "The flight departs when the pilots are ready.",
+      "I had doubts about what happened.",
+      "What happened was a surprise to everyone.",
+      "I was not sure about how to do it.",
+      "I was curious how to do it."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [
+          [
+            {
+              "RIGHT_ID": "verb",
+              "RIGHT_ATTRS": {
+                "POS": "VERB"
+              }
+            },
+            {
+              "LEFT_ID": "verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "clause_root",
+              "RIGHT_ATTRS": {
+                "DEP": {"IN": ["ccomp", "xcomp"]}
+              }
+            },
+            {
+              "LEFT_ID": "clause_root",
+              "REL_OP": ">",
+              "RIGHT_ID": "wh_word",
+              "RIGHT_ATTRS": {
+                "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
+              }
+            }
+          ],
+          [
+            {
+              "RIGHT_ID": "verb",
+              "RIGHT_ATTRS": {
+                "POS": "VERB"
+              }
+            },
+            {
+              "LEFT_ID": "verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "clause_root",
+              "RIGHT_ATTRS": {
+                "DEP": {"IN": ["ccomp", "xcomp"]}
+              }
+            },
+            {
+              "LEFT_ID": "clause_root",
+              "REL_OP": ">",
+              "RIGHT_ID": "argument",
+              "RIGHT_ATTRS": {
+                "DEP": {"IN": ["nsubj", "nsubjpass", "dobj", "pobj", "dative", "attr"]}
+              }
+            },
+            {
+              "LEFT_ID": "argument",
+              "REL_OP": ">",
+              "RIGHT_ID": "wh_word",
+              "RIGHT_ATTRS": {
+                "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
+              }
+            }
+          ],
+          [
+            {
+              "RIGHT_ID": "verb",
+              "RIGHT_ATTRS": {
+                "POS": "VERB"
+              }
+            },
+            {
+              "LEFT_ID": "verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "preposition",
+              "RIGHT_ATTRS": {
+                "DEP": "prep"
+              }
+            },
+            {
+              "LEFT_ID": "preposition",
+              "REL_OP": ">",
+              "RIGHT_ID": "clause_root",
+              "RIGHT_ATTRS": {
+                "DEP": {"IN": ["pcomp"]}
+              }
+            },
+            {
+              "LEFT_ID": "clause_root",
+              "REL_OP": ">",
+              "RIGHT_ID": "wh_word",
+              "RIGHT_ATTRS": {
+                "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
+              }
+            }
+          ],
+          [
+            {
+              "RIGHT_ID": "verb",
+              "RIGHT_ATTRS": {
+                "POS": "VERB"
+              }
+            },
+            {
+              "LEFT_ID": "verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "preposition",
+              "RIGHT_ATTRS": {
+                "DEP": "prep"
+              }
+            },
+            {
+              "LEFT_ID": "preposition",
+              "REL_OP": ">",
+              "RIGHT_ID": "clause_root",
+              "RIGHT_ATTRS": {
+                "DEP": {"IN": ["pcomp"]}
+              }
+            },
+            {
+              "LEFT_ID": "clause_root",
+              "REL_OP": ">",
+              "RIGHT_ID": "argument",
+              "RIGHT_ATTRS": {
+                "DEP": {"IN": ["nsubj", "nsubjpass", "dobj", "pobj", "dative", "attr"]}
+              }
+            },
+            {
+              "LEFT_ID": "argument",
+              "REL_OP": ">",
+              "RIGHT_ID": "wh_word",
+              "RIGHT_ATTRS": {
+                "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
+              }
+            }
+          ]
+        ]
+      }
+    }
+  },
+
+  "f_24_infinitives": {
+    "description": "Infinitives",
+    "examples": [
+      "I want to believe.",
+      "To be involved is unwise."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": "TO"}
+        ]]
+      }
+    }
+  },
+
+  "f_25_present_participle": {
+    "description": "Present participial adverbial clauses",
+    "comment": "Syntactically detached clauses only, to match Biber's definition",
+    "examples": [
+      "Stuffing his mouth with cookies, Joe ran out the door.",
+      "Joe ran out the door, stuffing his mouth with cookies.",
+      "Realizing they were completely lost, the hikers finally stopped to check their compass.",
+      "Hoping to avoid the rush hour traffic, we left the city long before dawn.",
+      "Turning the blind corner, the cyclist suddenly collided with a pedestrian.",
+      "The ancient water pipes finally burst during the sudden freeze, flooding the entire basement in a matter of minutes.",
+      "The exhausted marathon runner collapsed just past the finish line, gasping for air and clutching his side.",
+      "Practicing for just twenty minutes a day, you can master the basic chords on a guitar within a single month."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [
+          [
+            {"TAG": "VBG", "DEP": "advcl",
+             "IS_SENT_START": true}
+          ],
+          [
+            {"IS_PUNCT": true},
+            {"TAG": "VBG", "DEP": "advcl"}
+          ]
+        ]
+      }
+    }
+  },
+
+  "f_26_past_participle": {
+    "description": "Past participial adverbial clauses",
+    "comment": "Syntacticaly detached clauses only, to match Biber's definition",
+    "examples": [
+      "Built in a single week, the house would stand for fifty years.",
+      "Stored in a cool, dry place, these heirloom seeds can remain viable for up to five years.",
+      "The suspect finally confessed to the embezzlement scheme, cornered by the undeniable forensic evidence."
+    ],
+    "counterexamples": [
+      "After the bridge has been been built in a single week, it will fall down."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [
+          [
+            {"TAG": "VBN", "DEP": "advcl",
+             "IS_SENT_START": true}
+          ],
+          [
+            {"IS_PUNCT": true},
+            {"TAG": "VBN", "DEP": "advcl"}
+          ]
+        ]
+      }
+    }
+  },
+
+  "f_27_past_participle_whiz": {
+    "description": "Past participial postnominal (reduced relative) clauses",
+    "comment": "Includes participles inline in the text, as defined by Biber, as well as those in clauses set off by other punctuation.",
+    "examples": [
+      "The solution produced by this process is effective.",
+      "Steve, considered here, is a serious man.",
+      "Sharon's knowledge of grammar, combined with years of experience diagramming sentences, helped her write a past participle."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "noun",
+            "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
+          },
+          {
+            "LEFT_ID": "noun",
+            "REL_OP": ">",
+            "RIGHT_ID": "past_participle",
+            "RIGHT_ATTRS": {"DEP": "acl", "TAG": "VBN"}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_28_present_participle_whiz": {
+    "description": "Present participial postnominal (reduced relative) clauses",
+    "comment": "Includes participles inline in the text, as defined by Biber, as well as those in clauses set off by other punctuation.",
+    "examples": [
+      "The financial crisis was the event causing this decline.",
+      "She was the Karen causing this decline.",
+      "He was the man slowly running down the street."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "noun",
+            "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
+          },
+          {
+            "LEFT_ID": "noun",
+            "REL_OP": ">",
+            "RIGHT_ID": "past_participle",
+            "RIGHT_ATTRS": {"DEP": "acl", "TAG": "VBG"}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_29_that_subj": {
+    "description": "*that* relative clauses on subject position",
+    "examples": [
+      "The dog that bit me was big.",
+      "The Marine that bit me was big.",
+      "The graphs that are presented above allow us to understand the relationship."
+    ],
+    "counterexamples": [
+      "The dog that I saw was big.",
+      "The Marine that I saw was big.",
+      "The number of shares that an article gets is related to which day of the week it is published."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "noun_anchor",
+            "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
+          },
+          {
+            "LEFT_ID": "noun_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "rel_verb",
+            "RIGHT_ATTRS": {"DEP": "relcl"}
+          },
+          {
+            "LEFT_ID": "rel_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "that_token",
+            "RIGHT_ATTRS": {"LOWER": "that", "DEP": {"IN": ["nsubj", "nsubjpass"]}}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_30_that_obj": {
+    "description": "*that* relative clauses on object position",
+    "examples": [
+      "The dog that I saw was big.",
+      "The Marine that I saw was big.",
+      "The number of shares that an article gets is related to which day of the week it is published."
+    ],
+    "counterexamples": [
+      "The dog that bit me was big.",
+      "The Marine that bit me was big.",
+      "The graphs that are presented above allow us to understand the relationship."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "noun_anchor",
+            "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
+          },
+          {
+            "LEFT_ID": "noun_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "rel_verb",
+            "RIGHT_ATTRS": {"DEP": "relcl"}
+          },
+          {
+            "LEFT_ID": "rel_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "that_token",
+            "RIGHT_ATTRS": {"LOWER": "that", "DEP": {"IN": ["dobj", "pobj", "dative"]}}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_31_wh_subj": {
+    "description": "*wh-* relative clauses on subject position",
+    "examples": [
+      "The man who likes popcorn ate sixteen tons.",
+      "Our goal is to be a resource center with a reading library of materials and directors who are competent professionals.",
+      "Previous biomechanical analyses of pregnant women have used BSPs derived from non-pregnant populations, which may not accurately represent the substantial morphological changes that occur during pregnancy.",
+      "Iron and copper, which are invariably present within the apoplast in association with various metalloproteins and enzyme systems, can catalyse the oxidation of ascorbate through Fenton-type reactions, thereby accelerating the formation of monodehydroascorbate and subsequently DHA."
+    ],
+    "counterexamples": [
+      "The man who Sally likes is here.",
+      "Tom asked the man who went to the store.",
+      "The dog that saw me was big."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "noun_anchor",
+            "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
+          },
+          {
+            "LEFT_ID": "noun_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "rel_verb",
+            "RIGHT_ATTRS": {"DEP": "relcl"}
+          },
+          {
+            "LEFT_ID": "rel_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "wh_word",
             "RIGHT_ATTRS": {
-              "DEP": "punct",
-              "IS_PUNCT": true,
-              "ORTH": "?"
+              "DEP": {"IN": ["nsubj", "nsubjpass"]},
+              "TAG": {"IN": ["WDT", "WP"]},
+              "LOWER": {"NOT_IN": ["that"]}
             }
           },
           {
-            "LEFT_ID": "root_verb",
-            "REL_OP": ">>",
+            "LEFT_ID": "noun_anchor",
+            "REL_OP": "<",
+            "RIGHT_ID": "anchor_head",
+            "RIGHT_ATTRS": {
+              "LEMMA": {"NOT_IN": ["ask", "tell"]}
+            }
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_32_wh_obj": {
+    "description": "*wh-* relative clauses on object position",
+    "examples": [
+      "The man who Sally likes is here.",
+      "I resent the man who Sally likes.",
+      "The goals which we indicated for phase 1 are now complete."
+    ],
+    "counterexamples": [
+      "The man who likes popcorn ate sixteen tons.",
+      "The detective asked the witness whom he saw at the scene.",
+      "To test these hypotheses, we employed a double-blind, sham-controlled experimental design wherein participants completed a battery of cognitive tasks both before and after receiving either tDCS or sham stimulation at two different current intensities.",
+      "The dog that I saw was big."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "noun_anchor",
+            "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
+          },
+          {
+            "LEFT_ID": "noun_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "rel_verb",
+            "RIGHT_ATTRS": {"DEP": "relcl"}
+          },
+          {
+            "LEFT_ID": "rel_verb",
+            "REL_OP": ">",
             "RIGHT_ID": "wh_word",
             "RIGHT_ATTRS": {
+              "DEP": {"IN": ["dobj", "pobj"]},
               "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
-              "DEP": {"IN": ["nsubj", "advmod", "pobj", "det", "dobj"]}
+              "LOWER": {"NOT_IN": ["that"]}
             }
-          }
-        ]
-      ]
-    },
-
-    "f_17_agentless_passives:all": {
-      "description": "All passives",
-      "derived": true,
-      "rules": [[
-        {
-          "RIGHT_ID": "passive_verb",
-          "RIGHT_ATTRS": {"TAG": "VBN"}
-        },
-        {
-          "LEFT_ID": "passive_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "aux_pass",
-          "RIGHT_ATTRS": {"DEP": "auxpass"}
-        }
-      ]]
-    },
-
-    "f_18_by_passives": {
-      "description": "*by-* passives",
-      "comment": "Passive voice with *by* to indicate the actor",
-      "examples": [
-        "The task was done by Steve.",
-        "The task was done by Steve rather than by Sharon."
-      ],
-      "counterexamples": [
-        "The task was done.",
-        "By beginning this sentence with \"by\", I may break the feature detector."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "passive_verb",
-          "RIGHT_ATTRS": {"TAG": "VBN"}
-        },
-        {
-          "LEFT_ID": "passive_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "aux_pass",
-          "RIGHT_ATTRS": {"DEP": "auxpass"}
-        },
-        {
-          "LEFT_ID": "passive_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "agent_node",
-          "RIGHT_ATTRS": {"DEP": "agent"}
-        }
-      ]]
-    },
-
-    "f_21_that_verb_comp": {
-      "description": "*that* verb complements",
-      "examples": [
-        "I said that he went.",
-        "This finding suggests that the item may be green.",
-        "We see that the data is unimodal."
-      ],
-      "failed_counterexamples": [
-        {
-          "text": "Traditional exposure therapy operates on the premise that habituation and fear extinction constitute the primary mechanisms of change.",
-          "comment": "This matches the pattern perfectly, but *that* is modifying *premise*, a noun. Possibly mis-parsed by spaCy?"
-        }
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "verb",
-          "RIGHT_ATTRS": {"POS": "VERB"}
-        },
-        {
-          "LEFT_ID": "verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {"DEP": "ccomp", "POS": {"IN": ["VERB", "AUX"]}}
-        },
-        {
-          "LEFT_ID": "comp_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "that_comp",
-          "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
-        }
-      ]]
-    },
-
-    "f_22_that_adj_comp": {
-      "description": "*that* adjective complements",
-      "comment": "*that* clauses controlled by adjectival predicates. See Biber et al., 9.2.5.",
-      "examples": [
-        "I'm glad that you like it.",
-        "The values were so small that they did not have much of an effect on our model.",
-        "I'm sorry that you're sick.",
-        "It seems likely that you're nice.",
-        "It's nice that people say it to you unprompted.",
-        "It is plausible that aberrant prediction error processing could result in sustained relief.",
-        "You are undoubtedly right that this is a matching sentence.",
-        "I'm afraid that it's a bad idea."
-      ],
-      "rules": [
-        [
-          {
-            "RIGHT_ID": "adjective",
-            "RIGHT_ATTRS": {"POS": "ADJ"}
           },
           {
-            "LEFT_ID": "adjective",
-            "REL_OP": ">",
-            "RIGHT_ID": "comp_verb",
-            "RIGHT_ATTRS": {"DEP": "ccomp", "POS": {"IN": ["VERB", "AUX"]}}
-          },
-          {
-            "LEFT_ID": "comp_verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "that_comp",
-            "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
-          }
-        ],
-        [
-          {
-            "RIGHT_ID": "verb",
-            "RIGHT_ATTRS": {"POS": "AUX"}
-          },
-          {
-            "LEFT_ID": "verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "adjective",
-            "RIGHT_ATTRS": {"POS": "ADJ", "DEP": "acomp"}
-          },
-          {
-            "LEFT_ID": "verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "comp_verb",
-            "RIGHT_ATTRS": {"DEP": "ccomp", "POS": {"IN": ["VERB", "AUX"]}}
-          },
-          {
-            "LEFT_ID": "comp_verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "that_comp",
-            "RIGHT_ATTRS": {"DEP": "mark", "LOWER": "that", "POS": "SCONJ"}
-          }
-        ]
-      ]
-    },
-
-    "f_23_wh_clause": {
-      "description": "*wh-* clauses",
-      "comment": "*wh-* clauses acting as object complements to verbs. Biber originally restricted this to public, private, and suasive verbs due to limitations in automatic recognition, but we extend this to all verbs. See Quirk et al., 16.35, and Biber et al., 9.3.",
-      "examples": [
-        "I believed what he told me.",
-        "They investigated which chemical was responsible.",
-        "They investigated which unpleasant chemical was responsible.",
-        "I believed in what he told me.",
-        "She was asking what happened.",
-        "She was asking me what happened.",
-        "We discussed how the agency operates.",
-        "Can you confirm which flight we're taking?",
-        "Can you confirm where the flight departs?",
-        "Show me how this works.",
-        "I was thinking about what happened.",
-        "I listened to what you said.",
-        "I don't know what to do about it."
-      ],
-      "counterexamples": [
-        "When are you leaving?",
-        "Yes, but who cares?",
-        "What's happening?",
-        "We had a discussion about how the agency operates.",
-        "I believed a little of what he told me.",
-        "She is the person who confirmed our flight.",
-        "They knew I was affected by Hurricane Andrew, which struck Florida in 1992.",
-        "The flight departs when the pilots are ready.",
-        "I had doubts about what happened.",
-        "What happened was a surprise to everyone.",
-        "I was not sure about how to do it.",
-        "I was curious how to do it."
-      ],
-      "rules": [
-        [
-          {
-            "RIGHT_ID": "verb",
+            "LEFT_ID": "noun_anchor",
+            "REL_OP": "<",
+            "RIGHT_ID": "anchor_head",
             "RIGHT_ATTRS": {
-              "POS": "VERB"
-            }
-          },
-          {
-            "LEFT_ID": "verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "clause_root",
-            "RIGHT_ATTRS": {
-              "DEP": {"IN": ["ccomp", "xcomp"]}
-            }
-          },
-          {
-            "LEFT_ID": "clause_root",
-            "REL_OP": ">",
-            "RIGHT_ID": "wh_word",
-            "RIGHT_ATTRS": {
-              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
+              "LEMMA": {"NOT_IN": ["ask", "tell"]}
             }
           }
-        ],
-        [
-          {
-            "RIGHT_ID": "verb",
-            "RIGHT_ATTRS": {
-              "POS": "VERB"
-            }
-          },
-          {
-            "LEFT_ID": "verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "clause_root",
-            "RIGHT_ATTRS": {
-              "DEP": {"IN": ["ccomp", "xcomp"]}
-            }
-          },
-          {
-            "LEFT_ID": "clause_root",
-            "REL_OP": ">",
-            "RIGHT_ID": "argument",
-            "RIGHT_ATTRS": {
-              "DEP": {"IN": ["nsubj", "nsubjpass", "dobj", "pobj", "dative", "attr"]}
-            }
-          },
-          {
-            "LEFT_ID": "argument",
-            "REL_OP": ">",
-            "RIGHT_ID": "wh_word",
-            "RIGHT_ATTRS": {
-              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
-            }
-          }
-        ],
-        [
-          {
-            "RIGHT_ID": "verb",
-            "RIGHT_ATTRS": {
-              "POS": "VERB"
-            }
-          },
-          {
-            "LEFT_ID": "verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "preposition",
-            "RIGHT_ATTRS": {
-              "DEP": "prep"
-            }
-          },
-          {
-            "LEFT_ID": "preposition",
-            "REL_OP": ">",
-            "RIGHT_ID": "clause_root",
-            "RIGHT_ATTRS": {
-              "DEP": {"IN": ["pcomp"]}
-            }
-          },
-          {
-            "LEFT_ID": "clause_root",
-            "REL_OP": ">",
-            "RIGHT_ID": "wh_word",
-            "RIGHT_ATTRS": {
-              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
-            }
-          }
-        ],
-        [
-          {
-            "RIGHT_ID": "verb",
-            "RIGHT_ATTRS": {
-              "POS": "VERB"
-            }
-          },
-          {
-            "LEFT_ID": "verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "preposition",
-            "RIGHT_ATTRS": {
-              "DEP": "prep"
-            }
-          },
-          {
-            "LEFT_ID": "preposition",
-            "REL_OP": ">",
-            "RIGHT_ID": "clause_root",
-            "RIGHT_ATTRS": {
-              "DEP": {"IN": ["pcomp"]}
-            }
-          },
-          {
-            "LEFT_ID": "clause_root",
-            "REL_OP": ">",
-            "RIGHT_ID": "argument",
-            "RIGHT_ATTRS": {
-              "DEP": {"IN": ["nsubj", "nsubjpass", "dobj", "pobj", "dative", "attr"]}
-            }
-          },
-          {
-            "LEFT_ID": "argument",
-            "REL_OP": ">",
-            "RIGHT_ID": "wh_word",
-            "RIGHT_ATTRS": {
-              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
-            }
-          }
-        ]
-      ]
-    },
-
-    "f_27_past_participle_whiz": {
-      "description": "Past participial postnominal (reduced relative) clauses",
-      "comment": "Includes participles inline in the text, as defined by Biber, as well as those in clauses set off by other punctuation.",
-      "examples": [
-        "The solution produced by this process is effective.",
-        "Steve, considered here, is a serious man.",
-        "Sharon's knowledge of grammar, combined with years of experience diagramming sentences, helped her write a past participle."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "noun",
-          "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
-        },
-        {
-          "LEFT_ID": "noun",
-          "REL_OP": ">",
-          "RIGHT_ID": "past_participle",
-          "RIGHT_ATTRS": {"DEP": "acl", "TAG": "VBN"}
-        }
-      ]]
-    },
-
-    "f_28_present_participle_whiz": {
-      "description": "Present participial postnominal (reduced relative) clauses",
-      "comment": "Includes participles inline in the text, as defined by Biber, as well as those in clauses set off by other punctuation.",
-      "examples": [
-        "The financial crisis was the event causing this decline.",
-        "She was the Karen causing this decline.",
-        "He was the man slowly running down the street."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "noun",
-          "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
-        },
-        {
-          "LEFT_ID": "noun",
-          "REL_OP": ">",
-          "RIGHT_ID": "past_participle",
-          "RIGHT_ATTRS": {"DEP": "acl", "TAG": "VBG"}
-        }
-      ]]
-    },
-
-    "f_29_that_subj": {
-      "description": "*that* relative clauses on subject position",
-      "examples": [
-        "The dog that bit me was big.",
-        "The Marine that bit me was big.",
-        "The graphs that are presented above allow us to understand the relationship."
-      ],
-      "counterexamples": [
-        "The dog that I saw was big.",
-        "The Marine that I saw was big.",
-        "The number of shares that an article gets is related to which day of the week it is published."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "noun_anchor",
-          "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
-        },
-        {
-          "LEFT_ID": "noun_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "rel_verb",
-          "RIGHT_ATTRS": {"DEP": "relcl"}
-        },
-        {
-          "LEFT_ID": "rel_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "that_token",
-          "RIGHT_ATTRS": {"LOWER": "that", "DEP": {"IN": ["nsubj", "nsubjpass"]}}
-        }
-      ]]
-    },
-
-    "f_30_that_obj": {
-      "description": "*that* relative clauses on object position",
-      "examples": [
-        "The dog that I saw was big.",
-        "The Marine that I saw was big.",
-        "The number of shares that an article gets is related to which day of the week it is published."
-      ],
-      "counterexamples": [
-        "The dog that bit me was big.",
-        "The Marine that bit me was big.",
-        "The graphs that are presented above allow us to understand the relationship."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "noun_anchor",
-          "RIGHT_ATTRS": {"POS": {"IN": ["PROPN", "NOUN"]}}
-        },
-        {
-          "LEFT_ID": "noun_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "rel_verb",
-          "RIGHT_ATTRS": {"DEP": "relcl"}
-        },
-        {
-          "LEFT_ID": "rel_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "that_token",
-          "RIGHT_ATTRS": {"LOWER": "that", "DEP": {"IN": ["dobj", "pobj", "dative"]}}
-        }
-      ]]
-    },
-
-    "f_31_wh_subj": {
-      "description": "*wh-* relative clauses on subject position",
-      "examples": [
-        "The man who likes popcorn ate sixteen tons.",
-        "Our goal is to be a resource center with a reading library of materials and directors who are competent professionals.",
-        "Previous biomechanical analyses of pregnant women have used BSPs derived from non-pregnant populations, which may not accurately represent the substantial morphological changes that occur during pregnancy.",
-        "Iron and copper, which are invariably present within the apoplast in association with various metalloproteins and enzyme systems, can catalyse the oxidation of ascorbate through Fenton-type reactions, thereby accelerating the formation of monodehydroascorbate and subsequently DHA."
-      ],
-      "counterexamples": [
-        "The man who Sally likes is here.",
-        "Tom asked the man who went to the store.",
-        "The dog that saw me was big."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "noun_anchor",
-          "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
-        },
-        {
-          "LEFT_ID": "noun_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "rel_verb",
-          "RIGHT_ATTRS": {"DEP": "relcl"}
-        },
-        {
-          "LEFT_ID": "rel_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "wh_word",
-          "RIGHT_ATTRS": {
-            "DEP": {"IN": ["nsubj", "nsubjpass"]},
-            "TAG": {"IN": ["WDT", "WP"]},
-            "LOWER": {"NOT_IN": ["that"]}
-          }
-        },
-        {
-          "LEFT_ID": "noun_anchor",
-          "REL_OP": "<",
-          "RIGHT_ID": "anchor_head",
-          "RIGHT_ATTRS": {
-            "LEMMA": {"NOT_IN": ["ask", "tell"]}
-          }
-        }
-      ]]
-    },
-
-    "f_32_wh_obj": {
-      "description": "*wh-* relative clauses on object position",
-      "examples": [
-        "The man who Sally likes is here.",
-        "I resent the man who Sally likes.",
-        "The goals which we indicated for phase 1 are now complete."
-      ],
-      "counterexamples": [
-        "The man who likes popcorn ate sixteen tons.",
-        "The detective asked the witness whom he saw at the scene.",
-        "To test these hypotheses, we employed a double-blind, sham-controlled experimental design wherein participants completed a battery of cognitive tasks both before and after receiving either tDCS or sham stimulation at two different current intensities.",
-        "The dog that I saw was big."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "noun_anchor",
-          "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
-        },
-        {
-          "LEFT_ID": "noun_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "rel_verb",
-          "RIGHT_ATTRS": {"DEP": "relcl"}
-        },
-        {
-          "LEFT_ID": "rel_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "wh_word",
-          "RIGHT_ATTRS": {
-            "DEP": {"IN": ["dobj", "pobj"]},
-            "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]},
-            "LOWER": {"NOT_IN": ["that"]}
-          }
-        },
-        {
-          "LEFT_ID": "noun_anchor",
-          "REL_OP": "<",
-          "RIGHT_ID": "anchor_head",
-          "RIGHT_ATTRS": {
-            "LEMMA": {"NOT_IN": ["ask", "tell"]}
-          }
-        }
-      ]]
-    },
-
-    "f_33_pied_piping": {
-      "description": "Pied-piping relative clauses",
-      "examples": [
-        "That is the type of arrant pedantry up with which I shall not put!",
-        "She resented the manner in which she was told.",
-        "We felt that we needed a financial base on which to work.",
-        "He is a linguist articles by whom the editors always reject.",
-        "The executive to whom I addressed the complaint has recently resigned.",
-        "The crumbling stone bridge under which the river flows is scheduled for demolition.",
-        "The ancient artifact, the exact origins of which remain a subject of fierce debate among historians, is kept in a climate-controlled vault.",
-        "This is the report, to the findings of which they referred.",
-        "There are many more people like those in whom you are interested."
-      ],
-      "failed_examples": [
-        {
-          "text": "The corporate mandate, in staunch opposition to which the labor union ultimately decided to strike, was quietly repealed a week later.",
-          "comment": "spaCy tags TO as PART with DEP dependency relation, i.e., no specific relation; perhaps bad tagging?"
-        }
-      ],
-      "counterexamples": [
-        "She resented the manner she was told in.",
-        "We felt that we needed a financial base to work on.",
-        "Which manner was she told in?",
-        "There are many more events like those that you are interested in.",
-        "There are many more people like those who you are interested in."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "noun_anchor",
-          "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
-        },
-        {
-          "LEFT_ID": "noun_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "rel_verb",
-          "RIGHT_ATTRS": {"DEP": "relcl"}},
-        {
-          "LEFT_ID": "rel_verb",
-          "REL_OP": ">>",
-          "RIGHT_ID": "preposition",
-          "RIGHT_ATTRS": {"DEP": "prep"}},
-        {
-          "LEFT_ID": "preposition",
-          "REL_OP": ">",
-          "RIGHT_ID": "wh_word",
-          "RIGHT_ATTRS": {
-            "DEP": "pobj",
-            "TAG": {"IN": ["WDT", "WP", "WP$"]},
-            "LOWER": {"NOT_IN": ["that"]}
-          }
-        }
-      ]]
-    },
-
-    "f_35_because": {
-      "description": "Causative adverbial subordinator (*because*)",
-      "comment": "See Quirk et al., 15.45-47.",
-      "examples": [
-        "I ate because I was hungry.",
-        "Because I was hungry, I ate."
-      ],
-      "counterexamples": [
-        "Because of the rain, the game was canceled."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "adv_clause_head",
-          "RIGHT_ATTRS": {"DEP": "advcl"}
-        },
-        {
-          "LEFT_ID": "adv_clause_head",
-          "REL_OP": ">",
-          "RIGHT_ID": "other_adv_sub",
-          "RIGHT_ATTRS": {
-            "DEP": "mark",
-            "POS": "SCONJ",
-            "LOWER": "because"
-          }
-        }
-      ]]
-    },
-
-    "f_36_though": {
-      "description": "Concessive adverbial subordinators (*although*, *though*)",
-      "comment": "See Quirk et al., 15.39-40.",
-      "examples": [
-        "Although it rained, we played.",
-        "It was a good game, though it was rainy."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "adv_clause_head",
-          "RIGHT_ATTRS": {"DEP": "advcl"}
-        },
-        {
-          "LEFT_ID": "adv_clause_head",
-          "REL_OP": ">",
-          "RIGHT_ID": "other_adv_sub",
-          "RIGHT_ATTRS": {
-            "DEP": "mark",
-            "POS": "SCONJ",
-            "LOWER": {"IN": ["though", "although", "tho"]}
-          }
-        }
-      ]]
-    },
-
-    "f_37_if": {
-      "description": "Conditional adverbial subordinators (*if*, *unless*)",
-      "comment": "See Quirk et al., 15.33-38.",
-      "examples": [
-        "If it rains, we stay inside.",
-        "If it doesn't rain, we'll go outside.",
-        "Unless it rains, we'll go outside.",
-        "I think you shouldn't do it, if I may be so bold."
-      ],
-      "counterexamples": [
-        "It's difficult to say if she did it herself."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "adv_clause_head",
-          "RIGHT_ATTRS": {"DEP": "advcl"}
-        },
-        {
-          "LEFT_ID": "adv_clause_head",
-          "REL_OP": ">",
-          "RIGHT_ID": "other_adv_sub",
-          "RIGHT_ATTRS": {
-            "DEP": "mark",
-            "POS": "SCONJ",
-            "LOWER": {"IN": ["if", "unless"]}
-          }
-        }
-      ]]
-    },
-
-    "f_38_other_adv_sub": {
-      "description": "Other adverbial subordinators (*since*, *while*, *whereas*, etc.)",
-      "comment": "Other words or phrases used as adverbial subordinators. Rather than Biber's fixed list, we detect any adverbial clause with a subordinating conjunction that is not causative, concessive, or conditional.",
-      "examples": [
-        "Since it rained, we stayed inside.",
-        "The approach emphasizes creating redundancies, implementing cross-checks, and establishing feedback mechanisms that can catch errors before they propagate into accidents or serious incidents.",
-        "Developing standardised protocols for information gathering at incident scenes may also help to ensure that relevant information is systematically recorded whilst it remains readily accessible."
-      ],
-      "counterexamples": [
-        "It's been raining since noon.",
-        "I ate because I was hungry.",
-        "Because I was hungry, I ate.",
-        "If it rains, we stay inside.",
-        "Although it rained, we played.",
-        "It was a good game, though it was rainy.",
-        "Furthermore, whilst the cognitive avoidance hypothesis represents a plausible mechanistic explanation, alternative accounts merit consideration."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "adv_clause_head",
-          "RIGHT_ATTRS": {"DEP": "advcl"}
-        },
-        {
-          "LEFT_ID": "adv_clause_head",
-          "REL_OP": ">",
-          "RIGHT_ID": "other_adv_sub",
-          "RIGHT_ATTRS": {
-            "DEP": "mark",
-            "POS": "SCONJ",
-            "LEMMA": {"NOT_IN": ["because", "if", "unless", "though", "although", "tho"]}
-          }
-        }
-      ]]
-    },
-
-    "f_41_adj_pred": {
-      "description": "Predicative adjectives",
-      "comment": "Adjectives that are linked to a noun clause with a copula. Biber only considers forms of *be*; we extend to copulas such as *seem*, *appear*, *look*, etc. spaCy frequently mis-tags adjective complements of these verbs as object predicates, but as the verbs do not take object predicates, we can accept these cases without fear of false positives.",
-      "examples": [
-        "The horse is big.",
-        "The horse feels warm.",
-        "The horse is very big.",
-        "The horse seems big.",
-        "That's right.",
-        "It must be terrible."
-      ],
-      "counterexamples": [
-        "The big horse is here.",
-        "I have a terrible idea!",
-        "It's a quick and easy fix.",
-        "I didn't sleep at all last night."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "copula",
-          "RIGHT_ATTRS": {
-            "LEMMA": {"IN": ["be", "seem", "appear", "become", "remain", "look",
-                             "feel", "sound", "act", "get", "turn", "prove"]}
-          }
-        },
-        {
-          "LEFT_ID": "copula",
-          "REL_OP": ">",
-          "RIGHT_ID": "adj_pred",
-          "RIGHT_ATTRS": {
-            "POS": "ADJ",
-            "DEP": {"IN": ["acomp", "oprd"]}
-          }
-        }
-      ]]
-    },
-
-    "f_60_that_deletion:all": {
-      "derived": true,
-      "description": "Subordinator *that* deletion: clauses with or without *that*",
-      "examples": [
-        "I think he went.",
-        "She denies a problem occurred.",
-        "The reporter reported the election was over.",
-        "He alleges a small problem occurred.",
-        "I think that he went.",
-        "The reporter reported that the election was over.",
-        "She denies that a problem occurred.",
-        "He alleges that a small problem occurred.",
-        "She returned home from school and found that her mother was gone.",
-        "She returned home from school and found her mother was gone.",
-        "I think there are two ways Apple could go."
-      ],
-      "counterexamples": [
-        "She returned home from school and found her mother gone."
-      ],
-      "rules": [
-        [
-          {
-            "RIGHT_ID": "verb_anchor",
-            "RIGHT_ATTRS": {
-              "POS": "VERB",
-              "LEMMA": {"IN": [
-                "accept", "acknowledge", "add", "admit", "affirm", "agree",
-                "allege", "allow", "announce", "anticipate", "argue",
-                "arrange", "ascertain", "ask", "assert", "assume", "beg",
-                "believe", "bet", "boast", "calculate", "certify", "check",
-                "claim", "command", "comment", "complain", "concede", "conclude",
-                "confess", "confide", "confirm", "conjecture", "consider",
-                "contend", "convey", "decide", "declare", "decree", "decreed",
-                "deduce", "deem", "demand", "demonstrate", "deny", "desire",
-                "determine", "discern", "disclose", "discover", "doubt", "dream",
-                "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
-                "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
-                "forecast", "foresee", "foretell", "forget", "gather", "grant",
-                "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
-                "imply", "indicate", "infer", "insist", "instruct", "insure",
-                "intend", "judge", "know", "learn", "maintain", "mean",
-                "mention", "move", "note", "notice",
-                "object", "observe", "ordain", "order", "perceive", "pledge",
-                "pray", "predict", "prefer", "presume", "presuppose", "pretend",
-                "proclaim", "promise", "pronounce", "prophesy", "propose",
-                "protest", "prove", "realise", "realize", "reason", "recall",
-                "reckon", "recognise", "recognize", "recommend", "reflect",
-                "remark", "remember", "repeat", "reply", "report", "request",
-                "require", "resolve", "retort", "reveal", "rule", "say", "see",
-                "sense", "show", "signify", "state", "stipulate", "submit",
-                "suggest", "suggest", "suppose", "suspect", "swear",
-                "testify", "think", "understand", "urge", "vote", "vow", "warn",
-                "write"
-              ]}
-            }
-          },
-          {
-            "LEFT_ID": "verb_anchor",
-            "REL_OP": ">",
-            "RIGHT_ID": "comp_verb",
-            "RIGHT_ATTRS": {
-              "POS": {"IN": ["VERB", "AUX"]},
-              "TAG": {"NOT_IN": ["VBN", "VBG"]},
-              "DEP": "ccomp"
-            }
-          },
-          {
-            "LEFT_ID": "comp_verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "subject",
-            "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
-          }
-        ],
-        [
-          {
-            "RIGHT_ID": "verb_anchor",
-            "RIGHT_ATTRS": {
-              "POS": "VERB",
-              "LEMMA": {"IN": [
-                "accept", "acknowledge", "add", "admit", "affirm", "agree",
-                "allege", "allow", "announce", "anticipate", "argue",
-                "arrange", "ascertain", "ask", "assert", "assume", "beg",
-                "believe", "bet", "boast", "calculate", "certify", "check",
-                "claim", "command", "comment", "complain", "concede", "conclude",
-                "confess", "confide", "confirm", "conjecture", "consider",
-                "contend", "convey", "decide", "declare", "decree", "decreed",
-                "deduce", "deem", "demand", "demonstrate", "deny", "desire",
-                "determine", "discern", "disclose", "discover", "doubt", "dream",
-                "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
-                "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
-                "forecast", "foresee", "foretell", "forget", "gather", "grant",
-                "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
-                "imply", "indicate", "infer", "insist", "instruct", "insure",
-                "intend", "judge", "know", "learn", "maintain", "mean",
-                "mention", "move", "note", "notice",
-                "object", "observe", "ordain", "order", "perceive", "pledge",
-                "pray", "predict", "prefer", "presume", "presuppose", "pretend",
-                "proclaim", "promise", "pronounce", "prophesy", "propose",
-                "protest", "prove", "realise", "realize", "reason", "recall",
-                "reckon", "recognise", "recognize", "recommend", "reflect",
-                "remark", "remember", "repeat", "reply", "report", "request",
-                "require", "resolve", "retort", "reveal", "rule", "say", "see",
-                "sense", "show", "signify", "state", "stipulate", "submit",
-                "suggest", "suggest", "suppose", "suspect", "swear",
-                "testify", "think", "understand", "urge", "vote", "vow", "warn",
-                "write"
-              ]}
-            }
-          },
-          {
-            "LEFT_ID": "verb_anchor",
-            "REL_OP": ">",
-            "RIGHT_ID": "comp_verb",
-            "RIGHT_ATTRS": {
-              "POS": {"IN": ["VERB", "AUX"]},
-              "TAG": {"IN": ["VBN", "VBG"]},
-              "DEP": "ccomp"
-            }
-          },
-          {
-            "LEFT_ID": "comp_verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "auxiliary",
-            "RIGHT_ATTRS": {
-              "DEP": {"IN": ["aux", "auxpass"]}
-            }
-          },
-          {
-            "LEFT_ID": "auxiliary",
-            "REL_OP": ">",
-            "RIGHT_ID": "subject",
-            "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
-          }
-        ],
-        [
-          {
-            "RIGHT_ID": "verb_anchor",
-            "RIGHT_ATTRS": {
-              "POS": "VERB",
-              "LEMMA": {"IN": [
-                "accept", "acknowledge", "add", "admit", "affirm", "agree",
-                "allege", "allow", "announce", "anticipate", "argue",
-                "arrange", "ascertain", "ask", "assert", "assume", "beg",
-                "believe", "bet", "boast", "calculate", "certify", "check",
-                "claim", "command", "comment", "complain", "concede", "conclude",
-                "confess", "confide", "confirm", "conjecture", "consider",
-                "contend", "convey", "decide", "declare", "decree", "decreed",
-                "deduce", "deem", "demand", "demonstrate", "deny", "desire",
-                "determine", "discern", "disclose", "discover", "doubt", "dream",
-                "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
-                "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
-                "forecast", "foresee", "foretell", "forget", "gather", "grant",
-                "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
-                "imply", "indicate", "infer", "insist", "instruct", "insure",
-                "intend", "judge", "know", "learn", "maintain", "mean",
-                "mention", "move", "note", "notice",
-                "object", "observe", "ordain", "order", "perceive", "pledge",
-                "pray", "predict", "prefer", "presume", "presuppose", "pretend",
-                "proclaim", "promise", "pronounce", "prophesy", "propose",
-                "protest", "prove", "realise", "realize", "reason", "recall",
-                "reckon", "recognise", "recognize", "recommend", "reflect",
-                "remark", "remember", "repeat", "reply", "report", "request",
-                "require", "resolve", "retort", "reveal", "rule", "say", "see",
-                "sense", "show", "signify", "state", "stipulate", "submit",
-                "suggest", "suggest", "suppose", "suspect", "swear",
-                "testify", "think", "understand", "urge", "vote", "vow", "warn",
-                "write"
-              ]}
-            }
-          },
-          {
-            "LEFT_ID": "verb_anchor",
-            "REL_OP": ">",
-            "RIGHT_ID": "comp_verb",
-            "RIGHT_ATTRS": {
-              "POS": {"IN": ["VERB", "AUX"]},
-              "TAG": {"IN": ["VBN", "VBG"]},
-              "DEP": "ccomp"
-            }
-          },
-          {
-            "LEFT_ID": "comp_verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "auxiliary",
-            "RIGHT_ATTRS": {
-              "DEP": {"IN": ["aux", "auxpass"]}
-            }
-          },
-          {
-            "LEFT_ID": "comp_verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "subject",
-            "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
-          }
-        ]
-      ]
-    },
-
-    "f_60_that_deletion:that": {
-      "derived": true,
-      "description": "Subordinator *that* deletion: clauses with *that* or other subordinators (*whether*, *if*, etc.)",
-      "examples": [
-        "I think that he went.",
-        "She denies that a problem occurred.",
-        "He alleges that a small problem occurred.",
-        "I said whether you should do it.",
-        "She asked if he was coming."
-      ],
-      "counterexamples": [
-        "I think he went.",
-        "She denies a problem occurred.",
-        "He alleges a small problem occurred.",
-        "I said you should do it."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "verb_anchor",
-          "RIGHT_ATTRS": {
-            "POS": "VERB",
-            "LEMMA": {"IN": [
-              "accept", "acknowledge", "add", "admit", "affirm", "agree",
-              "allege", "allow", "announce", "anticipate", "argue",
-              "arrange", "ascertain", "ask", "assert", "assume", "beg",
-              "believe", "bet", "boast", "calculate", "certify", "check",
-              "claim", "command", "comment", "complain", "concede", "conclude",
-              "confess", "confide", "confirm", "conjecture", "consider",
-              "contend", "convey", "decide", "declare", "decree", "decreed",
-              "deduce", "deem", "demand", "demonstrate", "deny", "desire",
-              "determine", "discern", "disclose", "discover", "doubt", "dream",
-              "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
-              "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
-              "forecast", "foresee", "foretell", "forget", "gather", "grant",
-              "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
-              "imply", "indicate", "infer", "insist", "instruct", "insure",
-              "intend", "judge", "know", "learn", "maintain", "mean",
-              "mention", "move", "note", "notice",
-              "object", "observe", "ordain", "order", "perceive", "pledge",
-              "pray", "predict", "prefer", "presume", "presuppose", "pretend",
-              "proclaim", "promise", "pronounce", "prophesy", "propose",
-              "protest", "prove", "realise", "realize", "reason", "recall",
-              "reckon", "recognise", "recognize", "recommend", "reflect",
-              "remark", "remember", "repeat", "reply", "report", "request",
-              "require", "resolve", "retort", "reveal", "rule", "say", "see",
-              "sense", "show", "signify", "state", "stipulate", "submit",
-              "suggest", "suggest", "suppose", "suspect", "swear",
-              "testify", "think", "understand", "urge", "vote", "vow", "warn",
-              "write"
-            ]}
-          }
-        },
-        {
-          "LEFT_ID": "verb_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {
-            "POS": {"IN": ["VERB", "AUX"]},
-            "DEP": "ccomp"
-          }
-        },
-        {
-          "LEFT_ID": "comp_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "subject",
-          "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
-        },
-        {
-          "LEFT_ID": "comp_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "that",
-          "RIGHT_ATTRS": {"DEP": "mark"}
-        }
-      ]]
-    },
-
-    "f_60_that_deletion:wh_clause": {
-      "derived": true,
-      "description": "Subordinator *that* deletion: clauses where the verb introduces a *wh*-clause",
-      "comment": "When the verb introduces a *wh*-clause, *that* would not function grammatically, so its absence does not count as *that* deletion.",
-      "examples": [
-        "The rationale helps ensure that workers understand what they should do.",
-        "He explained which method they used."
-      ],
-      "counterexamples": [
-        "I think she was the one who attacked me."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "verb_anchor",
-          "RIGHT_ATTRS": {
-            "POS": "VERB",
-            "LEMMA": {"IN": [
-              "accept", "acknowledge", "add", "admit", "affirm", "agree",
-              "allege", "allow", "announce", "anticipate", "argue",
-              "arrange", "ascertain", "ask", "assert", "assume", "beg",
-              "believe", "bet", "boast", "calculate", "certify", "check",
-              "claim", "command", "comment", "complain", "concede", "conclude",
-              "confess", "confide", "confirm", "conjecture", "consider",
-              "contend", "convey", "decide", "declare", "decree", "decreed",
-              "deduce", "deem", "demand", "demonstrate", "deny", "desire",
-              "determine", "discern", "disclose", "discover", "doubt", "dream",
-              "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
-              "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
-              "forecast", "foresee", "foretell", "forget", "gather", "grant",
-              "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
-              "imply", "indicate", "infer", "insist", "instruct", "insure",
-              "intend", "judge", "know", "learn", "maintain", "mean",
-              "mention", "move", "note", "notice",
-              "object", "observe", "ordain", "order", "perceive", "pledge",
-              "pray", "predict", "prefer", "presume", "presuppose", "pretend",
-              "proclaim", "promise", "pronounce", "prophesy", "propose",
-              "protest", "prove", "realise", "realize", "reason", "recall",
-              "reckon", "recognise", "recognize", "recommend", "reflect",
-              "remark", "remember", "repeat", "reply", "report", "request",
-              "require", "resolve", "retort", "reveal", "rule", "say", "see",
-              "sense", "show", "signify", "state", "stipulate", "submit",
-              "suggest", "suggest", "suppose", "suspect", "swear",
-              "testify", "think", "understand", "urge", "vote", "vow", "warn",
-              "write"
-            ]}
-          }
-        },
-        {
-          "LEFT_ID": "verb_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {
-            "POS": {"IN": ["VERB", "AUX"]},
-            "DEP": "ccomp"
-          }
-        },
-        {
-          "LEFT_ID": "comp_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "subject",
-          "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
-        },
-        {
-          "LEFT_ID": "verb_anchor",
-          "REL_OP": ".",
-          "RIGHT_ID": "wh_clause",
-          "RIGHT_ATTRS": {
-            "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
-          }
-        }
-      ]]
-    },
-
-    "f_60_that_deletion:to_infinitive": {
-      "derived": true,
-      "description": "Subordinator *that* deletion: non-finite to-infinitive complements",
-      "examples": [
-        "This approach allows us to isolate the effect of bottom-up mechanisms.",
-        "Our experimental design allowed us to record the brain's response to each individual stimulus",
-        "Furthermore, we recorded event-related potentials (ERPs) simultaneously with BOLD fMRI signals, allowing us to relate the scalp topography of the vMMN to its neuroanatomical origins."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "verb_anchor",
-          "RIGHT_ATTRS": {
-            "POS": "VERB",
-            "LEMMA": {"IN": [
-              "accept", "acknowledge", "add", "admit", "affirm", "agree",
-              "allege", "allow", "announce", "anticipate", "argue",
-              "arrange", "ascertain", "ask", "assert", "assume", "beg",
-              "believe", "bet", "boast", "calculate", "certify", "check",
-              "claim", "command", "comment", "complain", "concede", "conclude",
-              "confess", "confide", "confirm", "conjecture", "consider",
-              "contend", "convey", "decide", "declare", "decree", "decreed",
-              "deduce", "deem", "demand", "demonstrate", "deny", "desire",
-              "determine", "discern", "disclose", "discover", "doubt", "dream",
-              "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
-              "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
-              "forecast", "foresee", "foretell", "forget", "gather", "grant",
-              "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
-              "imply", "indicate", "infer", "insist", "instruct", "insure",
-              "intend", "judge", "know", "learn", "maintain", "mean",
-              "mention", "move", "note", "notice",
-              "object", "observe", "ordain", "order", "perceive", "pledge",
-              "pray", "predict", "prefer", "presume", "presuppose", "pretend",
-              "proclaim", "promise", "pronounce", "prophesy", "propose",
-              "protest", "prove", "realise", "realize", "reason", "recall",
-              "reckon", "recognise", "recognize", "recommend", "reflect",
-              "remark", "remember", "repeat", "reply", "report", "request",
-              "require", "resolve", "retort", "reveal", "rule", "say", "see",
-              "sense", "show", "signify", "state", "stipulate", "submit",
-              "suggest", "suggest", "suppose", "suspect", "swear",
-              "testify", "think", "understand", "urge", "vote", "vow", "warn",
-              "write"
-            ]}
-          }
-        },
-        {
-          "LEFT_ID": "verb_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {
-            "POS": {"IN": ["VERB", "AUX"]},
-            "DEP": "ccomp"
-          }
-        },
-        {
-          "LEFT_ID": "comp_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "subject",
-          "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
-        },
-        {
-          "LEFT_ID": "comp_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "to",
-          "RIGHT_ATTRS": {"TAG": "TO"}
-        }
-      ]]
-    },
-
-    "f_60_that_deletion:quote": {
-      "derived": true,
-      "description": "Subordinator *that* deletion: clauses introducing a quotation",
-      "examples": [
-        "She said, \"It's a good idea.\"",
-        "He said, 'It's a good idea!'",
-        "I asked, \"How did you find it?\"",
-        "She said, “It's a good idea.”"
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "verb_anchor",
-          "RIGHT_ATTRS": {
-            "POS": "VERB",
-            "LEMMA": {"IN": [
-              "accept", "acknowledge", "add", "admit", "affirm", "agree",
-              "allege", "allow", "announce", "anticipate", "argue",
-              "arrange", "ascertain", "ask", "assert", "assume", "beg",
-              "believe", "bet", "boast", "calculate", "certify", "check",
-              "claim", "command", "comment", "complain", "concede", "conclude",
-              "confess", "confide", "confirm", "conjecture", "consider",
-              "contend", "convey", "decide", "declare", "decree", "decreed",
-              "deduce", "deem", "demand", "demonstrate", "deny", "desire",
-              "determine", "discern", "disclose", "discover", "doubt", "dream",
-              "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
-              "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
-              "forecast", "foresee", "foretell", "forget", "gather", "grant",
-              "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
-              "imply", "indicate", "infer", "insist", "instruct", "insure",
-              "intend", "judge", "know", "learn", "maintain", "mean",
-              "mention", "move", "note", "notice",
-              "object", "observe", "ordain", "order", "perceive", "pledge",
-              "pray", "predict", "prefer", "presume", "presuppose", "pretend",
-              "proclaim", "promise", "pronounce", "prophesy", "propose",
-              "protest", "prove", "realise", "realize", "reason", "recall",
-              "reckon", "recognise", "recognize", "recommend", "reflect",
-              "remark", "remember", "repeat", "reply", "report", "request",
-              "require", "resolve", "retort", "reveal", "rule", "say", "see",
-              "sense", "show", "signify", "state", "stipulate", "submit",
-              "suggest", "suggest", "suppose", "suspect", "swear",
-              "testify", "think", "understand", "urge", "vote", "vow", "warn",
-              "write"
-            ]}
-          }
-        },
-        {
-          "LEFT_ID": "verb_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "comp_verb",
-          "RIGHT_ATTRS": {
-            "POS": {"IN": ["VERB", "AUX"]},
-            "DEP": "ccomp"
-          }
-        },
-        {
-          "LEFT_ID": "comp_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "subject",
-          "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
-        },
-        {
-          "LEFT_ID": "verb_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "open_quote",
-          "RIGHT_ATTRS": {"TAG": "``"}
-        }
-      ]]
-    },
-
-    "f_62_split_infinitive": {
-      "description": "Split infinitives",
-      "comment": "Biber's definition is *to* + ADV + (ADV) + VB, allowing only one or two intervening adverbs. We use the dependency structure to allow any number of intervening words.",
-      "examples": [
-        "He wants to definitively show the result.",
-        "I aim to boldly go where no man has gone before.",
-        "I aim to boldly and rapidly go where no man has gone before."
-      ],
-      "counterexamples": [
-        "He wants to show the result."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "verb_anchor",
-          "RIGHT_ATTRS": {"TAG": "VB"}
-        },
-        {
-          "LEFT_ID": "verb_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "to",
-          "RIGHT_ATTRS": {
-            "TAG": "TO", "DEP": "aux"
-          }
-        }
-      ]]
-    },
-
-    "f_63_split_auxiliary": {
-      "description": "Split auxiliaries",
-      "comment": "Biber's definition is AUX + ADV + (ADV) + VB, allowing only one or two intervening adverbs. We use the dependency structure to allow any number of intervening words, including at least one adverb.",
-      "examples": [
-        "They are objectively shown to be split.",
-        "They are objectively and readily shown to be split.",
-        "I have already written the example.",
-        "The result cannot always be anticipated.",
-        "I would actually drive.",
-        "I can't ever imagine arguing with Jill.",
-        "They have not yet developed cancer."
-      ],
-      "counterexamples": [
-        "They are shown to be split.",
-        "I don't mind.",
-        "Don't stop.",
-        "I've been kidnapped."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "verb_anchor",
-          "RIGHT_ATTRS": {"POS": "VERB"}
-        },
-        {
-          "LEFT_ID": "verb_anchor",
-          "REL_OP": ">",
-          "RIGHT_ID": "auxiliary",
-          "RIGHT_ATTRS": {"POS": "AUX",
-                          "DEP": {"IN": ["aux", "auxpass"]}}
-        }
-      ]]
+        ]]
+      }
     }
   },
 
-  "PhraseMatcher": {
-    "f_45_conjuncts": {
-      "description": "Conjuncts",
-      "examples": [
-        "I need an example of a conjunct, e.g., one like this.",
-        "However, it didn't work."
-      ],
-      "comment": "There is also a Matcher rule for *else*, *altogether*, and *rather* following punctuation",
-      "rules": [
-        "alternatively", "consequently", "conversely", "e.g.", "furthermore",
-        "hence", "however", "i.e.", "instead", "likewise", "moreover", "namely",
-        "nevertheless", "nonetheless", "notwithstanding", "otherwise",
-        "similarly", "therefore", "thus", "viz.", "in comparison", "in contrast",
-        "in particular", "in addition", "in conclusion", "in consequence",
-        "in sum", "in summary", "for example", "for instance", "instead of",
-        "by contrast", "by comparison", "in any event", "in any case",
-        "in other words", "as a result", "as a consequence", "on the contrary",
-        "on the other hand"
-      ]
-    },
-
-    "f_46_downtoners": {
-      "description": "Downtoners",
-      "examples": [
-        "Are you working hard or hardly working?",
-        "It was somewhat difficult.",
-        "I was mildly annoyed."
-      ],
-      "rules": [
-        "almost", "barely", "hardly", "merely", "mildly", "nearly", "only",
-        "partially", "partly", "practically", "scarcely", "slightly", "somewhat"
-      ]
-    },
-
-    "f_47_hedges": {
-      "description": "Hedges",
-      "examples": [
-        "Maybe I should write more examples.",
-        "It was kind of gross.",
-        "At about seven feet, she was unusually tall."
-      ],
-      "rules": [
-        "maybe", "at about", "something like", "more or less", "sort of",
-        "kind of"
-      ]
-    },
-
-    "f_48_amplifiers": {
-      "description": "Amplifiers",
-      "examples": [
-        "She came on too strongly.",
-        "Yeah, absolutely!",
-        "It's definitely an example."
-      ],
-      "rules": [
-        "absolutely", "altogether", "completely", "definitely", "drastically",
-        "enormously", "entirely", "extremely", "fully", "greatly", "highly",
-        "intensely", "perfectly", "strongly", "thoroughly", "totally", "utterly",
-        "very"
-      ]
-    },
-
-    "f_49_emphatics": {
-      "description": "Emphatics",
-      "examples": [
-        "I just want a puppy.",
-        "It's such a disappointment."
-      ],
-      "rules": [
-        "just", "really", "most", "more", "a lot", "for sure", "such a"
-      ]
+  "f_33_pied_piping": {
+    "description": "Pied-piping relative clauses",
+    "examples": [
+      "That is the type of arrant pedantry up with which I shall not put!",
+      "She resented the manner in which she was told.",
+      "We felt that we needed a financial base on which to work.",
+      "He is a linguist articles by whom the editors always reject.",
+      "The executive to whom I addressed the complaint has recently resigned.",
+      "The crumbling stone bridge under which the river flows is scheduled for demolition.",
+      "The ancient artifact, the exact origins of which remain a subject of fierce debate among historians, is kept in a climate-controlled vault.",
+      "This is the report, to the findings of which they referred.",
+      "There are many more people like those in whom you are interested."
+    ],
+    "counterexamples": [
+      "She resented the manner she was told in.",
+      "We felt that we needed a financial base to work on.",
+      "Which manner was she told in?",
+      "There are many more events like those that you are interested in.",
+      "There are many more people like those who you are interested in."
+    ],
+    "failed_examples": [
+      {
+        "text": "The corporate mandate, in staunch opposition to which the labor union ultimately decided to strike, was quietly repealed a week later.",
+        "comment": "spaCy tags TO as PART with DEP dependency relation, i.e., no specific relation; perhaps bad tagging?"
+      }
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "noun_anchor",
+            "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
+          },
+          {
+            "LEFT_ID": "noun_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "rel_verb",
+            "RIGHT_ATTRS": {"DEP": "relcl"}},
+          {
+            "LEFT_ID": "rel_verb",
+            "REL_OP": ">>",
+            "RIGHT_ID": "preposition",
+            "RIGHT_ATTRS": {"DEP": "prep"}},
+          {
+            "LEFT_ID": "preposition",
+            "REL_OP": ">",
+            "RIGHT_ID": "wh_word",
+            "RIGHT_ATTRS": {
+              "DEP": "pobj",
+              "TAG": {"IN": ["WDT", "WP", "WP$"]},
+              "LOWER": {"NOT_IN": ["that"]}
+            }
+          }
+        ]]
+      }
     }
   },
 
-  "Derived": {
-    "f_16_other_nouns": {
-      "description": "Other nouns (not counting gerunds and nominalizations)",
-      "examples": [
-        "There is a cat."
-      ],
-      "counterexamples": [
-        "The adjustment was necessary.",
-        "Running is good."
-      ]
-    },
+  "f_34_sentence_relatives": {
+    "description": "Sentence relatives",
+    "comment": "Relative clauses that refer to the predicate of a clause or to a whole clause or sentence, rather than just to a noun phrase. Detected heuristically by *which* after punctuation. TODO Is there a better DependencyMatcher rule that would work? This tends to match the same things as wh_subj does, which seems wrong.",
+    "examples": [
+      "Bob likes fried mangoes, which is the most disgusting thing I've ever heard of.",
+      "Bob likes fried mangoes---which is the most disgusting thing I've ever heard of.",
+      "None of our variables have a VIF of greater than 2.5, which means that we do not need to be concerned about multicollinearity.",
+      "He walks for an hour each morning, which would bore me."
+    ],
+    "failed_examples": [
+      "They say he plays truant, which he doesn't.",
+      "The plane may be several hours late, in which case there's no point in our waiting."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {
+            "IS_PUNCT": true,
+            "IS_SENT_START": false
+          },
+          {
+            "LOWER": "which",
+            "DEP": {"IN": ["nsubj", "nsubjpass"]}
+          }
+        ]]
+      }
+    }
+  },
 
-    "f_17_agentless_passives": {
-      "description": "Agentless passive voice",
-      "comment": "Passive voice without *by* to indicate the actor",
-      "examples": [
-        "The task was done."
-      ],
-      "counterexamples": [
-        "The task was done by Steve."
-      ]
-    },
+  "f_35_because": {
+    "description": "Causative adverbial subordinator (*because*)",
+    "comment": "See Quirk et al., 15.45-47.",
+    "examples": [
+      "I ate because I was hungry.",
+      "Because I was hungry, I ate."
+    ],
+    "counterexamples": [
+      "Because of the rain, the game was canceled."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "adv_clause_head",
+            "RIGHT_ATTRS": {"DEP": "advcl"}
+          },
+          {
+            "LEFT_ID": "adv_clause_head",
+            "REL_OP": ">",
+            "RIGHT_ID": "other_adv_sub",
+            "RIGHT_ATTRS": {
+              "DEP": "mark",
+              "POS": "SCONJ",
+              "LOWER": "because"
+            }
+          }
+        ]]
+      }
+    }
+  },
 
-    "f_60_that_deletion": {
-      "description": "Subordinator *that* deletion",
-      "comment": "Public, private, or suasive verbs with subordinator clauses with an omitted *that*. See Biber et al., 9.2.8.\n\nDetecting a word that isn't there is difficult, so this rule is the most complex in the Biber features. The strategy is: 1. Detect all verbs in the specified classes with a clausal complement verb that has a subject (`f_60_that_deletion:all`). 2. Detect those cases that have a *that* attached to the verb, and exclude them (`f_60_that_deletion:that`). 3. Remove cases where the verb introduces a *wh* clause, as these can't have a *that* (`f_60_that_deletion:wh_clause`). 4. Remove cases where the verb introduces a non-finite to-infinitive (`f_60_that_deletion:to_infinitive`). 5. Remove cases where the verb introduces a literal quotation (`f_60_that_deletion:quote`). 6. Remove cases where the complement or subject appear *before* the main verb.",
-      "examples": [
-        "I think he went.",
-        "She denies a problem occurred.",
-        "He alleges a small problem occurred.",
-        "The reporter reported the election was over.",
-        "He admitted he had made a catastrophic mistake.",
-        "I believe he was arrested.",
-        "She thought the election was stolen.",
-        "I said it was a bad idea.",
-        "I think she attacked me.",
-        "I think she was the one who attacked me.",
-        "I think there are two ways Apple could go."
-      ],
-      "counterexamples": [
-        "I think that he went.",
-        "She denies that a problem occurred.",
-        "He alleges that a small problem occurred.",
-        "The rationale helps ensure that workers understand what they should do.",
-        "He admitted that he had made a catastrophic mistake.",
-        "I said whether you should do it.",
-        "She asked if he was coming.",
-        "This approach allows us to isolate the effect of bottom-up mechanisms.",
-        "Our experimental design allowed us to record the brain's response to each individual stimulus",
-        "Furthermore, we recorded event-related potentials (ERPs) simultaneously with BOLD fMRI signals, allowing us to relate the scalp topography of the vMMN to its neuroanatomical origins.",
-        "He explained which method they used.",
-        "I know whether you did it.",
-        "She asked what time it was.",
-        "\"It's a good idea,\" he said.",
-        "She said, \"It's a good idea.\"",
-        "They asked me if I drank beer; I said yeah.",
-        "I asked, \"How did you find it?\"",
-        "He was right, I think.",
-        "I found the door unlocked.",
-        "She returned home from school and found her mother gone.",
-        "When she didn't return, Mr. Jones reported her missing to police."
-      ]
+  "f_36_though": {
+    "description": "Concessive adverbial subordinators (*although*, *though*)",
+    "comment": "See Quirk et al., 15.39-40.",
+    "examples": [
+      "Although it rained, we played.",
+      "It was a good game, though it was rainy."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "adv_clause_head",
+            "RIGHT_ATTRS": {"DEP": "advcl"}
+          },
+          {
+            "LEFT_ID": "adv_clause_head",
+            "REL_OP": ">",
+            "RIGHT_ID": "other_adv_sub",
+            "RIGHT_ATTRS": {
+              "DEP": "mark",
+              "POS": "SCONJ",
+              "LOWER": {"IN": ["though", "although", "tho"]}
+            }
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_37_if": {
+    "description": "Conditional adverbial subordinators (*if*, *unless*)",
+    "comment": "See Quirk et al., 15.33-38.",
+    "examples": [
+      "If it rains, we stay inside.",
+      "If it doesn't rain, we'll go outside.",
+      "Unless it rains, we'll go outside.",
+      "I think you shouldn't do it, if I may be so bold."
+    ],
+    "counterexamples": [
+      "It's difficult to say if she did it herself."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "adv_clause_head",
+            "RIGHT_ATTRS": {"DEP": "advcl"}
+          },
+          {
+            "LEFT_ID": "adv_clause_head",
+            "REL_OP": ">",
+            "RIGHT_ID": "other_adv_sub",
+            "RIGHT_ATTRS": {
+              "DEP": "mark",
+              "POS": "SCONJ",
+              "LOWER": {"IN": ["if", "unless"]}
+            }
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_38_other_adv_sub": {
+    "description": "Other adverbial subordinators (*since*, *while*, *whereas*, etc.)",
+    "comment": "Other words or phrases used as adverbial subordinators. Rather than Biber's fixed list, we detect any adverbial clause with a subordinating conjunction that is not causative, concessive, or conditional.",
+    "examples": [
+      "Since it rained, we stayed inside.",
+      "The approach emphasizes creating redundancies, implementing cross-checks, and establishing feedback mechanisms that can catch errors before they propagate into accidents or serious incidents.",
+      "Developing standardised protocols for information gathering at incident scenes may also help to ensure that relevant information is systematically recorded whilst it remains readily accessible."
+    ],
+    "counterexamples": [
+      "It's been raining since noon.",
+      "I ate because I was hungry.",
+      "Because I was hungry, I ate.",
+      "If it rains, we stay inside.",
+      "Although it rained, we played.",
+      "It was a good game, though it was rainy.",
+      "Furthermore, whilst the cognitive avoidance hypothesis represents a plausible mechanistic explanation, alternative accounts merit consideration."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "adv_clause_head",
+            "RIGHT_ATTRS": {"DEP": "advcl"}
+          },
+          {
+            "LEFT_ID": "adv_clause_head",
+            "REL_OP": ">",
+            "RIGHT_ID": "other_adv_sub",
+            "RIGHT_ATTRS": {
+              "DEP": "mark",
+              "POS": "SCONJ",
+              "LEMMA": {"NOT_IN": ["because", "if", "unless", "though", "although", "tho"]}
+            }
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_39_prepositions": {
+    "description": "Total prepositional phrases",
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"DEP": "prep"}
+        ]]
+      }
+    }
+  },
+
+  "f_40_adj_attr": {
+    "description": "Attributive adjectives",
+    "comment": "Adjectives that modify a noun simply by preceding it.",
+    "examples": [
+      "The big horse is here.",
+      "I have a terrible idea!",
+      "It's a quick and easy fix.",
+      "I didn't sleep at all last night."
+    ],
+    "counterexamples": [
+      "The horse is big.",
+      "That's right.",
+      "It must be terrible."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"POS": "ADJ", "DEP": "amod"}
+        ]]
+      }
+    }
+  },
+
+  "f_41_adj_pred": {
+    "description": "Predicative adjectives",
+    "comment": "Adjectives that are linked to a noun clause with a copula. Biber only considers forms of *be*; we extend to copulas such as *seem*, *appear*, *look*, etc. spaCy frequently mis-tags adjective complements of these verbs as object predicates, but as the verbs do not take object predicates, we can accept these cases without fear of false positives.",
+    "examples": [
+      "The horse is big.",
+      "The horse feels warm.",
+      "The horse is very big.",
+      "The horse seems big.",
+      "That's right.",
+      "It must be terrible."
+    ],
+    "counterexamples": [
+      "The big horse is here.",
+      "I have a terrible idea!",
+      "It's a quick and easy fix.",
+      "I didn't sleep at all last night."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "copula",
+            "RIGHT_ATTRS": {
+              "LEMMA": {"IN": ["be", "seem", "appear", "become", "remain", "look",
+                               "feel", "sound", "act", "get", "turn", "prove"]}
+            }
+          },
+          {
+            "LEFT_ID": "copula",
+            "REL_OP": ">",
+            "RIGHT_ID": "adj_pred",
+            "RIGHT_ATTRS": {
+              "POS": "ADJ",
+              "DEP": {"IN": ["acomp", "oprd"]}
+            }
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_42_adverbs": {
+    "description": "Total adverbs",
+    "examples": [
+      "Unfortunately, that's the case."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": {"IN": ["RB", "RBR", "RBS", "WRB"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_45_conjuncts": {
+    "description": "Conjuncts",
+    "comment": "Connective phrases that mark relations between clauses, such as *altogether*, *in comparison*, *nonetheless*.",
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "comment": "*else*, *altogether*, and *rather* following punctuation or at the start of a sentence",
+        "examples": [
+          "It's a whole different kind of flying, altogether.",
+          "Rather than treating workers as passive recipients of safety procedures, this approach encourages workers to actively participate in identifying error-prone conditions, contributing to hazard analysis, and providing feedback on the effectiveness of existing controls and procedures."
+        ],
+        "rules": [
+          [
+            {"IS_PUNCT": true},
+            {"LOWER": {"IN": ["else", "altogether", "rather"]}}
+          ],
+          [
+            {"IS_SENT_START": true,
+             "LOWER": {"IN": ["else", "altogether", "rather"]}}
+          ]
+        ]
+      },
+
+      "phrase": {
+        "type": "PhraseMatcher",
+        "comment": "Fixed list of conjunct words and phrases",
+        "examples": [
+          "I need an example of a conjunct, e.g., one like this.",
+          "However, it didn't work."
+        ],
+        "rules": [
+          "alternatively", "consequently", "conversely", "e.g.", "furthermore",
+          "hence", "however", "i.e.", "instead", "likewise", "moreover", "namely",
+          "nevertheless", "nonetheless", "notwithstanding", "otherwise",
+          "similarly", "therefore", "thus", "viz.", "in comparison", "in contrast",
+          "in particular", "in addition", "in conclusion", "in consequence",
+          "in sum", "in summary", "for example", "for instance", "instead of",
+          "by contrast", "by comparison", "in any event", "in any case",
+          "in other words", "as a result", "as a consequence", "on the contrary",
+          "on the other hand"
+        ]
+      }
+    }
+  },
+
+  "f_46_downtoners": {
+    "description": "Downtoners",
+    "examples": [
+      "Are you working hard or hardly working?",
+      "It was somewhat difficult.",
+      "I was mildly annoyed."
+    ],
+    "subrules": {
+      "phrase": {
+        "type": "PhraseMatcher",
+        "rules": [
+          "almost", "barely", "hardly", "merely", "mildly", "nearly", "only",
+          "partially", "partly", "practically", "scarcely", "slightly", "somewhat"
+        ]
+      }
+    }
+  },
+
+  "f_47_hedges": {
+    "description": "Hedges",
+    "examples": [
+      "Maybe I should write more examples.",
+      "It was kind of gross.",
+      "At about seven feet, she was unusually tall."
+    ],
+    "subrules": {
+      "phrase": {
+        "type": "PhraseMatcher",
+        "rules": [
+          "maybe", "at about", "something like", "more or less", "sort of",
+          "kind of"
+        ]
+      }
+    }
+  },
+
+  "f_48_amplifiers": {
+    "description": "Amplifiers",
+    "examples": [
+      "She came on too strongly.",
+      "Yeah, absolutely!",
+      "It's definitely an example."
+    ],
+    "subrules": {
+      "phrase": {
+        "type": "PhraseMatcher",
+        "rules": [
+          "absolutely", "altogether", "completely", "definitely", "drastically",
+          "enormously", "entirely", "extremely", "fully", "greatly", "highly",
+          "intensely", "perfectly", "strongly", "thoroughly", "totally", "utterly",
+          "very"
+        ]
+      }
+    }
+  },
+
+  "f_49_emphatics": {
+    "description": "Emphatics",
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "examples": [
+          "The horse is so big.",
+          "He did do it.",
+          "It's a real big problem."
+        ],
+        "rules": [
+          [
+            {"LOWER": {"IN": ["so", "real"]}},
+            {"TAG": "JJ"}
+          ],
+          [
+            {"LOWER": {"IN": ["do", "does", "doing", "did"]},
+             "TAG": {"IN": ["VB", "VBD", "VBG", "VBN", "VBP", "VBN", "VBP", "VBZ"]}},
+            {"POS": "VERB"}
+          ]
+        ]
+      },
+
+      "phrase": {
+        "type": "PhraseMatcher",
+        "examples": [
+          "I just want a puppy.",
+          "It's such a disappointment."
+        ],
+        "rules": [
+          "just", "really", "most", "more", "a lot", "for sure", "such a"
+        ]
+      }
+    }
+  },
+
+  "f_50_discourse_particles": {
+    "description": "Discourse particles (e.g., *well*, *anyhow*, *anyway*)",
+    "comment": "TODO Switch to anything with RP POS, like MFTE?",
+    "examples": [
+      "Well, that's not a good idea.",
+      "Anyway, I started blasting.",
+      "She tried it, but, well, it didn't work."
+    ],
+    "counterexamples": [
+      "He dug a well."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [
+          [
+            {"IS_PUNCT": true},
+            {"LOWER": {"IN": ["well", "now", "anyhow", "anyways", "anyway"]}}
+          ],
+          [
+            {"IS_SENT_START": true,
+             "LOWER": {"IN": ["well", "now", "anyhow", "anyways", "anyway"]}}
+          ]
+
+        ]
+      }
+    }
+  },
+
+  "f_51_demonstratives": {
+    "description": "Demonstratives (*that*, *this*, *these*, or *those* used as determiners)",
+    "comment": "Excludes demonstrative pronouns (f_10_demonstrative_pronoun)",
+    "examples": [
+      "That sentence illustrates the feature.",
+      "This cat is happy."
+    ],
+    "counterexamples": [
+      "That is an example sentence.",
+      "This is the feature.",
+      "Those are my penguins."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"DEP": "det",
+           "LOWER": {"IN": ["that", "this", "these", "those"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_52_modal_possibility": {
+    "description": "Possibility modals",
+    "examples": [
+      "You can do it!",
+      "The bridge might fall down."
+    ],
+    "counterexamples": [
+      "Stand in awe of my might."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"LEMMA": {"IN": ["can", "may", "might", "could"]},
+           "TAG": "MD"}
+        ]]
+      }
+    }
+  },
+
+  "f_53_modal_necessity": {
+    "description": "Necessity modals",
+    "examples": [
+      "You should wright more examples.",
+      "One must write examples."
+    ],
+    "counterexamples": [
+      "It smells very musty in here."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"LEMMA": {"IN": ["ought", "should", "must"]},
+           "TAG": "MD"}
+        ]]
+      }
+    }
+  },
+
+  "f_54_modal_predictive": {
+    "description": "Predictive modals",
+    "examples": [
+      "You will read this example.",
+      "It shall be done."
+    ],
+    "counterexamples": [
+      "He wrote a will."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"LEMMA": {"IN": ["will", "would", "shall"]},
+           "TAG": "MD"}
+        ]]
+      }
+    }
+  },
+
+  "f_55_verb_public": {
+    "description": "Public verbs",
+    "comment": "Verbs describing speech actions (e.g., *allege*, *insist*, *reply*). See Quirk et al., 16.31.",
+    "examples": [
+      "He announced his opinions.",
+      "She remarked that this example is stupid.",
+      "I do solemly swear that this is an example."
+    ],
+    "counterexamples": [
+      "This is a swear word.",
+      "He placed a bet."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {
+            "POS": "VERB",
+            "LEMMA": {"IN": [
+              "acknowledge", "add", "admit", "affirm", "agree", "allege",
+              "announce", "argue", "assert", "bet", "boast", "certify", "claim",
+              "comment", "complain", "concede", "confess", "confide", "confirm",
+              "contend", "convey", "declare", "deny", "disclose", "exclaim",
+              "explain", "forecast", "foretell", "guarantee", "hint", "insist",
+              "maintain", "mention", "object", "predict", "proclaim", "promise",
+              "pronounce", "prophesy", "protest", "remark", "repeat", "reply",
+              "report", "retort", "say", "state", "submit", "suggest", "swear",
+              "testify", "vow", "warn", "write"
+            ]}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_56_verb_private": {
+    "description": "Private verbs",
+    "comment": "Verbs describing private intellectual states or intellectual acts (e.g., *realize*, *think*). See Quirk et al., 16.31.",
+    "examples": [
+      "I anticipate a raise.",
+      "I did not realise the issue.",
+      "She thinks it's an issue."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {
+            "POS": "VERB",
+            "LEMMA": {"IN": [
+              "accept", "anticipate", "ascertain", "assume", "believe",
+              "calculate", "check", "conclude", "conjecture", "consider",
+              "decide", "deduce", "deem", "demonstrate", "determine", "discern",
+              "discover", "doubt", "dream", "ensure", "establish", "estimate",
+              "expect", "fancy", "fear", "feel", "find", "foresee", "forget",
+              "gather", "guess", "hear", "hold", "hope", "imagine", "imply",
+              "indicate", "infer", "insure", "judge", "know", "learn", "mean",
+              "note", "notice", "observe", "perceive", "presume", "presuppose",
+              "pretend", "prove", "realize", "realise", "reason", "recall",
+              "reckon", "recognise", "recognize", "reflect", "remember",
+              "reveal", "see", "sense", "show", "signify", "suppose", "suspect",
+              "think", "understand"
+            ]}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_57_verb_suasive": {
+    "description": "Suasive verbs",
+    "comment": "Verbs describing intentions to cause a future change (e.g., *arrange*, *propose*, *suggest*). See Quirk et al., 16.32.",
+    "examples": [
+      "She decreed that none will survive.",
+      "I will ensure that you succeed.",
+      "They urged us to accept the proposal urgently."
+    ],
+    "counterexamples": [
+      "We followed the rules.",
+      "She read the decree."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {
+            "POS": "VERB",
+            "LEMMA": {"IN": [
+              "agree", "allow", "arrange", "ask", "beg", "command", "concede",
+              "decide", "decree", "decreed", "demand", "desire", "determine", "enjoin",
+              "ensure", "entreat", "grant", "insist", "instruct", "intend",
+              "move", "ordain", "order", "pledge", "pray", "prefer", "pronounce",
+              "propose", "recommend", "request", "require", "resolve", "rule",
+              "stipulate", "suggest", "urge", "vote"
+            ]}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_58_verb_seem": {
+    "description": "Verbs *seem* and *appear*",
+    "examples": [
+      "It seems to be the case.",
+      "It appears to be the case.",
+      "It just appeared in front of me!",
+      "While they were appearing, one went missing."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"POS": "VERB",
+           "LEMMA": {"IN": ["seem", "appear"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_59_contractions": {
+    "description": "Contractions",
+    "examples": [
+      "I can't do it.",
+      "They won't do it.",
+      "You shouldn't be involved.",
+      "They'll do it.",
+      "You could've done it.",
+      "It's a good idea.",
+      "She's a great teacher.",
+      "They're going to do it.",
+      "I can’t do it.",
+      "They won’t do it.",
+      "You shouldn’t be involved.",
+      "They’ll do it.",
+      "It’s a good idea.",
+      "She’s a great teacher.",
+      "They’re going to do it."
+    ],
+    "counterexamples": [
+      "The truck's fender was damaged.",
+      "Bob's truck was damaged.",
+      "The truck’s fender was damaged.",
+      "Bob’s truck was damaged."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"LOWER": {"REGEX": "['’]"},
+           "TAG": {"IN": ["MD", "RB", "VB", "VBZ", "VBP"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_60_that_deletion": {
+    "description": "Subordinator *that* deletion",
+    "comment": "Public, private, or suasive verbs with subordinator clauses with an omitted *that*. See Biber et al., 9.2.8.\n\nDetecting a word that isn't there is difficult, so this rule is the most complex in the Biber features. The strategy is: 1. Detect all verbs in the specified classes with a clausal complement verb that has a subject (`f_60_that_deletion:all`). 2. Detect those cases that have a *that* attached to the verb, and exclude them (`f_60_that_deletion:that`). 3. Remove cases where the verb introduces a *wh* clause, as these can't have a *that* (`f_60_that_deletion:wh_clause`). 4. Remove cases where the verb introduces a non-finite to-infinitive (`f_60_that_deletion:to_infinitive`). 5. Remove cases where the verb introduces a literal quotation (`f_60_that_deletion:quote`). 6. Remove cases where the complement or subject appear *before* the main verb.",
+    "examples": [
+      "I think he went.",
+      "She denies a problem occurred.",
+      "He alleges a small problem occurred.",
+      "The reporter reported the election was over.",
+      "He admitted he had made a catastrophic mistake.",
+      "I believe he was arrested.",
+      "She thought the election was stolen.",
+      "I said it was a bad idea.",
+      "I think she attacked me.",
+      "I think she was the one who attacked me.",
+      "I think there are two ways Apple could go."
+    ],
+    "counterexamples": [
+      "I think that he went.",
+      "She denies that a problem occurred.",
+      "He alleges that a small problem occurred.",
+      "The rationale helps ensure that workers understand what they should do.",
+      "He admitted that he had made a catastrophic mistake.",
+      "I said whether you should do it.",
+      "She asked if he was coming.",
+      "This approach allows us to isolate the effect of bottom-up mechanisms.",
+      "Our experimental design allowed us to record the brain's response to each individual stimulus",
+      "Furthermore, we recorded event-related potentials (ERPs) simultaneously with BOLD fMRI signals, allowing us to relate the scalp topography of the vMMN to its neuroanatomical origins.",
+      "He explained which method they used.",
+      "I know whether you did it.",
+      "She asked what time it was.",
+      "\"It's a good idea,\" he said.",
+      "She said, \"It's a good idea.\"",
+      "They asked me if I drank beer; I said yeah.",
+      "I asked, \"How did you find it?\"",
+      "He was right, I think.",
+      "I found the door unlocked.",
+      "She returned home from school and found her mother gone.",
+      "When she didn't return, Mr. Jones reported her missing to police."
+    ],
+    "subrules": {
+      "all": {
+        "type": "DependencyMatcher",
+        "derived": true,
+        "description": "Subordinator *that* deletion: clauses with or without *that*",
+        "examples": [
+          "I think he went.",
+          "She denies a problem occurred.",
+          "The reporter reported the election was over.",
+          "He alleges a small problem occurred.",
+          "I think that he went.",
+          "The reporter reported that the election was over.",
+          "She denies that a problem occurred.",
+          "He alleges that a small problem occurred.",
+          "She returned home from school and found that her mother was gone.",
+          "She returned home from school and found her mother was gone.",
+          "I think there are two ways Apple could go."
+        ],
+        "counterexamples": [
+          "She returned home from school and found her mother gone."
+        ],
+        "rules": [
+          [
+            {
+              "RIGHT_ID": "verb_anchor",
+              "RIGHT_ATTRS": {
+                "POS": "VERB",
+                "LEMMA": {"IN": [
+                  "accept", "acknowledge", "add", "admit", "affirm", "agree",
+                  "allege", "allow", "announce", "anticipate", "argue",
+                  "arrange", "ascertain", "ask", "assert", "assume", "beg",
+                  "believe", "bet", "boast", "calculate", "certify", "check",
+                  "claim", "command", "comment", "complain", "concede", "conclude",
+                  "confess", "confide", "confirm", "conjecture", "consider",
+                  "contend", "convey", "decide", "declare", "decree", "decreed",
+                  "deduce", "deem", "demand", "demonstrate", "deny", "desire",
+                  "determine", "discern", "disclose", "discover", "doubt", "dream",
+                  "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
+                  "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
+                  "forecast", "foresee", "foretell", "forget", "gather", "grant",
+                  "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
+                  "imply", "indicate", "infer", "insist", "instruct", "insure",
+                  "intend", "judge", "know", "learn", "maintain", "mean",
+                  "mention", "move", "note", "notice",
+                  "object", "observe", "ordain", "order", "perceive", "pledge",
+                  "pray", "predict", "prefer", "presume", "presuppose", "pretend",
+                  "proclaim", "promise", "pronounce", "prophesy", "propose",
+                  "protest", "prove", "realise", "realize", "reason", "recall",
+                  "reckon", "recognise", "recognize", "recommend", "reflect",
+                  "remark", "remember", "repeat", "reply", "report", "request",
+                  "require", "resolve", "retort", "reveal", "rule", "say", "see",
+                  "sense", "show", "signify", "state", "stipulate", "submit",
+                  "suggest", "suggest", "suppose", "suspect", "swear",
+                  "testify", "think", "understand", "urge", "vote", "vow", "warn",
+                  "write"
+                ]}
+              }
+            },
+            {
+              "LEFT_ID": "verb_anchor",
+              "REL_OP": ">",
+              "RIGHT_ID": "comp_verb",
+              "RIGHT_ATTRS": {
+                "POS": {"IN": ["VERB", "AUX"]},
+                "TAG": {"NOT_IN": ["VBN", "VBG"]},
+                "DEP": "ccomp"
+              }
+            },
+            {
+              "LEFT_ID": "comp_verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "subject",
+              "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
+            }
+          ],
+          [
+            {
+              "RIGHT_ID": "verb_anchor",
+              "RIGHT_ATTRS": {
+                "POS": "VERB",
+                "LEMMA": {"IN": [
+                  "accept", "acknowledge", "add", "admit", "affirm", "agree",
+                  "allege", "allow", "announce", "anticipate", "argue",
+                  "arrange", "ascertain", "ask", "assert", "assume", "beg",
+                  "believe", "bet", "boast", "calculate", "certify", "check",
+                  "claim", "command", "comment", "complain", "concede", "conclude",
+                  "confess", "confide", "confirm", "conjecture", "consider",
+                  "contend", "convey", "decide", "declare", "decree", "decreed",
+                  "deduce", "deem", "demand", "demonstrate", "deny", "desire",
+                  "determine", "discern", "disclose", "discover", "doubt", "dream",
+                  "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
+                  "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
+                  "forecast", "foresee", "foretell", "forget", "gather", "grant",
+                  "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
+                  "imply", "indicate", "infer", "insist", "instruct", "insure",
+                  "intend", "judge", "know", "learn", "maintain", "mean",
+                  "mention", "move", "note", "notice",
+                  "object", "observe", "ordain", "order", "perceive", "pledge",
+                  "pray", "predict", "prefer", "presume", "presuppose", "pretend",
+                  "proclaim", "promise", "pronounce", "prophesy", "propose",
+                  "protest", "prove", "realise", "realize", "reason", "recall",
+                  "reckon", "recognise", "recognize", "recommend", "reflect",
+                  "remark", "remember", "repeat", "reply", "report", "request",
+                  "require", "resolve", "retort", "reveal", "rule", "say", "see",
+                  "sense", "show", "signify", "state", "stipulate", "submit",
+                  "suggest", "suggest", "suppose", "suspect", "swear",
+                  "testify", "think", "understand", "urge", "vote", "vow", "warn",
+                  "write"
+                ]}
+              }
+            },
+            {
+              "LEFT_ID": "verb_anchor",
+              "REL_OP": ">",
+              "RIGHT_ID": "comp_verb",
+              "RIGHT_ATTRS": {
+                "POS": {"IN": ["VERB", "AUX"]},
+                "TAG": {"IN": ["VBN", "VBG"]},
+                "DEP": "ccomp"
+              }
+            },
+            {
+              "LEFT_ID": "comp_verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "auxiliary",
+              "RIGHT_ATTRS": {
+                "DEP": {"IN": ["aux", "auxpass"]}
+              }
+            },
+            {
+              "LEFT_ID": "auxiliary",
+              "REL_OP": ">",
+              "RIGHT_ID": "subject",
+              "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
+            }
+          ],
+          [
+            {
+              "RIGHT_ID": "verb_anchor",
+              "RIGHT_ATTRS": {
+                "POS": "VERB",
+                "LEMMA": {"IN": [
+                  "accept", "acknowledge", "add", "admit", "affirm", "agree",
+                  "allege", "allow", "announce", "anticipate", "argue",
+                  "arrange", "ascertain", "ask", "assert", "assume", "beg",
+                  "believe", "bet", "boast", "calculate", "certify", "check",
+                  "claim", "command", "comment", "complain", "concede", "conclude",
+                  "confess", "confide", "confirm", "conjecture", "consider",
+                  "contend", "convey", "decide", "declare", "decree", "decreed",
+                  "deduce", "deem", "demand", "demonstrate", "deny", "desire",
+                  "determine", "discern", "disclose", "discover", "doubt", "dream",
+                  "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
+                  "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
+                  "forecast", "foresee", "foretell", "forget", "gather", "grant",
+                  "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
+                  "imply", "indicate", "infer", "insist", "instruct", "insure",
+                  "intend", "judge", "know", "learn", "maintain", "mean",
+                  "mention", "move", "note", "notice",
+                  "object", "observe", "ordain", "order", "perceive", "pledge",
+                  "pray", "predict", "prefer", "presume", "presuppose", "pretend",
+                  "proclaim", "promise", "pronounce", "prophesy", "propose",
+                  "protest", "prove", "realise", "realize", "reason", "recall",
+                  "reckon", "recognise", "recognize", "recommend", "reflect",
+                  "remark", "remember", "repeat", "reply", "report", "request",
+                  "require", "resolve", "retort", "reveal", "rule", "say", "see",
+                  "sense", "show", "signify", "state", "stipulate", "submit",
+                  "suggest", "suggest", "suppose", "suspect", "swear",
+                  "testify", "think", "understand", "urge", "vote", "vow", "warn",
+                  "write"
+                ]}
+              }
+            },
+            {
+              "LEFT_ID": "verb_anchor",
+              "REL_OP": ">",
+              "RIGHT_ID": "comp_verb",
+              "RIGHT_ATTRS": {
+                "POS": {"IN": ["VERB", "AUX"]},
+                "TAG": {"IN": ["VBN", "VBG"]},
+                "DEP": "ccomp"
+              }
+            },
+            {
+              "LEFT_ID": "comp_verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "auxiliary",
+              "RIGHT_ATTRS": {
+                "DEP": {"IN": ["aux", "auxpass"]}
+              }
+            },
+            {
+              "LEFT_ID": "comp_verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "subject",
+              "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
+            }
+          ]
+        ]
+      },
+
+      "that": {
+        "type": "DependencyMatcher",
+        "derived": true,
+        "description": "Subordinator *that* deletion: clauses with *that* or other subordinators (*whether*, *if*, etc.)",
+        "examples": [
+          "I think that he went.",
+          "She denies that a problem occurred.",
+          "He alleges that a small problem occurred.",
+          "I said whether you should do it.",
+          "She asked if he was coming."
+        ],
+        "counterexamples": [
+          "I think he went.",
+          "She denies a problem occurred.",
+          "He alleges a small problem occurred.",
+          "I said you should do it."
+        ],
+        "rules": [[
+          {
+            "RIGHT_ID": "verb_anchor",
+            "RIGHT_ATTRS": {
+              "POS": "VERB",
+              "LEMMA": {"IN": [
+                "accept", "acknowledge", "add", "admit", "affirm", "agree",
+                "allege", "allow", "announce", "anticipate", "argue",
+                "arrange", "ascertain", "ask", "assert", "assume", "beg",
+                "believe", "bet", "boast", "calculate", "certify", "check",
+                "claim", "command", "comment", "complain", "concede", "conclude",
+                "confess", "confide", "confirm", "conjecture", "consider",
+                "contend", "convey", "decide", "declare", "decree", "decreed",
+                "deduce", "deem", "demand", "demonstrate", "deny", "desire",
+                "determine", "discern", "disclose", "discover", "doubt", "dream",
+                "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
+                "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
+                "forecast", "foresee", "foretell", "forget", "gather", "grant",
+                "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
+                "imply", "indicate", "infer", "insist", "instruct", "insure",
+                "intend", "judge", "know", "learn", "maintain", "mean",
+                "mention", "move", "note", "notice",
+                "object", "observe", "ordain", "order", "perceive", "pledge",
+                "pray", "predict", "prefer", "presume", "presuppose", "pretend",
+                "proclaim", "promise", "pronounce", "prophesy", "propose",
+                "protest", "prove", "realise", "realize", "reason", "recall",
+                "reckon", "recognise", "recognize", "recommend", "reflect",
+                "remark", "remember", "repeat", "reply", "report", "request",
+                "require", "resolve", "retort", "reveal", "rule", "say", "see",
+                "sense", "show", "signify", "state", "stipulate", "submit",
+                "suggest", "suggest", "suppose", "suspect", "swear",
+                "testify", "think", "understand", "urge", "vote", "vow", "warn",
+                "write"
+              ]}
+            }
+          },
+          {
+            "LEFT_ID": "verb_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "comp_verb",
+            "RIGHT_ATTRS": {
+              "POS": {"IN": ["VERB", "AUX"]},
+              "DEP": "ccomp"
+            }
+          },
+          {
+            "LEFT_ID": "comp_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "subject",
+            "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
+          },
+          {
+            "LEFT_ID": "comp_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "that",
+            "RIGHT_ATTRS": {"DEP": "mark"}
+          }
+        ]]
+      },
+
+      "wh_clause": {
+        "type": "DependencyMatcher",
+        "derived": true,
+        "description": "Subordinator *that* deletion: clauses where the verb introduces a *wh*-clause",
+        "comment": "When the verb introduces a *wh*-clause, *that* would not function grammatically, so its absence does not count as *that* deletion.",
+        "examples": [
+          "The rationale helps ensure that workers understand what they should do.",
+          "He explained which method they used."
+        ],
+        "counterexamples": [
+          "I think she was the one who attacked me."
+        ],
+        "rules": [[
+          {
+            "RIGHT_ID": "verb_anchor",
+            "RIGHT_ATTRS": {
+              "POS": "VERB",
+              "LEMMA": {"IN": [
+                "accept", "acknowledge", "add", "admit", "affirm", "agree",
+                "allege", "allow", "announce", "anticipate", "argue",
+                "arrange", "ascertain", "ask", "assert", "assume", "beg",
+                "believe", "bet", "boast", "calculate", "certify", "check",
+                "claim", "command", "comment", "complain", "concede", "conclude",
+                "confess", "confide", "confirm", "conjecture", "consider",
+                "contend", "convey", "decide", "declare", "decree", "decreed",
+                "deduce", "deem", "demand", "demonstrate", "deny", "desire",
+                "determine", "discern", "disclose", "discover", "doubt", "dream",
+                "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
+                "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
+                "forecast", "foresee", "foretell", "forget", "gather", "grant",
+                "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
+                "imply", "indicate", "infer", "insist", "instruct", "insure",
+                "intend", "judge", "know", "learn", "maintain", "mean",
+                "mention", "move", "note", "notice",
+                "object", "observe", "ordain", "order", "perceive", "pledge",
+                "pray", "predict", "prefer", "presume", "presuppose", "pretend",
+                "proclaim", "promise", "pronounce", "prophesy", "propose",
+                "protest", "prove", "realise", "realize", "reason", "recall",
+                "reckon", "recognise", "recognize", "recommend", "reflect",
+                "remark", "remember", "repeat", "reply", "report", "request",
+                "require", "resolve", "retort", "reveal", "rule", "say", "see",
+                "sense", "show", "signify", "state", "stipulate", "submit",
+                "suggest", "suggest", "suppose", "suspect", "swear",
+                "testify", "think", "understand", "urge", "vote", "vow", "warn",
+                "write"
+              ]}
+            }
+          },
+          {
+            "LEFT_ID": "verb_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "comp_verb",
+            "RIGHT_ATTRS": {
+              "POS": {"IN": ["VERB", "AUX"]},
+              "DEP": "ccomp"
+            }
+          },
+          {
+            "LEFT_ID": "comp_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "subject",
+            "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
+          },
+          {
+            "LEFT_ID": "verb_anchor",
+            "REL_OP": ".",
+            "RIGHT_ID": "wh_clause",
+            "RIGHT_ATTRS": {
+              "TAG": {"IN": ["WDT", "WP", "WP$", "WRB"]}
+            }
+          }
+        ]]
+      },
+
+      "to_infinitive": {
+        "type": "DependencyMatcher",
+        "derived": true,
+        "description": "Subordinator *that* deletion: non-finite to-infinitive complements",
+        "examples": [
+          "This approach allows us to isolate the effect of bottom-up mechanisms.",
+          "Our experimental design allowed us to record the brain's response to each individual stimulus",
+          "Furthermore, we recorded event-related potentials (ERPs) simultaneously with BOLD fMRI signals, allowing us to relate the scalp topography of the vMMN to its neuroanatomical origins."
+        ],
+        "rules": [[
+          {
+            "RIGHT_ID": "verb_anchor",
+            "RIGHT_ATTRS": {
+              "POS": "VERB",
+              "LEMMA": {"IN": [
+                "accept", "acknowledge", "add", "admit", "affirm", "agree",
+                "allege", "allow", "announce", "anticipate", "argue",
+                "arrange", "ascertain", "ask", "assert", "assume", "beg",
+                "believe", "bet", "boast", "calculate", "certify", "check",
+                "claim", "command", "comment", "complain", "concede", "conclude",
+                "confess", "confide", "confirm", "conjecture", "consider",
+                "contend", "convey", "decide", "declare", "decree", "decreed",
+                "deduce", "deem", "demand", "demonstrate", "deny", "desire",
+                "determine", "discern", "disclose", "discover", "doubt", "dream",
+                "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
+                "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
+                "forecast", "foresee", "foretell", "forget", "gather", "grant",
+                "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
+                "imply", "indicate", "infer", "insist", "instruct", "insure",
+                "intend", "judge", "know", "learn", "maintain", "mean",
+                "mention", "move", "note", "notice",
+                "object", "observe", "ordain", "order", "perceive", "pledge",
+                "pray", "predict", "prefer", "presume", "presuppose", "pretend",
+                "proclaim", "promise", "pronounce", "prophesy", "propose",
+                "protest", "prove", "realise", "realize", "reason", "recall",
+                "reckon", "recognise", "recognize", "recommend", "reflect",
+                "remark", "remember", "repeat", "reply", "report", "request",
+                "require", "resolve", "retort", "reveal", "rule", "say", "see",
+                "sense", "show", "signify", "state", "stipulate", "submit",
+                "suggest", "suggest", "suppose", "suspect", "swear",
+                "testify", "think", "understand", "urge", "vote", "vow", "warn",
+                "write"
+              ]}
+            }
+          },
+          {
+            "LEFT_ID": "verb_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "comp_verb",
+            "RIGHT_ATTRS": {
+              "POS": {"IN": ["VERB", "AUX"]},
+              "DEP": "ccomp"
+            }
+          },
+          {
+            "LEFT_ID": "comp_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "subject",
+            "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
+          },
+          {
+            "LEFT_ID": "comp_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "to",
+            "RIGHT_ATTRS": {"TAG": "TO"}
+          }
+        ]]
+      },
+
+      "quote": {
+        "type": "DependencyMatcher",
+        "derived": true,
+        "description": "Subordinator *that* deletion: clauses introducing a quotation",
+        "examples": [
+          "She said, \"It's a good idea.\"",
+          "He said, 'It's a good idea!'",
+          "I asked, \"How did you find it?\"",
+          "She said, “It's a good idea.”"
+        ],
+        "rules": [[
+          {
+            "RIGHT_ID": "verb_anchor",
+            "RIGHT_ATTRS": {
+              "POS": "VERB",
+              "LEMMA": {"IN": [
+                "accept", "acknowledge", "add", "admit", "affirm", "agree",
+                "allege", "allow", "announce", "anticipate", "argue",
+                "arrange", "ascertain", "ask", "assert", "assume", "beg",
+                "believe", "bet", "boast", "calculate", "certify", "check",
+                "claim", "command", "comment", "complain", "concede", "conclude",
+                "confess", "confide", "confirm", "conjecture", "consider",
+                "contend", "convey", "decide", "declare", "decree", "decreed",
+                "deduce", "deem", "demand", "demonstrate", "deny", "desire",
+                "determine", "discern", "disclose", "discover", "doubt", "dream",
+                "enjoin", "ensure", "ensure", "entreat", "establish", "estimate",
+                "exclaim", "expect", "explain", "fancy", "fear", "feel", "find",
+                "forecast", "foresee", "foretell", "forget", "gather", "grant",
+                "guarantee", "guess", "hear", "hint", "hold", "hope", "imagine",
+                "imply", "indicate", "infer", "insist", "instruct", "insure",
+                "intend", "judge", "know", "learn", "maintain", "mean",
+                "mention", "move", "note", "notice",
+                "object", "observe", "ordain", "order", "perceive", "pledge",
+                "pray", "predict", "prefer", "presume", "presuppose", "pretend",
+                "proclaim", "promise", "pronounce", "prophesy", "propose",
+                "protest", "prove", "realise", "realize", "reason", "recall",
+                "reckon", "recognise", "recognize", "recommend", "reflect",
+                "remark", "remember", "repeat", "reply", "report", "request",
+                "require", "resolve", "retort", "reveal", "rule", "say", "see",
+                "sense", "show", "signify", "state", "stipulate", "submit",
+                "suggest", "suggest", "suppose", "suspect", "swear",
+                "testify", "think", "understand", "urge", "vote", "vow", "warn",
+                "write"
+              ]}
+            }
+          },
+          {
+            "LEFT_ID": "verb_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "comp_verb",
+            "RIGHT_ATTRS": {
+              "POS": {"IN": ["VERB", "AUX"]},
+              "DEP": "ccomp"
+            }
+          },
+          {
+            "LEFT_ID": "comp_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "subject",
+            "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}
+          },
+          {
+            "LEFT_ID": "verb_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "open_quote",
+            "RIGHT_ATTRS": {"TAG": "``"}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_61_stranded_preposition": {
+    "description": "Prepositions stranded at the end of a sentence or clause",
+    "examples": [
+      "She is the candidate that I was thinking of.",
+      "She is the candidate that I was thinking of, before the meeting.",
+      "She is the candidate that I was thinking of---before the meeting.",
+      "I don't know who she laughed at."
+    ],
+    "counterexamples": [
+      "Let's meet face-to-face."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": "IN", "DEP": "prep"},
+          {"POS": "PUNCT", "TAG": {"IN": [".", ",", ":"]}}
+        ]]
+      }
+    }
+  },
+
+  "f_62_split_infinitive": {
+    "description": "Split infinitives",
+    "comment": "Biber's definition is *to* + ADV + (ADV) + VB, allowing only one or two intervening adverbs. We use the dependency structure to allow any number of intervening words.",
+    "examples": [
+      "He wants to definitively show the result.",
+      "I aim to boldly go where no man has gone before.",
+      "I aim to boldly and rapidly go where no man has gone before."
+    ],
+    "counterexamples": [
+      "He wants to show the result."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "verb_anchor",
+            "RIGHT_ATTRS": {"TAG": "VB"}
+          },
+          {
+            "LEFT_ID": "verb_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "to",
+            "RIGHT_ATTRS": {
+              "TAG": "TO", "DEP": "aux"
+            }
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_63_split_auxiliary": {
+    "description": "Split auxiliaries",
+    "comment": "Biber's definition is AUX + ADV + (ADV) + VB, allowing only one or two intervening adverbs. We use the dependency structure to allow any number of intervening words, including at least one adverb.",
+    "examples": [
+      "They are objectively shown to be split.",
+      "They are objectively and readily shown to be split.",
+      "I have already written the example.",
+      "The result cannot always be anticipated.",
+      "I would actually drive.",
+      "I can't ever imagine arguing with Jill.",
+      "They have not yet developed cancer."
+    ],
+    "counterexamples": [
+      "They are shown to be split.",
+      "I don't mind.",
+      "Don't stop.",
+      "I've been kidnapped."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "verb_anchor",
+            "RIGHT_ATTRS": {"POS": "VERB"}
+          },
+          {
+            "LEFT_ID": "verb_anchor",
+            "REL_OP": ">",
+            "RIGHT_ID": "auxiliary",
+            "RIGHT_ATTRS": {"POS": "AUX",
+                            "DEP": {"IN": ["aux", "auxpass"]}}
+          }
+        ]]
+      }
+    }
+  },
+
+  "f_64_phrasal_coordination": {
+    "description": "Phrases joined with coordinating conjunctions",
+    "comment": "TODO This matches any coordinating conjunction, but Biber himself explicitly matches *and* only. Limit, or expand?",
+    "examples": [
+      "I want ducks and drakes.",
+      "Swans are white and angry.",
+      "The cat likes to run and jump.",
+      "The cat struck silently and swiftly."
+    ],
+    "counterexamples": [
+      "She wrote the example, and then she tested it.",
+      "I came and I saw."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [
+          [
+            {"POS": "NOUN"},
+            {"TAG": "CC"},
+            {"POS": "NOUN"}
+          ],
+          [
+            {"POS": "VERB"},
+            {"TAG": "CC"},
+            {"POS": "VERB"}
+          ],
+          [
+            {"POS": "ADJ"},
+            {"TAG": "CC"},
+            {"POS": "ADJ"}
+          ],
+          [
+            {"POS": "ADV"},
+            {"TAG": "CC"},
+            {"POS": "ADV"}
+          ]
+        ]
+      }
+    }
+  },
+
+  "f_65_clausal_coordination": {
+    "description": "Independent clause coordination with *and*",
+    "comment": "TODO This actually also matches *or* and other CC, just like pseudobibeR and pybiber, but Biber himself explicitly matches *and*. Limit to *and*?",
+    "examples": [
+      "She wrote the example, and then she tested it.",
+      "I came and I saw."
+    ],
+    "counterexamples": [
+      "I want ducks and drakes."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"TAG": "CC",
+           "DEP": {"NOT_IN": ["ROOT"]}},
+          {"OP": "{,2}"},
+          {"DEP": "nsubj"}
+        ]]
+      }
+    }
+  },
+
+  "f_66_neg_synthetic": {
+    "description": "Synthetic negation",
+    "comment": "Negation using *no*, *neither*, or *nor*.",
+    "examples": [
+      "No answer is good enough for Jones.",
+      "No better answer is available.",
+      "Neither answer is satisfactory.",
+      "No Work, No School, No Shopping, No Banking, No Housework, No Compliance."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [
+          [
+            {"LOWER": "no"},
+            {"POS": {"IN": ["NOUN", "PROPN"]}}
+          ],
+          [
+            {"LOWER": "no"},
+            {"POS": "ADJ"}
+          ],
+          [
+            {"LOWER": "neither"}
+          ],
+          [
+            {"LOWER": "nor"}
+          ]
+        ]
+      }
+    }
+  },
+
+  "f_67_neg_analytic": {
+    "description": "Analytic negation",
+    "comment": "Negation using *not* or contractions thereof.",
+    "examples": [
+      "That is not good enough.",
+      "That isn't good enough."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [
+          [
+            {"LOWER": "not"}
+          ],
+          [
+            {"LOWER": {"IN": ["n't", "n’t"]}}
+          ]
+        ]
+      }
     }
   }
 }

@@ -137,16 +137,16 @@ def test_generic_matcher_visualization(nlp_symbols, tmp_path):
 def test_custom_dict_rules():
     nlp = spacy.load(MODEL, disable=["ner"])
     custom_rules = {
-        "Matcher": {
-            "custom_fox": {
-                "description": "Matches fox",
-                "rules": [[{"LOWER": "fox"}]],
-                "examples": ["fox"],
+        "custom_fox": {
+            "description": "Matches fox",
+            "examples": ["fox"],
+            "subrules": {
+                "matcher": {
+                    "type": "Matcher",
+                    "rules": [[{"LOWER": "fox"}]],
+                }
             }
-        },
-        "DependencyMatcher": {},
-        "PhraseMatcher": {},
-        "Derived": {},
+        }
     }
     nlp.add_pipe("matcherator_generic", config={"rules": custom_rules})
     doc = nlp("A brown fox ran.")

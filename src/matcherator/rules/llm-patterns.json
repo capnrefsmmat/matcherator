@@ -1,436 +1,484 @@
 {
-  "Matcher": {
-    "almost_hedge": {
-      "description": "Hedging by using 'almost'",
-      "comment": "From sneak's list",
-      "examples": [
-        "This is almost certainly an example of LLM writing.",
-        "Almost nobody formats lists this way when writing by hand."
-      ],
-      "rules": [[
-        {
-          "LEMMA": "almost"
-        }
-      ]]
-    },
-
-    "contradictory_sentence_pair": {
-      "description": "Pair of sentences where first states a contradiction and second replaces it",
-      "examples": [
-        "That wasn't style. That was software.",
-        "It didn't feel like a real style. It felt like something helped make it.",
-        "It's not human. It's machine-generated mimicry."
-      ],
-      "rules": [[
-        {"POS": "PRON", "DEP": "nsubj"},
-        {"POS": {"IN": ["AUX", "VERB"]}},
-        {"DEP": "neg"},
-        {"OP": "*"},
-        {"IS_SENT_START": true, "POS": "PRON", "DEP": "nsubj"},
-        {"POS": {"IN": ["AUX", "VERB"]}},
-        {"DEP": "neg", "OP": "!"}
-      ]]
-    },
-
-    "leading_adv_mod": {
-      "description": "Sentence-initial adverbial modifier",
-      "examples": [
-        "Crucially, we programmatically verified all assumptions.",
-        "Critically, attitudes about policing are the strongest predictors of training success."
-      ],
-      "rules": [[
-        {"POS": "ADV", "DEP": "advmod", "IS_SENT_START": true},
-        {"IS_PUNCT": true}
-      ]]
-    },
-
-    "non_verb_roots": {
-      "description": "Sentences whose roots are not verbs",
-      "examples": [
-        "The way you strip land.",
-        "Just something to pick from.",
-        "Just enough to stop pretending she didn't.",
-        "Evenings."
-      ],
-      "rules": [[
-        {"POS": {"NOT_IN": ["VERB"]}, "DEP": "ROOT"}
-      ]]
+  "almost_hedge": {
+    "description": "Hedging by using 'almost'",
+    "comment": "From sneak's list",
+    "examples": [
+      "This is almost certainly an example of LLM writing.",
+      "Almost nobody formats lists this way when writing by hand."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {
+            "LEMMA": "almost"
+          }
+        ]]
+      }
     }
   },
 
-  "DependencyMatcher": {
-    "rule_of_three": {
-      "description": "Rule of three (parallel lists)",
-      "examples": [
-        "The Amaze Conference brings together global SEO professionals, experts, and growth hackers to discuss the latest trends in digital marketing.",
-        "The event features keynote sessions, panel discussions, and networking opportunities."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "first_noun",
-          "RIGHT_ATTRS": {"POS": "NOUN"}
-        },
-        {
-          "LEFT_ID": "first_noun",
-          "REL_OP": ">",
-          "RIGHT_ID": "second_noun",
-          "RIGHT_ATTRS": {
-            "POS": "NOUN",
-            "DEP": "conj"
-          }
-        },
-        {
-          "LEFT_ID": "second_noun",
-          "REL_OP": ">",
-          "RIGHT_ID": "third_noun",
-          "RIGHT_ATTRS": {
-            "POS": "NOUN",
-            "DEP": "conj"
-          }
-        },
-        {
-          "LEFT_ID": "second_noun",
-          "REL_OP": ">",
-          "RIGHT_ID": "cc",
-          "RIGHT_ATTRS": {"DEP": "cc"}
-        }
-      ]]
-    },
-
-    "contradictory_be_clausal_complement": {
-      "description": "Clausal complement with *be* main verb that contradicts the main clause",
-      "examples": [
-        "It's not bold --- it's backwards.",
-        "It's not bold---it's backwards.",
-        "It's not delivery---it's DiGiorno!",
-        "It's not just a tool—it's a paradigm shift.",
-        "This isn't about technology—it's about trust.",
-        "It's not just about the beat riding under the vocals; it's part of the aggression and atmosphere.",
-        "This ain't bludgeoning — it's surgical teardown of a weak argument hiding behind fake neutrality."
-      ],
-      "comment": "Subtype of 'negative parallelisms' from Wikipedia and tropes.fyi; includes the 'em-dash pivot' by sneak.",
-      "rules": [
-        [
-          {
-            "RIGHT_ID": "be_main_verb",
-            "RIGHT_ATTRS": {
-              "LEMMA": "be"
-            }
-          },
-          {
-            "LEFT_ID": "be_main_verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "be_complement",
-            "RIGHT_ATTRS": {
-              "DEP": "ccomp",
-              "LEMMA": {"IN": ["be", "ai"]}
-            }
-          },
-          {
-            "LEFT_ID": "be_complement",
-            "REL_OP": ">",
-            "RIGHT_ID": "negation",
-            "RIGHT_ATTRS": {
-              "DEP": "neg"
-            }
-          }
-        ],
-        [
-          {
-            "RIGHT_ID": "be_main_verb",
-            "RIGHT_ATTRS": {
-              "LEMMA": "be"
-            }
-          },
-          {
-            "LEFT_ID": "be_main_verb",
-            "REL_OP": ">",
-            "RIGHT_ID": "gerund",
-            "RIGHT_ATTRS": {
-              "DEP": "ccomp",
-              "TAG": "VBG"
-            }
-          },
-          {
-            "LEFT_ID": "gerund",
-            "REL_OP": ">",
-            "RIGHT_ID": "be_complement",
-            "RIGHT_ATTRS": {
-              "DEP": "aux",
-              "LEMMA": {"IN": ["be", "ai"]}
-            }
-          },
-          {
-            "LEFT_ID": "gerund",
-            "REL_OP": ">",
-            "RIGHT_ID": "negation",
-            "RIGHT_ATTRS": {
-              "DEP": "neg"
-            }
-          }
-        ]
-      ]
-    },
-
-    "contradictory_aux_clausal_complement": {
-      "description": "Clausal complement with auxiliary that contradicts the main clause",
-      "examples": [
-        "At that moment, you won't care about the view of Pittsburgh; you'll only care about whether Larry Wasserman is going to invoke a Concentration Inequality that breaks your spirit.",
-        "The issue here isn't just sourcing---it's framing."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "main_verb",
-          "RIGHT_ATTRS": {"POS": "VERB"}
-        },
-        {
-          "LEFT_ID": "main_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "main_auxiliary",
-          "RIGHT_ATTRS": {"POS": "AUX"}
-        },
-        {
-          "LEFT_ID": "main_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "complement_verb",
-          "RIGHT_ATTRS": {
-            "POS": "VERB",
-            "DEP": "ccomp"
-          }
-        },
-        {
-          "LEFT_ID": "complement_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "negation",
-          "RIGHT_ATTRS": {"DEP": "neg"}
-        },
-        {
-          "LEFT_ID": "complement_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "complement_auxiliary",
-          "RIGHT_ATTRS": {"POS": "AUX"}
-        }
-      ]]
-    },
-
-    "contradictory_be_conjunction": {
-      "description": "Clause with *be* main verb, contradicted by conjunction",
-      "examples": [
-        "Through this lens, Kusama’s self-portrait is not a mirror but a portal.",
-        "I’ve just honed in on the pattern - the abrupt shift between complex vocabulary and plain clichés isn’t a stylistic choice, but the tell-tale signature of an algorithm."
-      ],
-      "rules": [
-        [
-          {
-            "RIGHT_ID": "root_be",
-            "RIGHT_ATTRS": {
-              "POS": {"IN": ["VERB", "AUX"]}
-            }
-          },
-          {
-            "LEFT_ID": "root_be",
-            "REL_OP": ">",
-            "RIGHT_ID": "negation",
-            "RIGHT_ATTRS": {
-              "DEP": "neg"
-            }
-          },
-          {
-            "LEFT_ID": "root_be",
-            "REL_OP": ">",
-            "RIGHT_ID": "attribute",
-            "RIGHT_ATTRS": {
-              "DEP": "attr"
-            }
-          },
-          {
-            "LEFT_ID": "root_be",
-            "REL_OP": ">",
-            "RIGHT_ID": "conjunction",
-            "RIGHT_ATTRS": {
-              "DEP": "cc",
-              "LEMMA": "but"
-            }
-          }
-        ],
-        [
-          {
-            "RIGHT_ID": "root_be",
-            "RIGHT_ATTRS": {
-              "LEMMA": "be"
-            }
-          },
-          {
-            "LEFT_ID": "root_be",
-            "REL_OP": ">",
-            "RIGHT_ID": "negation",
-            "RIGHT_ATTRS": {
-              "DEP": "neg"
-            }
-          },
-          {
-            "LEFT_ID": "root_be",
-            "REL_OP": ">",
-            "RIGHT_ID": "attribute",
-            "RIGHT_ATTRS": {
-              "DEP": "attr"
-            }
-          },
-          {
-            "LEFT_ID": "attribute",
-            "REL_OP": ">",
-            "RIGHT_ID": "conjunction",
-            "RIGHT_ATTRS": {
-              "DEP": "cc",
-              "LEMMA": "but"
-            }
-          }
-        ]
-      ]
-    },
-
-    "copula": {
-      "description": "Copula (linking subject to complement with *be*)",
-      "comment": "Wikipedia's 'Signs of AI Writing' notes LLMs avoid copulas, prefer fancier forms",
-      "examples": [
-        "The sky is blue.",
-        "It was not being cooperative.",
-        "Mary and John are my friends.",
-        "The birds and the beasts were there.",
-        "Are you happy?"
-      ],
-      "counterexamples": [
-        "The man was killed.",
-        "It is raining."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "subject",
-          "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
-        },
-        {
-          "LEFT_ID": "subject",
-          "REL_OP": "<",
-          "RIGHT_ID": "be",
-          "RIGHT_ATTRS": {"POS": "AUX", "LEMMA": "be"}
-        },
-        {
-          "LEFT_ID": "be",
-          "REL_OP": ">",
-          "RIGHT_ID": "complement",
-          "RIGHT_ATTRS": {"DEP": {"IN": ["acomp", "attr", "advmod"]}}
-        }
-      ]]
-    },
-
-    "phrasal_verbs": {
-      "description": "Phrasal verbs",
-      "examples": [
-        "The plane took off.",
-        "I give up.",
-        "She took her coat off.",
-        "He shut the computer down."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "verb",
-          "RIGHT_ATTRS": {"POS": "VERB"}
-        },
-        {
-          "LEFT_ID": "verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "particle",
-          "RIGHT_ATTRS": {"DEP": "prt"}
-        }
-      ]]
-    },
-
-    "private_verb_personal": {
-      "description": "Private verbs with a person or pronoun as subject",
-      "examples": [
-        "I think it's a good idea.",
-        "Steve accepts the conclusion.",
-        "You anticipate a problem."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "private_verb",
-          "RIGHT_ATTRS": {
-            "POS": "VERB",
-            "LEMMA": {"IN": [
-              "accept", "anticipate", "ascertain", "assume", "believe", "calculate",
-              "check", "conclude", "conjecture", "consider", "decide", "deduce",
-              "deem", "demonstrate", "determine", "discern", "discover", "doubt",
-              "dream", "ensure", "establish", "estimate", "expect", "fancy", "fear",
-              "feel", "find", "foresee", "forget", "gather", "guess", "hear",
-              "hold", "hope", "imagine", "imply", "indicate", "infer", "insure",
-              "judge", "know", "learn", "mean", "note", "notice", "observe",
-              "perceive", "presume", "presuppose", "pretend", "prove", "realize",
-              "realise",
-              "reason", "recall", "reckon", "recognize", "reflect", "remember",
-              "reveal", "see", "sense", "show", "signify", "suppose", "suspect",
-              "think", "understand"
-            ]}
-          }
-        },
-        {
-          "LEFT_ID": "private_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "subject",
-          "RIGHT_ATTRS": {
-            "DEP": "nsubj",
-            "POS": {"IN": ["PROPN", "PRON"]}
-          }
-        }
-      ]]
-    },
-
-    "private_verb_impersonal": {
-      "description": "Private verbs attributed to an entity, not a person",
-      "examples": [
-        "The government thinks it's a good idea.",
-        "Many experts believe the conclusion.",
-        "Modern researchers understand it to be an illusion."
-      ],
-      "rules": [[
-        {
-          "RIGHT_ID": "private_verb",
-          "RIGHT_ATTRS": {
-            "POS": "VERB",
-            "LEMMA": {"IN": [
-              "accept", "anticipate", "ascertain", "assume", "believe", "calculate",
-              "check", "conclude", "conjecture", "consider", "decide", "deduce",
-              "deem", "demonstrate", "determine", "discern", "discover", "doubt",
-              "dream", "ensure", "establish", "estimate", "expect", "fancy", "fear",
-              "feel", "find", "foresee", "forget", "gather", "guess", "hear",
-              "hold", "hope", "imagine", "imply", "indicate", "infer", "insure",
-              "judge", "know", "learn", "mean", "note", "notice", "observe",
-              "perceive", "presume", "presuppose", "pretend", "prove", "realize",
-              "realise",
-              "reason", "recall", "reckon", "recognize", "reflect", "remember",
-              "reveal", "see", "sense", "show", "signify", "suppose", "suspect",
-              "think", "understand"
-            ]}
-          }
-        },
-        {
-          "LEFT_ID": "private_verb",
-          "REL_OP": ">",
-          "RIGHT_ID": "subject",
-          "RIGHT_ATTRS": {
-            "DEP": "nsubj",
-            "POS": "NOUN"
-          }
-        }
-      ]]
+  "contradictory_sentence_pair": {
+    "description": "Pair of sentences where first states a contradiction and second replaces it",
+    "examples": [
+      "That wasn't style. That was software.",
+      "It didn't feel like a real style. It felt like something helped make it.",
+      "It's not human. It's machine-generated mimicry."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"POS": "PRON", "DEP": "nsubj"},
+          {"POS": {"IN": ["AUX", "VERB"]}},
+          {"DEP": "neg"},
+          {"OP": "*"},
+          {"IS_SENT_START": true, "POS": "PRON", "DEP": "nsubj"},
+          {"POS": {"IN": ["AUX", "VERB"]}},
+          {"DEP": "neg", "OP": "!"}
+        ]]
+      }
     }
   },
 
-  "PhraseMatcher": {
-
+  "leading_adv_mod": {
+    "description": "Sentence-initial adverbial modifier",
+    "examples": [
+      "Crucially, we programmatically verified all assumptions.",
+      "Critically, attitudes about policing are the strongest predictors of training success."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"POS": "ADV", "DEP": "advmod", "IS_SENT_START": true},
+          {"IS_PUNCT": true}
+        ]]
+      }
+    }
   },
 
-  "Derived": {
+  "non_verb_roots": {
+    "description": "Sentences whose roots are not verbs",
+    "examples": [
+      "The way you strip land.",
+      "Just something to pick from.",
+      "Just enough to stop pretending she didn't.",
+      "Evenings."
+    ],
+    "subrules": {
+      "matcher": {
+        "type": "Matcher",
+        "rules": [[
+          {"POS": {"NOT_IN": ["VERB"]}, "DEP": "ROOT"}
+        ]]
+      }
+    }
+  },
 
+  "rule_of_three": {
+    "description": "Rule of three (parallel lists)",
+    "examples": [
+      "The Amaze Conference brings together global SEO professionals, experts, and growth hackers to discuss the latest trends in digital marketing.",
+      "The event features keynote sessions, panel discussions, and networking opportunities."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "first_noun",
+            "RIGHT_ATTRS": {"POS": "NOUN"}
+          },
+          {
+            "LEFT_ID": "first_noun",
+            "REL_OP": ">",
+            "RIGHT_ID": "second_noun",
+            "RIGHT_ATTRS": {
+              "POS": "NOUN",
+              "DEP": "conj"
+            }
+          },
+          {
+            "LEFT_ID": "second_noun",
+            "REL_OP": ">",
+            "RIGHT_ID": "third_noun",
+            "RIGHT_ATTRS": {
+              "POS": "NOUN",
+              "DEP": "conj"
+            }
+          },
+          {
+            "LEFT_ID": "second_noun",
+            "REL_OP": ">",
+            "RIGHT_ID": "cc",
+            "RIGHT_ATTRS": {"DEP": "cc"}
+          }
+        ]]
+      }
+    }
+  },
+
+  "contradictory_be_clausal_complement": {
+    "description": "Clausal complement with *be* main verb that contradicts the main clause",
+    "comment": "Subtype of 'negative parallelisms' from Wikipedia and tropes.fyi; includes the 'em-dash pivot' by sneak.",
+    "examples": [
+      "It's not bold --- it's backwards.",
+      "It's not bold---it's backwards.",
+      "It's not delivery---it's DiGiorno!",
+      "It's not just a tool—it's a paradigm shift.",
+      "This isn't about technology—it's about trust.",
+      "It's not just about the beat riding under the vocals; it's part of the aggression and atmosphere.",
+      "This ain't bludgeoning — it's surgical teardown of a weak argument hiding behind fake neutrality."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [
+          [
+            {
+              "RIGHT_ID": "be_main_verb",
+              "RIGHT_ATTRS": {
+                "LEMMA": "be"
+              }
+            },
+            {
+              "LEFT_ID": "be_main_verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "be_complement",
+              "RIGHT_ATTRS": {
+                "DEP": "ccomp",
+                "LEMMA": {"IN": ["be", "ai"]}
+              }
+            },
+            {
+              "LEFT_ID": "be_complement",
+              "REL_OP": ">",
+              "RIGHT_ID": "negation",
+              "RIGHT_ATTRS": {
+                "DEP": "neg"
+              }
+            }
+          ],
+          [
+            {
+              "RIGHT_ID": "be_main_verb",
+              "RIGHT_ATTRS": {
+                "LEMMA": "be"
+              }
+            },
+            {
+              "LEFT_ID": "be_main_verb",
+              "REL_OP": ">",
+              "RIGHT_ID": "gerund",
+              "RIGHT_ATTRS": {
+                "DEP": "ccomp",
+                "TAG": "VBG"
+              }
+            },
+            {
+              "LEFT_ID": "gerund",
+              "REL_OP": ">",
+              "RIGHT_ID": "be_complement",
+              "RIGHT_ATTRS": {
+                "DEP": "aux",
+                "LEMMA": {"IN": ["be", "ai"]}
+              }
+            },
+            {
+              "LEFT_ID": "gerund",
+              "REL_OP": ">",
+              "RIGHT_ID": "negation",
+              "RIGHT_ATTRS": {
+                "DEP": "neg"
+              }
+            }
+          ]
+        ]
+      }
+    }
+  },
+
+  "contradictory_aux_clausal_complement": {
+    "description": "Clausal complement with auxiliary that contradicts the main clause",
+    "examples": [
+      "At that moment, you won't care about the view of Pittsburgh; you'll only care about whether Larry Wasserman is going to invoke a Concentration Inequality that breaks your spirit.",
+      "The issue here isn't just sourcing---it's framing."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "main_verb",
+            "RIGHT_ATTRS": {"POS": "VERB"}
+          },
+          {
+            "LEFT_ID": "main_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "main_auxiliary",
+            "RIGHT_ATTRS": {"POS": "AUX"}
+          },
+          {
+            "LEFT_ID": "main_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "complement_verb",
+            "RIGHT_ATTRS": {
+              "POS": "VERB",
+              "DEP": "ccomp"
+            }
+          },
+          {
+            "LEFT_ID": "complement_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "negation",
+            "RIGHT_ATTRS": {"DEP": "neg"}
+          },
+          {
+            "LEFT_ID": "complement_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "complement_auxiliary",
+            "RIGHT_ATTRS": {"POS": "AUX"}
+          }
+        ]]
+      }
+    }
+  },
+
+  "contradictory_be_conjunction": {
+    "description": "Clause with *be* main verb, contradicted by conjunction",
+    "examples": [
+      "Through this lens, Kusama’s self-portrait is not a mirror but a portal.",
+      "I’ve just honed in on the pattern - the abrupt shift between complex vocabulary and plain clichés isn’t a stylistic choice, but the tell-tale signature of an algorithm."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [
+          [
+            {
+              "RIGHT_ID": "root_be",
+              "RIGHT_ATTRS": {
+                "POS": {"IN": ["VERB", "AUX"]}
+              }
+            },
+            {
+              "LEFT_ID": "root_be",
+              "REL_OP": ">",
+              "RIGHT_ID": "negation",
+              "RIGHT_ATTRS": {
+                "DEP": "neg"
+              }
+            },
+            {
+              "LEFT_ID": "root_be",
+              "REL_OP": ">",
+              "RIGHT_ID": "attribute",
+              "RIGHT_ATTRS": {
+                "DEP": "attr"
+              }
+            },
+            {
+              "LEFT_ID": "root_be",
+              "REL_OP": ">",
+              "RIGHT_ID": "conjunction",
+              "RIGHT_ATTRS": {
+                "DEP": "cc",
+                "LEMMA": "but"
+              }
+            }
+          ],
+          [
+            {
+              "RIGHT_ID": "root_be",
+              "RIGHT_ATTRS": {
+                "LEMMA": "be"
+              }
+            },
+            {
+              "LEFT_ID": "root_be",
+              "REL_OP": ">",
+              "RIGHT_ID": "negation",
+              "RIGHT_ATTRS": {
+                "DEP": "neg"
+              }
+            },
+            {
+              "LEFT_ID": "root_be",
+              "REL_OP": ">",
+              "RIGHT_ID": "attribute",
+              "RIGHT_ATTRS": {
+                "DEP": "attr"
+              }
+            },
+            {
+              "LEFT_ID": "attribute",
+              "REL_OP": ">",
+              "RIGHT_ID": "conjunction",
+              "RIGHT_ATTRS": {
+                "DEP": "cc",
+                "LEMMA": "but"
+              }
+            }
+          ]
+        ]
+      }
+    }
+  },
+
+  "copula": {
+    "description": "Copula (linking subject to complement with *be*)",
+    "comment": "Wikipedia's 'Signs of AI Writing' notes LLMs avoid copulas, prefer fancier forms",
+    "examples": [
+      "The sky is blue.",
+      "It was not being cooperative.",
+      "Mary and John are my friends.",
+      "The birds and the beasts were there.",
+      "Are you happy?"
+    ],
+    "counterexamples": [
+      "The man was killed.",
+      "It is raining."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "subject",
+            "RIGHT_ATTRS": {"POS": {"IN": ["NOUN", "PROPN", "PRON"]}}
+          },
+          {
+            "LEFT_ID": "subject",
+            "REL_OP": "<",
+            "RIGHT_ID": "be",
+            "RIGHT_ATTRS": {"POS": "AUX", "LEMMA": "be"}
+          },
+          {
+            "LEFT_ID": "be",
+            "REL_OP": ">",
+            "RIGHT_ID": "complement",
+            "RIGHT_ATTRS": {"DEP": {"IN": ["acomp", "attr", "advmod"]}}
+          }
+        ]]
+      }
+    }
+  },
+
+  "phrasal_verbs": {
+    "description": "Phrasal verbs",
+    "examples": [
+      "The plane took off.",
+      "I give up.",
+      "She took her coat off.",
+      "He shut the computer down."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "verb",
+            "RIGHT_ATTRS": {"POS": "VERB"}
+          },
+          {
+            "LEFT_ID": "verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "particle",
+            "RIGHT_ATTRS": {"DEP": "prt"}
+          }
+        ]]
+      }
+    }
+  },
+
+  "private_verb_personal": {
+    "description": "Private verbs with a person or pronoun as subject",
+    "examples": [
+      "I think it's a good idea.",
+      "Steve accepts the conclusion.",
+      "You anticipate a problem."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "private_verb",
+            "RIGHT_ATTRS": {
+              "POS": "VERB",
+              "LEMMA": {"IN": [
+                "accept", "anticipate", "ascertain", "assume", "believe", "calculate",
+                "check", "conclude", "conjecture", "consider", "decide", "deduce",
+                "deem", "demonstrate", "determine", "discern", "discover", "doubt",
+                "dream", "ensure", "establish", "estimate", "expect", "fancy", "fear",
+                "feel", "find", "foresee", "forget", "gather", "guess", "hear",
+                "hold", "hope", "imagine", "imply", "indicate", "infer", "insure",
+                "judge", "know", "learn", "mean", "note", "notice", "observe",
+                "perceive", "presume", "presuppose", "pretend", "prove", "realize",
+                "realise",
+                "reason", "recall", "reckon", "recognize", "reflect", "remember",
+                "reveal", "see", "sense", "show", "signify", "suppose", "suspect",
+                "think", "understand"
+              ]}
+            }
+          },
+          {
+            "LEFT_ID": "private_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "subject",
+            "RIGHT_ATTRS": {
+              "DEP": "nsubj",
+              "POS": {"IN": ["PROPN", "PRON"]}
+            }
+          }
+        ]]
+      }
+    }
+  },
+
+  "private_verb_impersonal": {
+    "description": "Private verbs attributed to an entity, not a person",
+    "examples": [
+      "The government thinks it's a good idea.",
+      "Many experts believe the conclusion.",
+      "Modern researchers understand it to be an illusion."
+    ],
+    "subrules": {
+      "dependency": {
+        "type": "DependencyMatcher",
+        "rules": [[
+          {
+            "RIGHT_ID": "private_verb",
+            "RIGHT_ATTRS": {
+              "POS": "VERB",
+              "LEMMA": {"IN": [
+                "accept", "anticipate", "ascertain", "assume", "believe", "calculate",
+                "check", "conclude", "conjecture", "consider", "decide", "deduce",
+                "deem", "demonstrate", "determine", "discern", "discover", "doubt",
+                "dream", "ensure", "establish", "estimate", "expect", "fancy", "fear",
+                "feel", "find", "foresee", "forget", "gather", "guess", "hear",
+                "hold", "hope", "imagine", "imply", "indicate", "infer", "insure",
+                "judge", "know", "learn", "mean", "note", "notice", "observe",
+                "perceive", "presume", "presuppose", "pretend", "prove", "realize",
+                "realise",
+                "reason", "recall", "reckon", "recognize", "reflect", "remember",
+                "reveal", "see", "sense", "show", "signify", "suppose", "suspect",
+                "think", "understand"
+              ]}
+            }
+          },
+          {
+            "LEFT_ID": "private_verb",
+            "REL_OP": ">",
+            "RIGHT_ID": "subject",
+            "RIGHT_ATTRS": {
+              "DEP": "nsubj",
+              "POS": "NOUN"
+            }
+          }
+        ]]
+      }
+    }
   }
 }

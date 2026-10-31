@@ -3,7 +3,6 @@
 import pybiber as pb
 
 import importlib.resources
-import itertools
 import json
 import pytest
 
@@ -51,9 +50,13 @@ def test_examples(subtests):
     processor = pb.CorpusProcessor()
     nlp = spacy.load("en_core_web_sm")
 
-    for rulename, rule in itertools.chain(rules["Matcher"].items(),
-                                          rules["DependencyMatcher"].items(),
-                                          rules["PhraseMatcher"].items()):
+    for rulename, rule in rules.items():
+        # Examples of non-derived subrules should match the feature as a whole
+        parts = [rule] + [s for s in rule.get("subrules", {}).values()
+                          if not s.get("derived", False)]
+        examples = [ex for p in parts for ex in p.get("examples", [])]
+        counterexamples = [ex for p in parts for ex in p.get("counterexamples", [])]
+
         with subtests.test(f"Matcher: {rulename}"):
-            examples_match(processor, nlp, rule.get("examples", []), rulename)
-            counterexamples_match(processor, nlp, rule.get("counterexamples", []), rulename)
+            examples_match(processor, nlp, examples, rulename)
+            counterexamples_match(processor, nlp, counterexamples, rulename)

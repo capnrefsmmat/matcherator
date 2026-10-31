@@ -12,6 +12,58 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from spacy.tokens import Doc
 
 
+def _ruleset_metadata(rules_json: Dict[str, Any], ruleset_name: str) -> Dict[str, Dict[str, Any]]:
+    """Collect display metadata for each feature in a ruleset.
+
+    Derived subrules, whose matches are recorded under their own
+    ``feature:subrule`` label, get their own entries marked as derived.
+    """
+    metadata: Dict[str, Dict[str, Any]] = {}
+
+    for feature_name, feature in rules_json.items():
+        subrules = feature.get("subrules", {})
+        matcher_types = {s.get("type") for s in subrules.values()
+                         if not s.get("derived", False)}
+
+        if len(matcher_types) == 1:
+            matcher_type = matcher_types.pop()
+        elif matcher_types:
+            matcher_type = "Mixed"
+        else:
+            matcher_type = "Derived"
+
+        metadata[feature_name] = {
+            "name": feature_name,
+            "matcher_type": matcher_type,
+            "ruleset": ruleset_name,
+            "description": feature.get("description", ""),
+            "comment": feature.get("comment", ""),
+            "examples": feature.get("examples", []),
+            "counterexamples": feature.get("counterexamples", []),
+            "rules": [{"name": name, **s} for name, s in subrules.items()],
+            "derived": False,
+        }
+
+        for subrule_name, subrule in subrules.items():
+            if not subrule.get("derived", False):
+                continue
+
+            label = f"{feature_name}:{subrule_name}"
+            metadata[label] = {
+                "name": label,
+                "matcher_type": subrule.get("type", ""),
+                "ruleset": ruleset_name,
+                "description": subrule.get("description", ""),
+                "comment": subrule.get("comment", ""),
+                "examples": subrule.get("examples", []),
+                "counterexamples": subrule.get("counterexamples", []),
+                "rules": subrule.get("rules", []),
+                "derived": True,
+            }
+
+    return metadata
+
+
 def _load_builtin_rules() -> Dict[str, Dict[str, Any]]:
     """Load all rules from built-in rulesets in matcherator.rules."""
     all_rules: Dict[str, Dict[str, Any]] = {}
@@ -24,21 +76,10 @@ def _load_builtin_rules() -> Dict[str, Dict[str, Any]]:
                 rules_json = json.loads(rule_text)
                 ruleset_name = item.name
 
-                for matcher_type in ("Matcher", "DependencyMatcher", "PhraseMatcher", "Derived"):
-                    for rule_name, rule_def in rules_json.get(matcher_type, {}).items():
-                        # Preserve existing if already loaded, but record metadata
-                        if rule_name not in all_rules:
-                            all_rules[rule_name] = {
-                                "name": rule_name,
-                                "matcher_type": matcher_type,
-                                "ruleset": ruleset_name,
-                                "description": rule_def.get("description", ""),
-                                "comment": rule_def.get("comment", ""),
-                                "examples": rule_def.get("examples", []),
-                                "counterexamples": rule_def.get("counterexamples", []),
-                                "rules": rule_def.get("rules", []),
-                                "derived": rule_def.get("derived", matcher_type == "Derived"),
-                            }
+                for rule_name, rule_meta in _ruleset_metadata(rules_json, ruleset_name).items():
+                    # Preserve existing if already loaded
+                    if rule_name not in all_rules:
+                        all_rules[rule_name] = rule_meta
             except Exception:
                 continue
 
@@ -75,19 +116,7 @@ def _resolve_rules(
         else:
             continue
 
-        for matcher_type in ("Matcher", "DependencyMatcher", "PhraseMatcher", "Derived"):
-            for rule_name, rule_def in r_dict.get(matcher_type, {}).items():
-                merged[rule_name] = {
-                    "name": rule_name,
-                    "matcher_type": matcher_type,
-                    "ruleset": ruleset_name,
-                    "description": rule_def.get("description", ""),
-                    "comment": rule_def.get("comment", ""),
-                    "examples": rule_def.get("examples", []),
-                    "counterexamples": rule_def.get("counterexamples", []),
-                    "rules": rule_def.get("rules", []),
-                    "derived": rule_def.get("derived", matcher_type == "Derived"),
-                }
+        merged.update(_ruleset_metadata(r_dict, ruleset_name))
 
     return merged
 

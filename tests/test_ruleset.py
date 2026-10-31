@@ -1,7 +1,6 @@
 """Test rule files to ensure the examples and counterexamples match correctly."""
 
 import importlib.resources
-import itertools
 import json
 import pytest
 
@@ -26,24 +25,39 @@ def check_rule_in_matches(rulename, matches, nlp):
 
     return False
 
-def check_rule_examples(nlp, rules, attr_name, subtests):
-    for rulename, rule in itertools.chain(rules["Matcher"].items(),
-                                          rules["DependencyMatcher"].items(),
-                                          rules["PhraseMatcher"].items(),
-                                          rules["Derived"].items()):
-        for example in rule.get("examples", []):
-            with subtests.test(rulename + " examples"):
-                doc = nlp(example)
+def check_examples(rule, label, get_matches, subtests):
+    for example in rule.get("examples", []):
+        with subtests.test(label + " examples"):
+            assert len(get_matches(example)[label]) > 0, \
+                f"Expected `{label}` to match `{example}`"
 
-                assert len(getattr(doc._, attr_name)[rulename]) > 0, \
-                    f"Expected `{rulename}` to match `{example}`"
+    for example in rule.get("counterexamples", []):
+        with subtests.test(label + " counterexamples"):
+            assert len(get_matches(example)[label]) == 0, \
+                f"Expected `{label}` to not match `{example}`"
 
-        for example in rule.get("counterexamples", []):
-            with subtests.test(rulename + " counterexamples"):
-                doc = nlp(example)
+def check_rule_examples(nlp, rules, pipe_name, subtests):
+    """Check examples and counterexamples for each feature and subrule.
 
-                assert len(getattr(doc._, attr_name)[rulename]) == 0, \
-                    f"Expected `{rulename}` to not match `{example}`"
+    Feature examples are checked against the feature's final matches, after any
+    post-processing. Subrule examples are checked against the matches of that
+    subrule alone, before post-processing.
+
+    """
+    pipe = nlp.get_pipe(pipe_name)
+
+    def feature_matches(text):
+        return getattr(nlp(text)._, pipe_name)
+
+    def subrule_matches(text):
+        return pipe._match(nlp(text), keep_subrules=True)
+
+    for feature_name, feature in rules.items():
+        check_examples(feature, feature_name, feature_matches, subtests)
+
+        for subrule_name, subrule in feature.get("subrules", {}).items():
+            check_examples(subrule, f"{feature_name}:{subrule_name}",
+                           subrule_matches, subtests)
 
 def test_biber(subtests):
     rules = json.loads(

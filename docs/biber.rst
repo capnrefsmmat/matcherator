@@ -49,8 +49,4 @@ Additional examples and definitions used below were drawn from:
 * Le Foll and Shakir (2023), Multi-Feature Tagger of English,
   <https://github.com/mshakirDr/MFTE>.
 
-Note that some rules show up twice under different matchers. In these cases, two
-different strategies are used to find different cases of the pattern, then
-combined when computing results.
-
 .. include:: pseudobiber-reference.rst

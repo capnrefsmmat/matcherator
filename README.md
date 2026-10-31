@@ -22,11 +22,30 @@ virtual environment first.
 
 ### Matching patterns in text
 
-Match rules are defined in JSON format in `matcherator/rules/`. Some rules
-require post-processing in Python, so we provide spaCy pipelines that have the
-necessary code already loaded.
+Match rules are defined in JSON format in `matcherator/rules/`. A feature
+contains one or more subrules, each using spaCy's `Matcher`,
+`DependencyMatcher`, or `PhraseMatcher`:
 
-For example, for Biber-style features:
+```json
+"f_49_emphatics": {
+  "description": "Emphatics",
+  "examples": ["He did do it."],
+  "subrules": {
+    "matcher": {
+      "type": "Matcher",
+      "examples": ["The horse is so big."],
+      "rules": [[{"LOWER": {"IN": ["so", "real"]}}, {"TAG": "JJ"}]]
+    },
+    "phrase": {
+      "type": "PhraseMatcher",
+      "rules": ["just", "really", "most", "more", "a lot", "for sure", "such a"]
+    }
+  }
+}
+```
+
+Some rules require post-processing in Python, so we provide spaCy pipelines that
+have the necessary code already loaded. For example, for Biber-style features:
 
 ```python
 import spacy
@@ -216,7 +235,10 @@ TODO count postnominal and prenominal modification of nouns
 
 Unit tests work with pytest. Test data is defined in the same rule files, by
 `examples` and `counterexamples` files for each rule: the rule must match the
-`examples` and must not match the `counterexamples`.
+`examples` and must not match the `counterexamples`. Examples on a feature are
+checked against the feature's final matches, after any post-processing.
+Examples on a subrule are checked against that subrule's own matches, before
+post-processing.
 
 `test/test_ruleset.py` uses these to test the matcherator matching engine and
 rule definitions.

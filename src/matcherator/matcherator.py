@@ -10,6 +10,21 @@ from spacy.tokens import Doc, Span
 from spacy.matcher import Matcher, DependencyMatcher, PhraseMatcher
 
 
+MATCHER_TYPES = ("Matcher", "DependencyMatcher", "PhraseMatcher")
+
+
+def iter_subrules(rules):
+    """Iterate over all subrules in a ruleset.
+
+    Yields ``(feature_name, subrule_name, subrule)`` tuples. Each subrule's
+    matches are labeled ``feature_name:subrule_name``.
+
+    """
+    for feature_name, feature in rules.items():
+        for subrule_name, subrule in feature.get("subrules", {}).items():
+            yield feature_name, subrule_name, subrule
+
+
 class Matcherator:
     def __init__(self, nlp, rules):
         # Set up matchers
@@ -18,61 +33,70 @@ class Matcherator:
         self.phrase_matcher = PhraseMatcher(nlp.vocab, attr="LOWER",
                                             validate=True)
 
-        for rulename, rule in rules["Matcher"].items():
-            self.matcher.add(rulename, rule["rules"], greedy="FIRST")
+        # Map each subrule label to its feature, or None if it is derived (only
+        # used to compute other features)
+        self.subrule_features = {}
 
-        for rulename, rule in rules["DependencyMatcher"].items():
-            self.dep_matcher.add(rulename, rule["rules"])
+        for feature_name, subrule_name, subrule in iter_subrules(rules):
+            label = f"{feature_name}:{subrule_name}"
+            matcher_type = subrule.get("type")
 
-        for rulename, rule in rules["PhraseMatcher"].items():
-            self.phrase_matcher.add(rulename, list(nlp.tokenizer.pipe(rule["rules"])))
+            if matcher_type == "Matcher":
+                self.matcher.add(label, subrule["rules"], greedy="FIRST")
+            elif matcher_type == "DependencyMatcher":
+                self.dep_matcher.add(label, subrule["rules"])
+            elif matcher_type == "PhraseMatcher":
+                self.phrase_matcher.add(label, list(nlp.tokenizer.pipe(subrule["rules"])))
+            else:
+                raise ValueError(f"Subrule `{label}` has unknown type `{matcher_type}`; "
+                                 f"must be one of {', '.join(MATCHER_TYPES)}")
 
-        self.features = _collect_features(rules)
+            self.subrule_features[label] = \
+                None if subrule.get("derived", False) else feature_name
+
+        self.features = set(rules.keys())
         self.nlp = nlp
 
-    def _match(self, doc):
+    def _match(self, doc, keep_subrules=False):
+        """Match all subrules against `doc`.
+
+        Returns a dictionary mapping feature names to lists of matches. Matches
+        from derived subrules are kept under their ``feature:subrule`` label, so
+        they can be used to compute other features. If ``keep_subrules`` is True,
+        matches from every subrule are also kept under their own label.
+
+        """
         # some matchers warn when there are 0 rules, so don't use them in that case
         match_matches = self.matcher(doc) if len(self.matcher) > 0 else []
         dep_matches = self.dep_matcher(doc) if len(self.dep_matcher) > 0 else []
         phrase_matches = self.phrase_matcher(doc) if len(self.phrase_matcher) > 0 else []
 
-        matches = defaultdict(list)
+        subrule_matches = defaultdict(list)
 
         # note that everything we add to doc._ must be serializable if we're
         # going to use this in a parallel pipeline, since multiprocessing has to
         # serialize the data back to the main process. Span objects are not, so
         # we have to stick to token ranges or indices.
         for match_id, start, end in match_matches:
-            matches[self.nlp.vocab.strings[match_id]].append((start, end))
+            subrule_matches[self.nlp.vocab.strings[match_id]].append((start, end))
 
         for match_id, token_ids in dep_matches:
-            matches[self.nlp.vocab.strings[match_id]].append(token_ids)
+            subrule_matches[self.nlp.vocab.strings[match_id]].append(token_ids)
 
         for match_id, start, end in phrase_matches:
-            matches[self.nlp.vocab.strings[match_id]].append((start, end))
+            subrule_matches[self.nlp.vocab.strings[match_id]].append((start, end))
+
+        matches = defaultdict(list)
+        for label, label_matches in subrule_matches.items():
+            feature_name = self.subrule_features[label]
+
+            if feature_name is None or keep_subrules:
+                matches[label].extend(label_matches)
+
+            if feature_name is not None:
+                matches[feature_name].extend(label_matches)
 
         return matches
-
-
-def _collect_features(rules):
-    """Collect all valid feature names from rules.
-
-    Some rules are used to derive others and should not be in the output; these
-    have `derived` set to True. Ignore these.
-
-    """
-
-    def collect_one(r):
-        return {
-            feature_name
-            for feature_name in r.keys()
-            if not r[feature_name].get("derived", False)
-        }
-
-    return (collect_one(rules["Matcher"]) |
-            collect_one(rules["DependencyMatcher"]) |
-            collect_one(rules["PhraseMatcher"]) |
-            collect_one(rules["Derived"]))
 
 
 def feature_counts(nlp, doc, normalize=False):

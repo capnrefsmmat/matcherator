@@ -28,34 +28,11 @@ if __name__ == "__main__":
 
     variables = {
         "ruleset_name": args.ruleset,
-        "matcher_rules": [{"name": name,
-                           "description": r["description"],
-                           "comment": r.get("comment", ""),
-                           "examples": r.get("examples", []),
-                           "counterexamples": r.get("counterexamples", [])}
-                           for name, r in rules["Matcher"].items()
-                           if not r.get("derived", False)],
-
-        "dep_matcher_rules": [{"name": name,
-                               "description": r["description"],
-                               "comment": r.get("comment", ""),
-                               "examples": r.get("examples", []),
-                               "counterexamples": r.get("counterexamples", [])}
-                              for name, r in rules["DependencyMatcher"].items()
-                              if not r.get("derived", False)],
-
-        "phrase_matcher_rules": [{"name": name,
-                                  "description": r["description"],
-                                  "comment": r.get("comment", ""),
-                                  "examples": r.get("examples", []),
-                                  "counterexamples": r.get("counterexamples", [])}
-                                 for name, r in rules["PhraseMatcher"].items()],
-
-        "derived_rules": [{"name": name,
-                           "description": r["description"],
-                           "comment": r.get("comment", ""),
-                           "examples": r.get("examples", []),
-                           "counterexamples": r.get("counterexamples", [])}
-                          for name, r in rules["Derived"].items()]
+        "features": [{"name": name,
+                      "description": r.get("description", ""),
+                      "comment": r.get("comment", ""),
+                      "examples": r.get("examples", []),
+                      "counterexamples": r.get("counterexamples", [])}
+                     for name, r in rules.items()]
     }
     print(template.render(variables))
