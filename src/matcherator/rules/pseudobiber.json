@@ -50,10 +50,26 @@
 
   "f_04_place_adverbials": {
     "description": "Place adverbials (e.g., *above*, *beside*, *outdoors*)",
-    "comment": "TODO 'She flew west at high speed' seems like a place adverbial, but 'west' is tagged NOUN with advmod dep. Should it count?",
+    "comment": "Compass directions are usually tagged as adverbs when used adverbially, but spaCy sometimes tags them as nouns or adjectives (*She flew west*). We also count them when their dependency is adverbial, except for proper nouns (*Captain West*).",
     "examples": [
       "Far downstream, you can find the delta.",
-      "I haven't found any good restaurants locally."
+      "I haven't found any good restaurants locally.",
+      "She flew west at high speed.",
+      "We drove south for an hour.",
+      "The village lies ten miles north of the city.",
+      "The birds migrate south every winter.",
+      "From Los Angeles, drive north to the town of Lancaster.",
+      "The train depot sits vacant just west of downtown."
+    ],
+    "counterexamples": [
+      "Rain is expected in the west.",
+      "The west wing of the house is closed.",
+      "They visited the south of France.",
+      "The wind blew from the east.",
+      "She lives in West Virginia.",
+      "Captain West, this is Lieutenant Smith.",
+      "The North Pole is cold.",
+      "The north side of the building gets little sun."
     ],
     "subrules": {
       "matcher": {
@@ -80,6 +96,11 @@
                "behind", "below", "beneath", "beside", "inside", "near", "nearby",
                "outside", "underneath"]}
             }
+          ],
+          [
+            {"LOWER": {"IN": ["east", "north", "south", "west"]},
+             "DEP": {"IN": ["advmod", "npadvmod"]},
+             "TAG": {"NOT_IN": ["NNP", "NNPS"]}}
           ]
         ]
       }

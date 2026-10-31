@@ -26,11 +26,27 @@
 :f_04_place_adverbials:
    Place adverbials (e.g., *above*, *beside*, *outdoors*)
 
-   TODO 'She flew west at high speed' seems like a place adverbial, but 'west' is tagged NOUN with advmod dep. Should it count?
+   Compass directions are usually tagged as adverbs when used adverbially, but spaCy sometimes tags them as nouns or adjectives (*She flew west*). We also count them when their dependency is adverbial, except for proper nouns (*Captain West*).
 
    * Far downstream, you can find the delta.
    * I haven't found any good restaurants locally.
+   * She flew west at high speed.
+   * We drove south for an hour.
+   * The village lies ten miles north of the city.
+   * The birds migrate south every winter.
+   * From Los Angeles, drive north to the town of Lancaster.
+   * The train depot sits vacant just west of downtown.
 
+   Counterexamples:
+
+   * Rain is expected in the west.
+   * The west wing of the house is closed.
+   * They visited the south of France.
+   * The wind blew from the east.
+   * She lives in West Virginia.
+   * Captain West, this is Lieutenant Smith.
+   * The North Pole is cold.
+   * The north side of the building gets little sun.
 
 :f_05_time_adverbials:
    Time adverbials (e.g., *early*, *instantly*, *soon*)
@@ -765,7 +781,7 @@
 
    Public, private, or suasive verbs with subordinator clauses with an omitted *that*. See Biber et al., 9.2.8.
 
-   The `clausal_complement` subrule matches every verb in the specified classes with a clausal complement verb, with or without *that*. Post-processing then keeps only finite clauses with a subject (including existential *there*) and removes clauses with *that* or another subordinator (*whether*, *if*), to-infinitives, *wh*-clauses (a *wh*-word between the verb and the clause's subject), quotations, and clauses whose subject or verb appears before the main verb (*He was right, I think*).
+   The ``clausal_complement`` subrule matches every verb in the specified classes with a clausal complement verb, with or without *that*. Post-processing then keeps only finite clauses with a subject (including existential *there*) and removes clauses with *that* or another subordinator (*whether*, *if*), to-infinitives, *wh*-clauses (a *wh*-word between the verb and the clause's subject), quotations, and clauses whose subject or verb appears before the main verb (*He was right, I think*).
 
    * I think he went.
    * She denies a problem occurred.
