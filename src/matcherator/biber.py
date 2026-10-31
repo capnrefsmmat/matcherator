@@ -93,53 +93,65 @@ class BiberMatcherator(Matcherator):
 
         return matches
 
-    def _filter_that_deletion(self, matches):
+    def _filter_that_deletion(self, doc, matches):
         """Produce f_60_that_deletion.
 
-        We match subordinator clauses with or without "that", and separately
-        match those with "that". "That" deletion is the clauses without.
-
-        We also match subordinator clauses where it introduces a wh-clause
-        instead. For example, "The rationale helps ensure that workers
-        understand what they should do." matches our DependencyMatcher rules.
-        Here "understand" it introduces a wh-question ("what they should do")
-        and not a clause like "that it is bad."
-
-        We also remove cases where the comp_verb or subject appear before the
-        anchor verb. These are cases like "He was right, I think" or "'It's a
-        good idea,' he said."
+        The DependencyMatcher rule matches every verb in the specified classes
+        with a clausal complement, as (verb, complement verb). "That" deletion
+        is the finite complement clauses with a subject but no "that", so we
+        remove clauses with "that" or another subordinator, to-infinitives,
+        wh-clauses, quotations, and clauses that come before the verb.
 
         """
 
-        # match structure for all of these, with variations:
-        # verb, clausal complement, subject, [extra stuff]
+        def keep(verb, comp):
+            auxiliaries = [c for c in comp.children if c.dep_ in ("aux", "auxpass")]
 
-        subord_thats = {(m[0], m[1], m[2])
-                        for m in matches["f_60_that_deletion:that"]}
-        wh_clauses = {(m[0], m[1], m[2])
-                      for m in matches["f_60_that_deletion:wh_clause"]}
-        to_infinitives = {(m[0], m[1], m[2])
-                          for m in matches["f_60_that_deletion:to_infinitive"]}
-        quotes = {(m[0], m[1], m[2])
-                  for m in matches["f_60_that_deletion:quote"]}
+            # No subject, so not a clause. Existential "there" counts, and
+            # spaCy sometimes attaches the subject to the auxiliary.
+            subjects = [c for c in comp.children
+                        if c.dep_ in ("nsubj", "nsubjpass", "expl")] + \
+                [c for a in auxiliaries for c in a.children
+                 if c.dep_ in ("nsubj", "nsubjpass", "expl")]
+            if not subjects:
+                return False
 
-        dont_match = subord_thats | wh_clauses | to_infinitives | quotes
+            # Non-finite small clause with no auxiliary: "found her mother gone"
+            if comp.tag_ in ("VBN", "VBG") and not auxiliaries:
+                return False
 
-        def check_match(m):
-            if len(m) == 3:
-                # first rule is (verb_anchor, comp_verb, subject)
-                return m[1] > m[0] and m[2] > m[0] and \
-                    (m[0], m[1], m[2]) not in dont_match
-            elif len(m) == 4:
-                # second and third rules are
-                # (verb_anchor, comp_verb, auxiliary, subject)
-                return m[1] > m[0] and m[3] > m[0] and \
-                    (m[0], m[1], m[3]) not in dont_match
+            # "That" or another subordinator is present: "I think that he
+            # went", "She asked if he was coming"
+            if any(c.dep_ == "mark" for c in comp.children):
+                return False
 
-        that_deleted = [m for m in matches["f_60_that_deletion:all"]
-                        if check_match(m)]
+            # To-infinitive, which can't take "that": "allows us to isolate"
+            if any(c.tag_ == "TO" for c in comp.children):
+                return False
 
-        matches["f_60_that_deletion"] = that_deleted
+            # Complement or subject before the verb: "He was right, I think",
+            # "'It's a good idea,' he said"
+            subject = subjects[0]
+            if comp.i < verb.i or subject.i < verb.i:
+                return False
+
+            # Wh-clause, which can't take "that": a wh-word between the verb
+            # and the clause's subject, or as the subject ("asked me what I
+            # was watching", "understood what nourished his soul")
+            if any(t.tag_ in ("WDT", "WP", "WP$", "WRB")
+                   for t in doc[verb.i + 1:min(subject.i, comp.i) + 1]):
+                return False
+
+            # Quotation: "She said, 'It's a good idea.'"
+            if any(c.tag_ == "``" for c in verb.children):
+                return False
+
+            return True
+
+        matches["f_60_that_deletion"] = [
+            m for m in matches["f_60_that_deletion"]
+            if keep(doc[m[0]], doc[m[1]])
+        ]
 
         return matches
 
@@ -315,7 +327,7 @@ class BiberMatcherator(Matcherator):
         matches = self._match(doc)
 
         matches = self._filter_passives(matches)
-        matches = self._filter_that_deletion(matches)
+        matches = self._filter_that_deletion(doc, matches)
         matches = self._filter_other_nouns(matches)
         matches = self._filter_split_infinitive(matches)
         matches = self._filter_split_auxiliary(doc, matches)

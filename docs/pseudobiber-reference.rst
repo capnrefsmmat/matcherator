@@ -435,7 +435,7 @@
 
    Relative clauses that refer to the predicate of a clause or to a whole clause or sentence, rather than just to a noun phrase. See Biber et al., 8.7.1.1.
 
-   Biber's heuristic, *which* after punctuation, also matches every non-restrictive relative clause modifying a noun, which are far more common. Distinguishing the two is difficult because spaCy usually attaches a sentence relative to the nearest noun as an ordinary relative clause, so we look for several cues: (1) spaCy attaches the clause to a verb instead of a noun (`verb_attached`, `verb_attached_xcomp`); (2) the relative clause's verb usually takes a clause as its subject, as in *which means* or *which surprised everyone* (`clausal_verb`); (3) the clause evaluates the situation, as in *which is good* or *which is a shame* (`evaluation`); (4) *which is why* (`why`); (5) a plural antecedent with a singular verb, as in *mangoes, which is disgusting* (`agreement`); (6) prepositional phrases such as *in which case* or *for which reason* (`pied_piped`).
+   Biber's heuristic, *which* after punctuation, also matches every non-restrictive relative clause modifying a noun, which are far more common. Distinguishing the two is difficult because spaCy usually attaches a sentence relative to the nearest noun as an ordinary relative clause, so we look for several cues: (1) spaCy attaches the clause to a verb instead of a noun (``verb_attached``, ``verb_attached_xcomp``); (2) the relative clause's verb usually takes a clause as its subject, as in *which means* or *which surprised everyone* (``clausal_verb``); (3) the clause evaluates the situation, as in *which is good* or *which is a shame* (``evaluation``); (4) *which is why* (``why``); (5) a plural antecedent with a singular verb, as in *mangoes, which is disgusting* (``agreement``); (6) prepositional phrases such as *in which case* or *for which reason* (``pied_piped``).
 
    Post-processing then removes clauses attached to a noun that are followed by that noun's governing verb (*The car, which runs poorly, was falling apart*), clauses attached to a noun with a plural verb (sentence relatives always take singular verbs), and questions like *which of you...*, and counts each *which* only once.
 
@@ -765,7 +765,7 @@
 
    Public, private, or suasive verbs with subordinator clauses with an omitted *that*. See Biber et al., 9.2.8.
 
-   Detecting a word that isn't there is difficult, so this rule is the most complex in the Biber features. The strategy is: 1. Detect all verbs in the specified classes with a clausal complement verb that has a subject (`f_60_that_deletion:all`). 2. Detect those cases that have a *that* attached to the verb, and exclude them (`f_60_that_deletion:that`). 3. Remove cases where the verb introduces a *wh* clause, as these can't have a *that* (`f_60_that_deletion:wh_clause`). 4. Remove cases where the verb introduces a non-finite to-infinitive (`f_60_that_deletion:to_infinitive`). 5. Remove cases where the verb introduces a literal quotation (`f_60_that_deletion:quote`). 6. Remove cases where the complement or subject appear *before* the main verb.
+   The `clausal_complement` subrule matches every verb in the specified classes with a clausal complement verb, with or without *that*. Post-processing then keeps only finite clauses with a subject (including existential *there*) and removes clauses with *that* or another subordinator (*whether*, *if*), to-infinitives, *wh*-clauses (a *wh*-word between the verb and the clause's subject), quotations, and clauses whose subject or verb appears before the main verb (*He was right, I think*).
 
    * I think he went.
    * She denies a problem occurred.
@@ -778,6 +778,9 @@
    * I think she attacked me.
    * I think she was the one who attacked me.
    * I think there are two ways Apple could go.
+   * He said there might be some antique pieces.
+   * I didn't know there was a lake.
+   * A government spokesman denied there were talks with the rebels.
 
    Counterexamples:
 
@@ -802,6 +805,11 @@
    * I found the door unlocked.
    * She returned home from school and found her mother gone.
    * When she didn't return, Mr. Jones reported her missing to police.
+   * Dad came home and asked me what I was watching.
+   * She explained to me what happened to her husband.
+   * We owe it to the families to find out what happened.
+   * I asked a film critic how often she sees movies she finds demeaning.
+   * I was sure I understood what nourished his soul.
 
 :f_61_stranded_preposition:
    Prepositions stranded at the end of a sentence or clause
