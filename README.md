@@ -183,9 +183,9 @@ Audit notes, comparing to pybiber/pseudobibeR:
 - `f_33_pied_piping`: pybiber and pseudobiber only look for the forms "in who",
   "in whom", "in whose", and "in which"; and not, for instance, "on which" or
   "to which", though those can be pied piping too.
-- `f_34_sentence_relatives`: Match pybiber pretty well; we add a DEP constraint
-  on "which" to be more specific. I'm not sure the rule is precise; it matches
-  Biber's book, but probably we can do better with DependencyMatcher?
+- `f_34_sentence_relatives`: Completely rewritten rule. Instead of Biber's ",
+  which" heuristic, which has many false positives where "which" is merely
+  modifying the subject of a sentence, we detect many more cases.
 - `f_35_because`: pseudobibeR and pybiber forbid following "of". Necessary? Need
   test cases/examples. Their rules look just at word occurrence, but ours uses
   DependencyMatcher and explicitly looks for adverbial clauses.

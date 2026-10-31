@@ -233,6 +233,62 @@ class BiberMatcherator(Matcherator):
 
         return matches
 
+    def _filter_sentence_relatives(self, doc, matches):
+        """Produce f_34_sentence_relatives.
+
+        Each subrule's first token is *which*. When the *which* clause is
+        attached to a noun, we remove it if the noun's governing verb follows
+        the clause, as in "The car, which runs poorly, was falling apart", or
+        if its verb is plural, as sentence relatives take singular verbs. We
+        also remove questions like "which of you...". Several subrules can
+        match the same *which*, so we count each only once.
+
+        """
+
+        def keep(which):
+            # Question, not a relative clause: "which of you gets the
+            # privilege?"
+            if any(c.dep_ == "prep" for c in which.children):
+                return False
+
+            # Clause is not attached to a noun (e.g., attached to a verb, or
+            # pied-piped "in which case"), so the noun checks don't apply
+            verb = which.head
+            if verb.dep_ != "relcl":
+                return True
+
+            # Plural verb, so *which* refers to a plural noun, not a clause:
+            # "slingbacks, which weren't bad"
+            verbs = [verb] + [c for c in verb.children if c.dep_ in ("aux", "auxpass")]
+            if any(v.tag_ == "VBP" or v.lower_ == "were" for v in verbs):
+                return False
+
+            # Noun's governing verb follows the clause, so the clause modifies
+            # the noun mid-sentence: "The car, which runs poorly, was falling
+            # apart"
+            following = [t for t in doc[verb.right_edge.i + 1:which.sent.end]
+                         if not t.is_punct]
+            if following:
+                governor = following[0]
+                if governor.dep_ in ("aux", "auxpass"):
+                    governor = governor.head
+                if governor in verb.head.ancestors:
+                    return False
+
+            # Attached to a noun but passed every check
+            return True
+
+        seen = set()
+        sentence_relatives = []
+        for m in matches["f_34_sentence_relatives"]:
+            if m[0] not in seen and keep(doc[m[0]]):
+                seen.add(m[0])
+                sentence_relatives.append(m)
+
+        matches["f_34_sentence_relatives"] = sentence_relatives
+
+        return matches
+
     def _compute_mean_word_length(self, doc):
 
         """Mean word length, excluding digits and URLs."""
@@ -265,6 +321,7 @@ class BiberMatcherator(Matcherator):
         matches = self._filter_split_auxiliary(doc, matches)
         matches = self._filter_wh_question(matches)
         matches = self._filter_pied_piping(matches)
+        matches = self._filter_sentence_relatives(doc, matches)
 
         doc._.matcherator_biber = matches
         # _ attributes must be serializable; sets aren't, so use a list

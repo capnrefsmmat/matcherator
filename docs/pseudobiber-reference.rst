@@ -433,13 +433,55 @@
 :f_34_sentence_relatives:
    Sentence relatives
 
-   Relative clauses that refer to the predicate of a clause or to a whole clause or sentence, rather than just to a noun phrase. Detected heuristically by *which* after punctuation. TODO Is there a better DependencyMatcher rule that would work? This tends to match the same things as wh_subj does, which seems wrong.
+   Relative clauses that refer to the predicate of a clause or to a whole clause or sentence, rather than just to a noun phrase. See Biber et al., 8.7.1.1.
+
+   Biber's heuristic, *which* after punctuation, also matches every non-restrictive relative clause modifying a noun, which are far more common. Distinguishing the two is difficult because spaCy usually attaches a sentence relative to the nearest noun as an ordinary relative clause, so we look for several cues: (1) spaCy attaches the clause to a verb instead of a noun (`verb_attached`, `verb_attached_xcomp`); (2) the relative clause's verb usually takes a clause as its subject, as in *which means* or *which surprised everyone* (`clausal_verb`); (3) the clause evaluates the situation, as in *which is good* or *which is a shame* (`evaluation`); (4) *which is why* (`why`); (5) a plural antecedent with a singular verb, as in *mangoes, which is disgusting* (`agreement`); (6) prepositional phrases such as *in which case* or *for which reason* (`pied_piped`).
+
+   Post-processing then removes clauses attached to a noun that are followed by that noun's governing verb (*The car, which runs poorly, was falling apart*), clauses attached to a noun with a plural verb (sentence relatives always take singular verbs), and questions like *which of you...*, and counts each *which* only once.
+
+   Non-restrictive relatives modifying a noun at the end of a sentence (*I bought a new car, which runs poorly*) are structurally identical to many sentence relatives (*He forgot to save the file, which cost him a day's work*), so sentence relatives without any of these cues are missed.
 
    * Bob likes fried mangoes, which is the most disgusting thing I've ever heard of.
    * Bob likes fried mangoes---which is the most disgusting thing I've ever heard of.
    * None of our variables have a VIF of greater than 2.5, which means that we do not need to be concerned about multicollinearity.
    * He walks for an hour each morning, which would bore me.
+   * The plane may be several hours late, in which case there's no point in our waiting.
+   * The model failed to converge, which suggests the priors are too vague.
+   * The p-value was 0.03, which indicates a statistically significant difference.
+   * She quit her job last week, which surprised everyone.
+   * He forgot to save the file, which is why we lost the data.
+   * They canceled the meeting at the last minute, which was annoying.
+   * The coefficients are all positive, which is consistent with our hypothesis.
+   * The kids cleaned their rooms without being asked, which never happens.
+   * He promised to call, which he never did.
+   * She told me to apologize, which I refused to do.
+   * If he resigns, which seems likely, we will need a new chair.
+   * We don't get up in time to say goodbye to the band, which sucks, but when we get home, we pass out.
+   * My mom lent me the car for the weekend, which was awesome.
+   * I have three dogs, which gets me out walking every single morning.
 
+   Counterexamples:
+
+   * The car, which runs poorly, was falling apart.
+   * The report, which ran to 300 pages, was largely ignored.
+   * The report---which ran to 300 pages---was largely ignored.
+   * The algorithm, which was first proposed in 1975, is still widely used.
+   * One of the latest models, which includes a rifled barrel, is said to be very accurate.
+   * I bought a new car, which runs poorly.
+   * He lives in Pittsburgh, which is in western Pennsylvania.
+   * We fit a random forest model, which achieved an accuracy of 92%.
+   * The results are shown in Figure 3, which plots the residuals against the fitted values.
+   * The team analyzed tweets, which are limited to 280 characters.
+   * She plays the cello, which she started learning at age five.
+   * We had dinner at The Buffet, which was also excellent.
+   * I bought white slingbacks for 35 bucks, which weren't bad.
+   * Saudi Arabia will not reverse that decision, which he said was a result of the Council's failure.
+   * We compared three methods, each of which has its own drawbacks.
+   * We tested several models, none of which converged.
+   * His transfer ends his two-year stay with Manchester City, during which time he became a tabloid star.
+   * The book which I read last week was excellent.
+   * OK, boys, which of you gets the privilege?
+   * I don't know which to choose.
 
 :f_35_because:
    Causative adverbial subordinator (*because*)
