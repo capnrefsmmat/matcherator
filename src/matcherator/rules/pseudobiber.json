@@ -1065,7 +1065,10 @@
     "counterexamples": [
       "The man who Sally likes is here.",
       "Tom asked the man who went to the store.",
-      "The dog that saw me was big."
+      "The dog that saw me was big.",
+      "Bob likes fried mangoes, which is the most disgusting thing I've ever heard of.",
+      "They canceled the meeting at the last minute, which was annoying.",
+      "He forgot to save the file, which is why we lost the data."
     ],
     "subrules": {
       "dependency": {

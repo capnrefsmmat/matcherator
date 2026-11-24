@@ -246,7 +246,7 @@ class BiberMatcherator(Matcherator):
         return matches
 
     def _filter_sentence_relatives(self, doc, matches):
-        """Produce f_34_sentence_relatives.
+        """Produce f_34_sentence_relatives and exclude them from wh-relatives.
 
         Each subrule's first token is *which*. When the *which* clause is
         attached to a noun, we remove it if the noun's governing verb follows
@@ -254,6 +254,11 @@ class BiberMatcherator(Matcherator):
         if its verb is plural, as sentence relatives take singular verbs. We
         also remove questions like "which of you...". Several subrules can
         match the same *which*, so we count each only once.
+
+        Because spaCy often attaches sentence relatives to a preceding noun as
+        an ordinary ``relcl``, we also remove any ``f_31_wh_subj`` or
+        ``f_32_wh_obj`` matches whose *wh*-word was matched as a sentence
+        relative.
 
         """
 
@@ -298,6 +303,15 @@ class BiberMatcherator(Matcherator):
                 sentence_relatives.append(m)
 
         matches["f_34_sentence_relatives"] = sentence_relatives
+
+        matches["f_31_wh_subj"] = [
+            m for m in matches["f_31_wh_subj"]
+            if m[2] not in seen
+        ]
+        matches["f_32_wh_obj"] = [
+            m for m in matches["f_32_wh_obj"]
+            if m[2] not in seen
+        ]
 
         return matches
 
