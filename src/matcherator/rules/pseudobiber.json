@@ -2251,28 +2251,50 @@
     "examples": [
       "He wants to definitively show the result.",
       "I aim to boldly go where no man has gone before.",
-      "I aim to boldly and rapidly go where no man has gone before."
+      "I aim to boldly and rapidly go where no man has gone before.",
+      "I want to really be understood."
     ],
     "counterexamples": [
-      "He wants to show the result."
+      "He wants to show the result.",
+      "She seems to have left.",
+      "It ought to have been finished.",
+      "I want to be really understood."
     ],
     "subrules": {
       "dependency": {
         "type": "DependencyMatcher",
-        "rules": [[
-          {
-            "RIGHT_ID": "verb_anchor",
-            "RIGHT_ATTRS": {"TAG": "VB"}
-          },
-          {
-            "LEFT_ID": "verb_anchor",
-            "REL_OP": ">",
-            "RIGHT_ID": "to",
-            "RIGHT_ATTRS": {
-              "TAG": "TO", "DEP": "aux"
+        "rules": [
+          [
+            {
+              "RIGHT_ID": "verb_anchor",
+              "RIGHT_ATTRS": {"TAG": "VB"}
+            },
+            {
+              "LEFT_ID": "verb_anchor",
+              "REL_OP": ">",
+              "RIGHT_ID": "to",
+              "RIGHT_ATTRS": {
+                "TAG": "TO", "DEP": "aux"
+              }
             }
-          }
-        ]]
+          ],
+          [
+            {
+              "RIGHT_ID": "aux_anchor",
+              "RIGHT_ATTRS": {
+                "TAG": "VB", "DEP": {"IN": ["aux", "auxpass"]}
+              }
+            },
+            {
+              "LEFT_ID": "aux_anchor",
+              "REL_OP": "$--",
+              "RIGHT_ID": "to",
+              "RIGHT_ATTRS": {
+                "TAG": "TO", "DEP": "aux"
+              }
+            }
+          ]
+        ]
       }
     }
   },
